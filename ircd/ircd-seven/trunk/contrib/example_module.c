@@ -16,7 +16,7 @@
  *   along with this program; if not, write to the Free Software
  *   Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
  *
- *   $Id: example_module.c 18297 2005-01-21 11:33:59Z leeh $
+ *   $Id$
  */
 
 /* List of ircd includes from ../include/ */
@@ -144,7 +144,7 @@ DECLARE_MODULE_AV1(
 			  /* Then the hook function list, if we have one */
 			  test_hfnlist,
 			  /* And finally the version number of this module. */
-			  "$Revision: 18297 $");
+			  "$Revision$");
 
 /* Any of the above arguments can be NULL to indicate they aren't used. */
 

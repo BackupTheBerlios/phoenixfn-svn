@@ -30,7 +30,7 @@
  *  IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  *  POSSIBILITY OF SUCH DAMAGE.
  *
- *  $Id: m_cmessage.c 22701 2006-06-06 20:55:03Z leeh $
+ *  $Id$
  */
 #include "stdinc.h"
 #include "client.h"
@@ -57,7 +57,7 @@ struct Message cnotice_msgtab = {
 };
 
 mapi_clist_av1 cmessage_clist[] = { &cprivmsg_msgtab, &cnotice_msgtab, NULL };
-DECLARE_MODULE_AV1(cmessage, NULL, NULL, cmessage_clist, NULL, NULL, "$Revision: 22701 $");
+DECLARE_MODULE_AV1(cmessage, NULL, NULL, cmessage_clist, NULL, NULL, "$Revision$");
 
 #define PRIVMSG 0
 #define NOTICE 1

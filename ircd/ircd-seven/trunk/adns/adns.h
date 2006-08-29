@@ -51,7 +51,7 @@
  *  Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  *
  *
- *  $Id: adns.h 18363 2005-01-30 00:59:14Z androsyn $
+ *  $Id$
  */
 
 #ifndef ADNS_H_INCLUDED

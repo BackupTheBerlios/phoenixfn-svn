@@ -25,7 +25,7 @@
  *  along with this program; if not, write to the Free Software Foundation,
  *  Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA. 
  *
- *  $Id: general.c 21528 2005-12-27 17:20:55Z androsyn $
+ *  $Id$
  */
 
 #include <stdlib.h>

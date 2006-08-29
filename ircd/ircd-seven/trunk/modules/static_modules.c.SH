@@ -1,6 +1,6 @@
 #!/bin/sh
 # static_modules.c.SH: Generates our static module list
-# $Id: static_modules.c.SH 21564 2006-01-04 19:42:17Z leeh $
+# $Id$
 #
 SYMS=`for x in $*; do basename $x .o|sed -es/^m_//; done`
 cat > static_modules.c <<EOF

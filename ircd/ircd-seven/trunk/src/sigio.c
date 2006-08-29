@@ -23,7 +23,7 @@
  *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307
  *  USA
  *
- *  $Id: sigio.c 21361 2005-12-12 19:30:47Z androsyn $
+ *  $Id$
  */
 
 #ifndef _GNU_SOURCE

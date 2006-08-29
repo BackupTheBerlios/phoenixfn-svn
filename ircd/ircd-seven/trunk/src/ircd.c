@@ -21,7 +21,7 @@
  *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307
  *  USA
  *
- *  $Id: ircd.c 21852 2006-02-07 19:29:02Z leeh $
+ *  $Id$
  */
 
 #include "stdinc.h"

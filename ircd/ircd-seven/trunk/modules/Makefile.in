@@ -1,7 +1,7 @@
 #
 # Makefile.in for ircd/modules
 #
-# $Id: Makefile.in 21592 2006-01-07 19:44:44Z leeh $
+# $Id$
 #
 CC		= @CC@
 AR		= @AR@

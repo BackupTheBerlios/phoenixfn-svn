@@ -22,7 +22,7 @@
  *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307
  *  USA
  *
- *  $Id: poll.c 22631 2006-05-23 18:24:00Z androsyn $
+ *  $Id$
  */
 
 #include "config.h"

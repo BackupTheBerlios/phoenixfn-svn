@@ -21,7 +21,7 @@
  *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307
  *  USA
  *
- *  $Id: restart.c 21648 2006-01-13 15:58:24Z androsyn $
+ *  $Id$
  */
 
 #include "stdinc.h"

@@ -29,7 +29,7 @@
  * IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  *
- * $Id: s_newconf.h 19241 2005-06-11 20:26:01Z leeh $
+ * $Id$
  */
 
 #ifndef INCLUDED_s_newconf_h

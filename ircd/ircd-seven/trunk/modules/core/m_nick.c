@@ -21,7 +21,7 @@
  *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307
  *  USA
  *
- *  $Id: m_nick.c 21526 2005-12-23 20:14:22Z jilles $
+ *  $Id$
  */
 
 #include "stdinc.h"
@@ -64,7 +64,7 @@ struct Message uid_msgtab = {
 };
 
 mapi_clist_av1 nick_clist[] = { &nick_msgtab, &uid_msgtab, NULL };
-DECLARE_MODULE_AV1(nick, NULL, NULL, nick_clist, NULL, NULL, "$Revision: 21526 $");
+DECLARE_MODULE_AV1(nick, NULL, NULL, nick_clist, NULL, NULL, "$Revision$");
 
 static int change_remote_nick(struct Client *, struct Client *, time_t, const char *);
 

@@ -1,4 +1,4 @@
-$Id: README.cidr_bans 11820 2002-08-07 00:48:19Z androsyn $ 
+$Id$ 
 
 
 Basically what this patch does is allow for users to use cidr masks when

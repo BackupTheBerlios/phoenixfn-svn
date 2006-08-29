@@ -15,7 +15,7 @@
  *   along with this program; if not, write to the Free Software
  *   Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
  *
- *   $Id: io.c 22629 2006-05-23 17:47:03Z androsyn $
+ *   $Id$
  */
 
 #include "setup.h"

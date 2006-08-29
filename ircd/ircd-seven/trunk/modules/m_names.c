@@ -21,7 +21,7 @@
  *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307
  *  USA
  *
- *  $Id: m_names.c 20702 2005-08-31 20:59:02Z leeh $
+ *  $Id$
  */
 
 #include "stdinc.h"
@@ -49,7 +49,7 @@ struct Message names_msgtab = {
 };
 
 mapi_clist_av1 names_clist[] = { &names_msgtab, NULL };
-DECLARE_MODULE_AV1(names, NULL, NULL, names_clist, NULL, NULL, "$Revision: 20702 $");
+DECLARE_MODULE_AV1(names, NULL, NULL, names_clist, NULL, NULL, "$Revision$");
 
 static void names_global(struct Client *source_p);
 

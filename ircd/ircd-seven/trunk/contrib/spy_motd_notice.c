@@ -19,7 +19,7 @@
  *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307
  *  USA
  *
- *  $Id: spy_motd_notice.c 21776 2006-01-23 19:12:53Z androsyn $
+ *  $Id$
  */
 #include "stdinc.h"
 #include "modules.h"
@@ -35,7 +35,7 @@ mapi_hfn_list_av1 motd_hfnlist[] = {
 	{NULL, NULL}
 };
 
-DECLARE_MODULE_AV1(motd_spy, NULL, NULL, NULL, NULL, motd_hfnlist, "$Revision: 21776 $");
+DECLARE_MODULE_AV1(motd_spy, NULL, NULL, NULL, NULL, motd_hfnlist, "$Revision$");
 
 void
 show_motd(hook_data *data)

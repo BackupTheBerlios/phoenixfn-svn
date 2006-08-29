@@ -21,7 +21,7 @@
  *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307
  *  USA
  *
- *  $Id: hostmask.c 21269 2005-11-21 19:30:49Z leeh $
+ *  $Id$
  */
 
 #include "stdinc.h"

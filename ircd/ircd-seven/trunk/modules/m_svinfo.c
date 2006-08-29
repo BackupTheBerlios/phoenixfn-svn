@@ -21,7 +21,7 @@
  *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307
  *  USA
  *
- *  $Id: m_svinfo.c 21277 2005-11-21 20:10:49Z leeh $
+ *  $Id$
  */
 #include "stdinc.h"
 #include "client.h"
@@ -44,7 +44,7 @@ struct Message svinfo_msgtab = {
 };
 
 mapi_clist_av1 svinfo_clist[] = { &svinfo_msgtab, NULL };
-DECLARE_MODULE_AV1(svinfo, NULL, NULL, svinfo_clist, NULL, NULL, "$Revision: 21277 $");
+DECLARE_MODULE_AV1(svinfo, NULL, NULL, svinfo_clist, NULL, NULL, "$Revision$");
 
 /*
  * ms_svinfo - SVINFO message handler

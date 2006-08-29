@@ -21,7 +21,7 @@
  *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307
  *  USA
  *
- *  $Id: memory.h 21132 2005-11-08 21:04:24Z androsyn $
+ *  $Id$
  */
 
 #ifndef _I_MEMORY_H

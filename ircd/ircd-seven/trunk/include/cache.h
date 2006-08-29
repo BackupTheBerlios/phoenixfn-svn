@@ -1,4 +1,4 @@
-/* $Id: cache.h 18204 2005-01-14 17:12:36Z androsyn $ */
+/* $Id$ */
 #ifndef INCLUDED_CACHE_H
 #define INCLUDED_CACHE_H
 

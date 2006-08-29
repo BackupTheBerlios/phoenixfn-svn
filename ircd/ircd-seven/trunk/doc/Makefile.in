@@ -1,4 +1,4 @@
-# $Id: Makefile.in 17051 2004-06-17 23:19:00Z androsyn $
+# $Id$
 CC		= @CC@
 INSTALL		= @INSTALL@
 INSTALL_BIN	= @INSTALL_PROGRAM@

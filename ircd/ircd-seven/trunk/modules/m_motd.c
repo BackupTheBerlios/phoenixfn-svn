@@ -21,7 +21,7 @@
  *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307
  *  USA
  *
- *  $Id: m_motd.c 20702 2005-08-31 20:59:02Z leeh $
+ *  $Id$
  */
 
 #include "stdinc.h"
@@ -54,7 +54,7 @@ mapi_hlist_av1 motd_hlist[] = {
 	{ NULL, NULL }
 };
 
-DECLARE_MODULE_AV1(motd, NULL, NULL, motd_clist, motd_hlist, NULL, "$Revision: 20702 $");
+DECLARE_MODULE_AV1(motd, NULL, NULL, motd_clist, motd_hlist, NULL, "$Revision$");
 
 static void motd_spy(struct Client *);
 

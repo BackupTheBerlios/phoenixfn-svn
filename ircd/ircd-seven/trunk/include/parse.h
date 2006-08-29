@@ -21,7 +21,7 @@
  *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307
  *  USA
  *
- *  $Id: parse.h 16071 2004-03-15 17:58:08Z leeh $
+ *  $Id$
  */
 
 #ifndef INCLUDED_parse_h_h

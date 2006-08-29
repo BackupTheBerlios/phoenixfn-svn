@@ -1,4 +1,4 @@
-$Id: CIDR.txt 8849 2001-10-24 02:00:05Z wcampbel $
+$Id$
 
 CIDR Information
 ----------------

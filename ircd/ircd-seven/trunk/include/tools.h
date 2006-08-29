@@ -21,7 +21,7 @@
  *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307
  *  USA
  *
- *  $Id: tools.h 19391 2005-07-04 08:27:58Z androsyn $
+ *  $Id$
  */
 
 #ifndef __TOOLS_H__

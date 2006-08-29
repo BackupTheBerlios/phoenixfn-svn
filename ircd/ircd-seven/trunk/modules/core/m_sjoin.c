@@ -21,7 +21,7 @@
  *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307
  *  USA
  *
- *  $Id: m_sjoin.c 22848 2006-07-05 13:35:49Z jilles $
+ *  $Id$
  */
 
 #include "stdinc.h"
@@ -49,7 +49,7 @@ struct Message sjoin_msgtab = {
 };
 
 mapi_clist_av1 sjoin_clist[] = { &sjoin_msgtab, NULL };
-DECLARE_MODULE_AV1(sjoin, NULL, NULL, sjoin_clist, NULL, NULL, "$Revision: 22848 $");
+DECLARE_MODULE_AV1(sjoin, NULL, NULL, sjoin_clist, NULL, NULL, "$Revision$");
 
 /*
  * ms_sjoin

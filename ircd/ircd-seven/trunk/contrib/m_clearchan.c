@@ -17,7 +17,7 @@
  *   along with this program; if not, write to the Free Software
  *   Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
  *
- *   $Id: m_clearchan.c 16480 2004-04-05 02:38:04Z leeh $
+ *   $Id$
  */
 #include "stdinc.h"
 #include "tools.h"
@@ -46,7 +46,7 @@ struct Message clearchan_msgtab = {
 
 mapi_clist_av1 clearchan_clist[] = { &clearchan_msgtab, NULL };
 
-DECLARE_MODULE_AV1(clearchan, NULL, NULL, clearchan_clist, NULL, NULL, "$Revision: 16480 $");
+DECLARE_MODULE_AV1(clearchan, NULL, NULL, clearchan_clist, NULL, NULL, "$Revision$");
 
 /*
 ** mo_clearchan

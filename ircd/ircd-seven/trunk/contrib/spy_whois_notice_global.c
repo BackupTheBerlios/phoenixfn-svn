@@ -19,7 +19,7 @@
  *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307
  *  USA
  *
- *  $Id: spy_whois_notice_global.c 21776 2006-01-23 19:12:53Z androsyn $
+ *  $Id$
  */
 #include "stdinc.h"
 #include "modules.h"
@@ -36,7 +36,7 @@ mapi_hfn_list_av1 whois_global_hfnlist[] = {
 };
 
 DECLARE_MODULE_AV1(whois_global_spy, NULL, NULL, NULL, NULL, whois_global_hfnlist,
-		   "$Revision: 21776 $");
+		   "$Revision$");
 
 void
 show_whois_global(hook_data_client *data)

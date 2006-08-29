@@ -21,7 +21,7 @@
  *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307
  *  USA
  *
- *  $Id: client.c 22705 2006-06-06 21:27:12Z leeh $
+ *  $Id$
  */
 #include "stdinc.h"
 #include "config.h"

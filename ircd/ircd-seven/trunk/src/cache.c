@@ -29,7 +29,7 @@
  * IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  *
- * $Id: cache.c 22663 2006-05-27 01:22:11Z androsyn $
+ * $Id$
  */
 
 #include "stdinc.h"

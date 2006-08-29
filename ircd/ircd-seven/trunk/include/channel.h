@@ -21,7 +21,7 @@
  *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307
  *  USA
  *
- *  $Id: channel.h 21136 2005-11-08 21:24:00Z leeh $
+ *  $Id$
  */
 
 #ifndef INCLUDED_channel_h

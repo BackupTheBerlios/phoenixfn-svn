@@ -20,7 +20,7 @@
  *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307
  *  USA
  *
- *  $Id: m_unreject.c 20702 2005-08-31 20:59:02Z leeh $
+ *  $Id$
  */
 
 #include "stdinc.h"
@@ -40,7 +40,7 @@ struct Message unreject_msgtab = {
 };
 
 mapi_clist_av1 unreject_clist[] = { &unreject_msgtab, NULL };
-DECLARE_MODULE_AV1(unreject, NULL, NULL, unreject_clist, NULL, NULL, "$Revision: 20702 $");
+DECLARE_MODULE_AV1(unreject, NULL, NULL, unreject_clist, NULL, NULL, "$Revision$");
 
 /*
  * mo_unreject

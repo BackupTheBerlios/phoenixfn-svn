@@ -21,7 +21,7 @@
  *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307
  *  USA
  *
- *  $Id: m_away.c 21130 2005-11-08 21:01:45Z leeh $
+ *  $Id$
  */
 
 #include "stdinc.h"
@@ -46,7 +46,7 @@ struct Message away_msgtab = {
 };
 
 mapi_clist_av1 away_clist[] = { &away_msgtab, NULL };
-DECLARE_MODULE_AV1(away, NULL, NULL, away_clist, NULL, NULL, "$Revision: 21130 $");
+DECLARE_MODULE_AV1(away, NULL, NULL, away_clist, NULL, NULL, "$Revision$");
 
 /***********************************************************************
  * m_away() - Added 14 Dec 1988 by jto. 

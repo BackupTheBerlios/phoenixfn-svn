@@ -27,7 +27,7 @@
  * IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  *
- * $Id: m_cap.c 22413 2006-05-08 12:25:00Z androsyn $
+ * $Id$
  */
 
 #include "stdinc.h"
@@ -54,7 +54,7 @@ struct Message cap_msgtab = {
 };
 
 mapi_clist_av1 cap_clist[] = { &cap_msgtab, NULL };
-DECLARE_MODULE_AV1(cap, modinit, NULL, cap_clist, NULL, NULL, "$Revision: 22413 $");
+DECLARE_MODULE_AV1(cap, modinit, NULL, cap_clist, NULL, NULL, "$Revision$");
 
 #define _CLICAP(name, capserv, capclient, flags)	\
 	{ (name), (capserv), (capclient), (flags), sizeof(name) - 1 }

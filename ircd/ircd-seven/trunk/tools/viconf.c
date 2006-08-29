@@ -1,7 +1,7 @@
 /*
  * viconf.c
  *
- * $Id: viconf.c 13238 2002-11-29 17:28:30Z leeh $
+ * $Id$
  */
 #include <stdio.h>
 #include <unistd.h>

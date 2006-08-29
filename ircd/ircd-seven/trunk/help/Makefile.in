@@ -1,5 +1,5 @@
 # Generated automatically from Makefile.in by configure.
-# $Id: Makefile.in 22093 2006-03-12 17:07:00Z jilles $
+# $Id$
 # makefile for include/
 
 INSTALL=	@INSTALL@

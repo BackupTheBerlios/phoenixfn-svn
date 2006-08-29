@@ -83,4 +83,4 @@ A number of scripts for clients have already been written to automate this
 process, see client-scripts/README for more information.
 
 -- 
-$Id: challenge.txt 21735 2006-01-20 19:23:23Z leeh $
+$Id$

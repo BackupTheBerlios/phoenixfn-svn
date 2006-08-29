@@ -5,7 +5,7 @@
  * Copyright (C) 2005 Lee Hardy <lee -at- leeh.co.uk>
  * Copyright (C) 2005 ircd-ratbox development team
  *
- * $Id: monitor.h 18526 2005-02-24 19:53:03Z leeh $
+ * $Id$
  */
 #ifndef INCLUDED_monitor_h
 #define INCLUDED_monitor_h

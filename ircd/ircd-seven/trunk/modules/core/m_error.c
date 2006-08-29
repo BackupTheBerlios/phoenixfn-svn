@@ -21,7 +21,7 @@
  *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307
  *  USA
  *
- *  $Id: m_error.c 21510 2005-12-19 18:57:37Z leeh $
+ *  $Id$
  */
 
 #include "stdinc.h"
@@ -48,7 +48,7 @@ mapi_clist_av1 error_clist[] = {
         &error_msgtab, NULL
 };
 
-DECLARE_MODULE_AV1(error, NULL, NULL, error_clist, NULL, NULL, "$Revision: 21510 $");
+DECLARE_MODULE_AV1(error, NULL, NULL, error_clist, NULL, NULL, "$Revision$");
 
 
 /*

@@ -28,7 +28,7 @@
  * IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  *
- * $Id: s_log.c 21852 2006-02-07 19:29:02Z leeh $
+ * $Id$
  */
 
 #include "stdinc.h"

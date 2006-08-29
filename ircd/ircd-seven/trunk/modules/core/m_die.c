@@ -21,7 +21,7 @@
  *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307
  *  USA
  *
- *  $Id: m_die.c 21852 2006-02-07 19:29:02Z leeh $
+ *  $Id$
  */
 
 #include "stdinc.h"
@@ -47,7 +47,7 @@ static struct Message die_msgtab = {
 };
 
 mapi_clist_av1 die_clist[] = { &die_msgtab, NULL };
-DECLARE_MODULE_AV1(die, NULL, NULL, die_clist, NULL, NULL, "$Revision: 21852 $");
+DECLARE_MODULE_AV1(die, NULL, NULL, die_clist, NULL, NULL, "$Revision$");
 
 /*
  * mo_die - DIE command handler

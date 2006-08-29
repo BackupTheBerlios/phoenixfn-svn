@@ -290,4 +290,4 @@ send_message()
 
 -- Diane Bruce 
 
-$Id: send.txt 5399 2001-02-10 18:24:30Z fl_ $
+$Id$

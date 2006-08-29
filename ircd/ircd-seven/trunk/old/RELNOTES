@@ -93,5 +93,5 @@ If you are upgrading from 1.x, you must also read doc/whats-new-2.0.txt
 - ERROR had somehow been lost from loading.
 - Improved logging in situations where we disallow a servers link.
 
-$Id: RELNOTES 22929 2006-07-23 20:17:52Z leeh $
+$Id$
 

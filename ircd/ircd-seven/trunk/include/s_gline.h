@@ -21,7 +21,7 @@
  *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307
  *  USA
  *
- *  $Id: s_gline.h 18204 2005-01-14 17:12:36Z androsyn $
+ *  $Id$
  */
 
 #ifndef INCLUDED_s_gline_h

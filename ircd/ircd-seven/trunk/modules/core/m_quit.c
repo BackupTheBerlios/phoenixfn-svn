@@ -21,7 +21,7 @@
  *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307
  *  USA
  *
- *  $Id: m_quit.c 22535 2006-05-17 14:11:02Z jilles $
+ *  $Id$
  */
 
 #include "stdinc.h"
@@ -46,7 +46,7 @@ struct Message quit_msgtab = {
 };
 
 mapi_clist_av1 quit_clist[] = { &quit_msgtab, NULL };
-DECLARE_MODULE_AV1(quit, NULL, NULL, quit_clist, NULL, NULL, "$Revision: 22535 $");
+DECLARE_MODULE_AV1(quit, NULL, NULL, quit_clist, NULL, NULL, "$Revision$");
 
 static int
 mr_quit(struct Client *client_p, struct Client *source_p, int parc, const char *parv[])

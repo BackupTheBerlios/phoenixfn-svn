@@ -21,7 +21,7 @@
  *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307
  *  USA
  *
- *  $Id: m_mode.c 22844 2006-07-03 22:14:01Z jilles $
+ *  $Id$
  */
 
 #include "stdinc.h"
@@ -64,7 +64,7 @@ struct Message bmask_msgtab = {
 };
 
 mapi_clist_av1 mode_clist[] = { &mode_msgtab, &tmode_msgtab, &bmask_msgtab, NULL };
-DECLARE_MODULE_AV1(mode, NULL, NULL, mode_clist, NULL, NULL, "$Revision: 22844 $");
+DECLARE_MODULE_AV1(mode, NULL, NULL, mode_clist, NULL, NULL, "$Revision$");
 
 /* bitmasks for error returns, so we send once per call */
 #define SM_ERR_NOOPS            0x00000002	/* No chan ops */

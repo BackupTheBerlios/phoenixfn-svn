@@ -15,7 +15,7 @@
  *   along with this program; if not, write to the Free Software
  *   Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
  *
- *   $Id: io.h 15076 2003-09-26 01:58:59Z androsyn $
+ *   $Id$
  */
 
 #ifndef INCLUDED_servlink_io_h

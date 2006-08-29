@@ -21,7 +21,7 @@
  *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307
  *  USA
  *
- *  $Id: commio.c 21654 2006-01-13 16:33:18Z androsyn $
+ *  $Id$
  */
 
 #include "stdinc.h"

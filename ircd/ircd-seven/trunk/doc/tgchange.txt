@@ -35,4 +35,4 @@ channel.  See /quote help cnotice and /quote help cprivmsg for more
 information.
 
 -- 
-$Id: tgchange.txt 18819 2005-03-27 02:19:02Z leeh $
+$Id$

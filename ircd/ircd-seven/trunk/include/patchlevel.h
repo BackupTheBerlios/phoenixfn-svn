@@ -21,7 +21,7 @@
  *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307
  *  USA
  *
- *  $Id: patchlevel.h 22931 2006-07-23 20:33:49Z leeh $
+ *  $Id$
  */
 
 #ifndef PATCHLEVEL

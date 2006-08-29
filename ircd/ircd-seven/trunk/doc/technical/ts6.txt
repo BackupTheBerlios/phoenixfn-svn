@@ -1,4 +1,4 @@
-$Id: ts6.txt 16189 2004-03-22 17:23:26Z leeh $
+$Id$
 
 TS6 Proposal (v7)
 Written by Lee H <lee@leeh.co.uk>

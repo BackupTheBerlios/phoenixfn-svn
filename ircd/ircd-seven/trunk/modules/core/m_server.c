@@ -21,7 +21,7 @@
  *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307
  *  USA
  *
- *  $Id: m_server.c 21727 2006-01-19 22:36:10Z leeh $
+ *  $Id$
  */
 
 #include "stdinc.h"
@@ -58,7 +58,7 @@ struct Message sid_msgtab = {
 };
 
 mapi_clist_av1 server_clist[] = { &server_msgtab, &sid_msgtab, NULL };
-DECLARE_MODULE_AV1(server, NULL, NULL, server_clist, NULL, NULL, "$Revision: 21727 $");
+DECLARE_MODULE_AV1(server, NULL, NULL, server_clist, NULL, NULL, "$Revision$");
 
 int bogus_host(const char *host);
 struct Client *server_exists(const char *);

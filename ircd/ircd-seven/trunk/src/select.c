@@ -22,7 +22,7 @@
  *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307
  *  USA
  *
- *  $Id: select.c 22826 2006-06-21 19:26:15Z androsyn $
+ *  $Id$
  */
 
 #include "config.h"

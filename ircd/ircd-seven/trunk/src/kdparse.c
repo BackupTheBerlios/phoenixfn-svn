@@ -21,7 +21,7 @@
  *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307
  *  USA
  *
- *  $Id: kdparse.c 22663 2006-05-27 01:22:11Z androsyn $
+ *  $Id$
  */
 
 #include "stdinc.h"

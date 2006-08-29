@@ -3,7 +3,7 @@ linebuf - a dbuf replacement for the New World Order(tm)
 
 By Adrian Chadd <adrian@creative.net.au>
 
-$Id: linebuf.txt 1798 2000-11-27 19:23:02Z adrian $
+$Id$
 
 
 History

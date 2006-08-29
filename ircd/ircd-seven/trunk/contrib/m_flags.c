@@ -27,7 +27,7 @@
  *  IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  *  POSSIBILITY OF SUCH DAMAGE.
  *
- *  $Id: m_flags.c 15967 2004-03-07 18:13:24Z leeh $
+ *  $Id$
  */
 
 /* List of ircd includes from ../include/ */
@@ -64,7 +64,7 @@ struct Message test_msgtab = {
 
 mapi_clist_av1 test_clist[] = { &test_msgtab, NULL };
 
-DECLARE_MODULE_AV1(test, NULL, NULL, test_clist, NULL, NULL, "$Revision: 15967 $");
+DECLARE_MODULE_AV1(test, NULL, NULL, test_clist, NULL, NULL, "$Revision$");
 
 
 /* FLAGS requires it's own mini parser, since the last parameter in it can

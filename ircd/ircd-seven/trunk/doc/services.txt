@@ -52,4 +52,4 @@ to ircd:
    This forcibly changes the clients nickname to the one they requested
    they regain, ensuring they can always regain their nickname.
 
-# $Id: services.txt 19253 2005-06-12 02:23:00Z leeh $
+# $Id$

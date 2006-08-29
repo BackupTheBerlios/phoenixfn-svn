@@ -21,7 +21,7 @@
  *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307
  *  USA
  *
- *  $Id: linebuf.c 20772 2005-09-17 23:30:22Z androsyn $
+ *  $Id$
  */
 
 #include "stdinc.h"

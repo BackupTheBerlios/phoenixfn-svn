@@ -1,7 +1,7 @@
 Overview of the event subsystem
 Adrian Chadd <adrian@creative.net.au>
 
-$Id: event.txt 4895 2001-01-24 14:58:49Z wcampbel $
+$Id$
 
 
 One of the things that immediately struck me whilst first looking at the

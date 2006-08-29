@@ -1,5 +1,5 @@
 Servlink protocol documentation.
-$Id: README 15822 2004-03-02 21:26:52Z androsyn $
+$Id$
 --------------
 
 After negotiating an incoming/outgoing server connection, the ircd will

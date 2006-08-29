@@ -21,7 +21,7 @@
  *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307
  *  USA
  *
- *  $Id: commio.h 21578 2006-01-05 16:35:07Z androsyn $
+ *  $Id$
  */
 
 #ifndef INCLUDED_commio_h

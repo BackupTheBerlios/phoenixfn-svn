@@ -21,7 +21,7 @@
  *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307
  *  USA
  *
- *  $Id: m_squit.c 20780 2005-09-18 01:51:50Z androsyn $
+ *  $Id$
  */
 
 #include "stdinc.h"
@@ -49,7 +49,7 @@ struct Message squit_msgtab = {
 };
 
 mapi_clist_av1 squit_clist[] = { &squit_msgtab, NULL };
-DECLARE_MODULE_AV1(squit, NULL, NULL, squit_clist, NULL, NULL, "$Revision: 20780 $");
+DECLARE_MODULE_AV1(squit, NULL, NULL, squit_clist, NULL, NULL, "$Revision$");
 
 struct squit_parms
 {

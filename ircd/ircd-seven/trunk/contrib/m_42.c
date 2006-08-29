@@ -2,7 +2,7 @@
  *   Copyright (C) infinity-infinity God <God@Heaven>
  *
  *   Bob was here 
- *   $Id: m_42.c 18554 2005-02-24 22:45:19Z androsyn $
+ *   $Id$
  */
 
 #include "stdinc.h"

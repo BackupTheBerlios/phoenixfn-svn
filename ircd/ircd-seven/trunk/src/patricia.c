@@ -1,7 +1,7 @@
 /*
  * Yanked out of Net::Patricia by Aaron Sethman <androsyn@ratbox.org>
  *
- * $Id: patricia.c 22407 2006-05-07 15:39:43Z androsyn $
+ * $Id$
  * Dave Plonka <plonka@doit.wisc.edu>
  *
  * This product includes software developed by the University of Michigan,

@@ -23,7 +23,7 @@
  *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307
  *  USA
  *
- *  $Id: epoll.c 22575 2006-05-19 20:50:15Z androsyn $
+ *  $Id$
  */
 
 #include "config.h"

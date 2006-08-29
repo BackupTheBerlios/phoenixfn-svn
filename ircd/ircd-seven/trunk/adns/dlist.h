@@ -24,7 +24,7 @@
  *  along with this program; if not, write to the Free Software Foundation,
  *  Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA. 
  *
- *  $Id: dlist.h 17804 2004-09-15 18:32:22Z androsyn $
+ *  $Id$
  */
 
 #ifndef ADNS_DLIST_H_INCLUDED

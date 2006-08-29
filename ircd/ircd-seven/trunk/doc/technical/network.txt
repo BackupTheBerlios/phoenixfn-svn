@@ -1,7 +1,7 @@
 Overview of the network subsystem
 Adrian Chadd <adrian@creative.net.au>
 
-$Id: network.txt 4895 2001-01-24 14:58:49Z wcampbel $
+$Id$
 
 
 This document is an overview of the new and hopefully improved network

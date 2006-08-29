@@ -21,7 +21,7 @@
  *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307
  *  USA
  *
- *  $Id: listener.h 17410 2004-08-03 20:20:02Z androsyn $
+ *  $Id$
  */
 
 #ifndef INCLUDED_listener_h

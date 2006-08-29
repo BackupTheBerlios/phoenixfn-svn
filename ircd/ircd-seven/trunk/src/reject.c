@@ -20,7 +20,7 @@
  *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307
  *  USA
  *
- *  $Id: reject.c 21572 2006-01-04 22:07:13Z androsyn $
+ *  $Id$
  */
 
 #include "stdinc.h"

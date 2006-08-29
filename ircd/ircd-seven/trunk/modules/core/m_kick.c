@@ -21,7 +21,7 @@
  *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307
  *  USA
  *
- *  $Id: m_kick.c 22844 2006-07-03 22:14:01Z jilles $
+ *  $Id$
  */
 
 #include "stdinc.h"
@@ -48,7 +48,7 @@ struct Message kick_msgtab = {
 };
 
 mapi_clist_av1 kick_clist[] = { &kick_msgtab, NULL };
-DECLARE_MODULE_AV1(kick, NULL, NULL, kick_clist, NULL, NULL, "$Revision: 22844 $");
+DECLARE_MODULE_AV1(kick, NULL, NULL, kick_clist, NULL, NULL, "$Revision$");
 
 /*
 ** m_kick

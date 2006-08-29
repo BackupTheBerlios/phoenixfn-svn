@@ -21,7 +21,7 @@
  *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307
  *  USA
  *
- *  $Id: m_set.c 21729 2006-01-20 19:09:22Z leeh $
+ *  $Id$
  */
 
 /* rewritten by jdc */
@@ -52,7 +52,7 @@ struct Message set_msgtab = {
 };
 
 mapi_clist_av1 set_clist[] = { &set_msgtab, NULL };
-DECLARE_MODULE_AV1(set, NULL, NULL, set_clist, NULL, NULL, "$Revision: 21729 $");
+DECLARE_MODULE_AV1(set, NULL, NULL, set_clist, NULL, NULL, "$Revision$");
 
 /* Structure used for the SET table itself */
 struct SetStruct

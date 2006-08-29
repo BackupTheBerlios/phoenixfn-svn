@@ -1,7 +1,7 @@
 Overview of the filedescriptor subsystem
 Adrian Chadd <adrian@creative.net.au>
 
-$Id: fd-management.txt 1559 2000-11-08 19:57:55Z adrian $
+$Id$
 
 
 Filedescriptor lists

@@ -15,7 +15,7 @@
  *   along with this program; if not, write to the Free Software
  *   Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
  *
- *   $Id: servlink.h 15774 2004-03-02 00:05:39Z androsyn $
+ *   $Id$
  */
 
 #ifndef INCLUDED_servlink_servlink_h

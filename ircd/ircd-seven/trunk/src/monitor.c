@@ -29,7 +29,7 @@
  * IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  *
- * $Id: monitor.c 21002 2005-10-26 17:54:12Z androsyn $
+ * $Id$
  */
 #include "stdinc.h"
 #include "tools.h"

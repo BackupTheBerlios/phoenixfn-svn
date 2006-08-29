@@ -21,7 +21,7 @@
  *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307
  *  USA
  *
- *  $Id: m_userhost.c 20702 2005-08-31 20:59:02Z leeh $
+ *  $Id$
  */
 
 #include "stdinc.h"
@@ -47,7 +47,7 @@ struct Message userhost_msgtab = {
 };
 
 mapi_clist_av1 userhost_clist[] = { &userhost_msgtab, NULL };
-DECLARE_MODULE_AV1(userhost, NULL, NULL, userhost_clist, NULL, NULL, "$Revision: 20702 $");
+DECLARE_MODULE_AV1(userhost, NULL, NULL, userhost_clist, NULL, NULL, "$Revision$");
 
 /*
  * m_userhost added by Darren Reed 13/8/91 to aid clients and reduce

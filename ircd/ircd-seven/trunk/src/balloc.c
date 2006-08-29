@@ -26,7 +26,7 @@
  *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307
  *  USA
  *
- *  $Id: balloc.c 22645 2006-05-24 15:45:59Z androsyn $
+ *  $Id$
  */
 
 /* 

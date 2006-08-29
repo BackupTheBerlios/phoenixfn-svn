@@ -34,7 +34,7 @@
  * IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  *
- * $Id: hook.c 18369 2005-01-31 00:16:07Z leeh $
+ * $Id$
  */
 #include "stdinc.h"
 #include "memory.h"

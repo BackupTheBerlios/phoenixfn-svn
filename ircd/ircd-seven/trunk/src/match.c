@@ -16,7 +16,7 @@
  *   along with this program; if not, write to the Free Software
  *   Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
  *
- * $Id: match.c 22407 2006-05-07 15:39:43Z androsyn $
+ * $Id$
  *
  */
 #include "stdinc.h"

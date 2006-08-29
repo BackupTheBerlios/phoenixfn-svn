@@ -16,7 +16,7 @@
  *   along with this program; if not, write to the Free Software
  *   Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
  *
- *   $Id: messages.tab 22335 2006-04-09 21:13:35Z leeh $
+ *   $Id$
  */
 
 static  const char *  replies[] = {

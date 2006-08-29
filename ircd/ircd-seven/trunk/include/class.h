@@ -21,7 +21,7 @@
  *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307
  *  USA
  *
- *  $Id: class.h 19162 2005-05-17 13:16:10Z leeh $
+ *  $Id$
  */
 
 #ifndef INCLUDED_class_h

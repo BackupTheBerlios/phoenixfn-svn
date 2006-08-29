@@ -1,4 +1,4 @@
-$Id: cluster.txt 16896 2004-05-25 17:06:06Z leeh $
+$Id$
 
 Short description of how remote kline and friends are propagated under
 the old hyb7 style (CAP_KLN etc) and under the new style over ENCAP.

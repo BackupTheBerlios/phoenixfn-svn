@@ -21,7 +21,7 @@
  *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307
  *  USA
  *
- *  $Id: m_kill.c 21339 2005-12-09 14:05:30Z leeh $
+ *  $Id$
  */
 
 #include "stdinc.h"
@@ -54,7 +54,7 @@ struct Message kill_msgtab = {
 };
 
 mapi_clist_av1 kill_clist[] = { &kill_msgtab, NULL };
-DECLARE_MODULE_AV1(kill, NULL, NULL, kill_clist, NULL, NULL, "$Revision: 21339 $");
+DECLARE_MODULE_AV1(kill, NULL, NULL, kill_clist, NULL, NULL, "$Revision$");
 
 /*
 ** mo_kill

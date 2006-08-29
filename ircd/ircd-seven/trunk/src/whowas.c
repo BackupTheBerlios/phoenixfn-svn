@@ -21,7 +21,7 @@
  *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307
  *  USA
  *
- *  $Id: whowas.c 21128 2005-11-08 20:41:20Z leeh $
+ *  $Id$
  */
 
 #include "stdinc.h"

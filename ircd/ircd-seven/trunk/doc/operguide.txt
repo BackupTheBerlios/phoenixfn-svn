@@ -365,4 +365,4 @@ Vuurwerk Internet           '|.|'   PGP   - 0xD68A7AAB
 
 And on the seventh day, He exited from append mode.
 
-# $Id: operguide.txt 10275 2002-02-24 04:45:02Z wcampbel $
+# $Id$

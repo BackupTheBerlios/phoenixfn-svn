@@ -1,5 +1,5 @@
 
-# $Id: index.txt 16899 2004-05-25 17:19:53Z leeh $
+# $Id$
 Here is the overview of the documents in the doc/ directory.
 
 CIDR.txt		- Description of CIDR in IPv4
