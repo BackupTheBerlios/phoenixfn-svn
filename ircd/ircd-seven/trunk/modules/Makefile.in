@@ -58,6 +58,7 @@ TSRCS =                          \
   m_capab.c \
   m_close.c \
   m_cmessage.c \
+  m_collide.c \
   m_connect.c \
   m_dline.c \
   m_encap.c \

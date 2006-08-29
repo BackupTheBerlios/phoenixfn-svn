@@ -649,7 +649,7 @@ valid_hostname(const char *hostname)
 	{
 		if(!IsHostChar(*p))
 			return NO;
-                if(*p == '.' || *p == ':')
+                if(*p == '.' || *p == ':' || *p == '/')
   			found_sep++;
 		p++;
 	}

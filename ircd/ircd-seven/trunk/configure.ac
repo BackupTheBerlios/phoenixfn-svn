@@ -893,7 +893,7 @@ dnl so enable small net unless you really need this much support
 fi
 
 AC_ARG_WITH(nicklen,
-AC_HELP_STRING([--with-nicklen=LENGTH],[Set the nick length to LENGTH (default 9, max 50)]),
+AC_HELP_STRING([--with-nicklen=LENGTH],[Set the nick length to LENGTH (default 16, max 50)]),
 [
   if test $withval -ge 50; then
 	NICKLEN=50
@@ -901,10 +901,10 @@ AC_HELP_STRING([--with-nicklen=LENGTH],[Set the nick length to LENGTH (default 9
   else
 	NICKLEN="$withval"
   fi
-], [NICKLEN=9])
+], [NICKLEN=16])
 
 AC_ARG_WITH(topiclen,           
-AC_HELP_STRING([--with-topiclen=NUMBER],[Set the max topic length to NUMBER (default 160, max 390)]),
+AC_HELP_STRING([--with-topiclen=NUMBER],[Set the max topic length to NUMBER (default 360, max 390)]),
 [
  if test $withval -ge 390; then
 	TOPICLEN=390
@@ -912,7 +912,7 @@ AC_HELP_STRING([--with-topiclen=NUMBER],[Set the max topic length to NUMBER (def
  else
  	TOPICLEN=$withval
  fi
-], [TOPICLEN=160])
+], [TOPICLEN=360])
 
 
 AC_DEFINE_UNQUOTED(TOPICLEN, ${TOPICLEN}, [Maximum topic length (<=390)])

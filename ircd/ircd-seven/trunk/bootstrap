@@ -1,0 +1,40 @@
+#! /bin/sh
+#
+# $Id$
+
+prog="`basename $0`"
+
+die() {
+	echo "$prog: error: $*";
+	exit 1;
+}
+
+test -d src || \
+	die "this script must be run from the top-level source directory"
+
+if test "x$1" = x-f || \
+	test ! -e configure || \
+	test configure.ac -nt configure; then
+	echo "bootstrapping..."
+	autoconf || die "autoconf failed"
+	autoheader || die "autoheader failed"
+fi
+
+#if test "x$1" = x-f || \
+#	test src/ircd_lexer.l -nt src/lex.yy.c; then
+#	echo "regenerating src/lex.yy.[ch]..."
+#	cd src || die "chdir failed"
+#	lex ircd_lexer.l || die "lex failed"
+#	cd .. || die "chdir failed"
+#fi
+
+#if test "x$1" = x-f || \
+#	test src/ircd_parser.y -nt src/y.tab.c || \
+#	test src/ircd_parser.y -nt src/y.tab.h; then
+#	echo "regenerating src/y.tab.[ch]..."
+#	cd src || die "chdir failed"
+#	yacc -d ircd_parser.y || die "yacc failed"
+#	cd .. || die "chdir failed"
+#fi
+
+# vim: ft=sh ts=8 sw=8 noet
