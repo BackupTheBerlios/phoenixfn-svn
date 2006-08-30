@@ -1,0 +1,24 @@
+$Id: CREDITS 6 2005-09-10 01:02:21Z nenolod $
+ 
+Charybdis started as an evolution from ircd-ratbox-2.1.5+datadrain. Its
+development is led by a team of dedicated developers who have put a lot
+of time into the project.
+ 
+The charybdis core team is listed in nick-alphabetical order:
+ 
+beu, Elfyn McBratney <elfyn.mcbratney -at- gmail.com>
+jilles, Jilles Tjoelker <jilles -at- stack.nl>
+GXTi, Michael Tharp <gxti -at- partiallystapled.com>
+nenolod, William Pitcock <nenolod -at- nenolod.net>
+ 
+The following people have made contributions to the Charybdis release,
+in nick-alphabetical order:
+ 
+AndroSyn, Aaron Sethman <androsyn -at- ratbox.org>
+anfl, Lee Hardy <lee -at- leeh.co.uk>
+Entrope, Michael Poole <mdpoole -at- trolius.org> 
+ThaPrince, Jon Christopherson <jon -at- vile.com>
+w00t, Robin Burchell <surreal.w00t -at- gmail.com>
+ 
+Visit the Charybdis website at: http://www.charybdis.be
+ 
