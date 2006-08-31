@@ -10,7 +10,7 @@ AC_PREREQ(2.57)
 dnl Sneaky way to get an Id tag into the configure script
 AC_COPYRIGHT([$Id$])
 
-AC_INIT([ircd-ratbox],[stable])
+AC_INIT([ircd-seven],[0.0.1])
 
 AC_CONFIG_HEADER(include/setup.h)
 
@@ -341,7 +341,7 @@ fi
 AC_C_BIGENDIAN
 
 dnl Check for stdarg.h - if we can't find it, halt configure
-AC_CHECK_HEADER(stdarg.h, , [AC_MSG_ERROR([** stdarg.h could not be found - ircd-ratbox will not compile without it **])])
+AC_CHECK_HEADER(stdarg.h, , [AC_MSG_ERROR([** stdarg.h could not be found - ircd-seven will not compile without it **])])
 
 dnl Checks for the existence of strlcat, strlcpy, basename...
 dnl This more reliable test only works with gcc though.

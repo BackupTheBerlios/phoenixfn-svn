@@ -506,7 +506,7 @@ setup_corefile(void)
 int
 main(int argc, char *argv[])
 {
-	static const char ircd_default_name[] = "ircd.ratbox";
+	static const char ircd_default_name[] = "ircd.seven";
 
 	/* Check to see if the user is running us as root, which is a nono */
 	if(geteuid() == 0)
