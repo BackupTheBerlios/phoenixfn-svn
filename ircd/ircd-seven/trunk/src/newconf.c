@@ -370,6 +370,7 @@ static struct mode_table cluster_table[] = {
 	{ "resv",	SHARED_PRESV	},
 	{ "tresv",	SHARED_TRESV	},
 	{ "unresv",	SHARED_UNRESV	},
+	{ "rehash",	SHARED_REHASH	},
 	{ "all",	CLUSTER_ALL	},
 	{NULL, 0}
 };
@@ -386,6 +387,7 @@ static struct mode_table shared_table[] =
 	{ "tresv",	SHARED_TRESV	},
 	{ "unresv",	SHARED_UNRESV	},
 	{ "locops",	SHARED_LOCOPS	},
+	{ "rehash",	SHARED_REHASH	},
 	{ "all",	SHARED_ALL	},
 	{ "none",	0		},
 	{NULL, 0}

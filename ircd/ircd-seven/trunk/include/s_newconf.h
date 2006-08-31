@@ -94,10 +94,12 @@ struct remote_conf
 #define SHARED_TRESV	0x0800
 #define SHARED_PRESV	0x0100
 #define SHARED_UNRESV	0x0200
+#define SHARED_REHASH	0x0400
 
 #define SHARED_ALL	(SHARED_TKLINE | SHARED_PKLINE | SHARED_UNKLINE |\
 			SHARED_PXLINE | SHARED_TXLINE | SHARED_UNXLINE |\
-			SHARED_TRESV | SHARED_PRESV | SHARED_UNRESV)
+			SHARED_TRESV | SHARED_PRESV | SHARED_UNRESV |\
+			SHARED_REHASH)
 #define CLUSTER_ALL	(SHARED_ALL | SHARED_LOCOPS)
 
 /* flags used in hub/leaf */
@@ -129,6 +131,10 @@ extern void propagate_generic(struct Client *source_p, const char *command,
 		const char *target, int cap, const char *format, ...);
 extern void cluster_generic(struct Client *, const char *, int cltype,
 			int cap, const char *format, ...);
+
+#define find_shared_conf_client(source, what)			\
+	find_shared_conf((source)->username, (source)->host,	\
+		(source)->servptr->name, (what))
 
 #define OPER_ENCRYPTED	0x00001
 #define OPER_KLINE	0x00002

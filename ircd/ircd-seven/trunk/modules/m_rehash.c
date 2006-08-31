@@ -1,27 +1,33 @@
 /*
- *  ircd-ratbox: A slightly useful ircd.
- *  m_rehash.c: Re-reads the configuration file.
+ * ircd-seven: makes cows say "~oof~".
+ * m_rehash.c: Re-reads the configuration file.
  *
- *  Copyright (C) 1990 Jarkko Oikarinen and University of Oulu, Co Center
- *  Copyright (C) 1996-2002 Hybrid Development Team
- *  Copyright (C) 2002-2005 ircd-ratbox development team
+ * Copyright (C) 1990 Jarkko Oikarinen and University of Oulu, Co Center
+ * Copyright (C) 1996-2002 Hybrid Development Team
+ * Copyright (C) 2002-2005 ircd-ratbox development team
+ * Copyright (C) 2006 Elfyn McBratney
  *
- *  This program is free software; you can redistribute it and/or modify
- *  it under the terms of the GNU General Public License as published by
- *  the Free Software Foundation; either version 2 of the License, or
- *  (at your option) any later version.
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 2 of the License, or
+ * (at your option) any later version.
  *
- *  This program is distributed in the hope that it will be useful,
- *  but WITHOUT ANY WARRANTY; without even the implied warranty of
- *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- *  GNU General Public License for more details.
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
  *
- *  You should have received a copy of the GNU General Public License
- *  along with this program; if not, write to the Free Software
- *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307
- *  USA
+ * You should have received a copy of the GNU General Public License
+ * along with this program; if not, write to:
  *
- *  $Id$
+ *	Free Software Foundation, Inc.
+ *	51 Franklin St
+ *	Fifth Floor
+ *	Boston, MA
+ *	02111-1307
+ *	USA
+ *
+ * $Id$
  */
 
 #include "stdinc.h"
@@ -44,28 +50,56 @@
 #include "reject.h"
 #include "hash.h"
 #include "cache.h"
+#include "s_serv.h"
 
 static int mo_rehash(struct Client *, struct Client *, int, const char **);
+static int me_rehash(struct Client *, struct Client *, int, const char **);
+
+static void rehash_bans_loc (struct Client *);
+static void rehash_dns (struct Client *);
+static void rehash_motd (struct Client *);
+static void rehash_omotd (struct Client *);
+static void rehash_glines (struct Client *);
+static void rehash_pglines (struct Client *);
+static void rehash_tklines (struct Client *);
+static void rehash_tdlines (struct Client *);
+static void rehash_txlines (struct Client *);
+static void rehash_tresvs (struct Client *);
+static void rehash_rejectcache (struct Client *);
+static void rehash_help (struct Client *);
 
 struct Message rehash_msgtab = {
 	"REHASH", 0, 0, 0, MFLG_SLOW,
-	{mg_unreg, mg_not_oper, mg_ignore, mg_ignore, mg_ignore, {mo_rehash, 0}}
+	{mg_unreg, mg_not_oper, mg_ignore, mg_ignore, {me_rehash, 0}, {mo_rehash, 0}}
 };
 
 mapi_clist_av1 rehash_clist[] = { &rehash_msgtab, NULL };
 DECLARE_MODULE_AV1(rehash, NULL, NULL, rehash_clist, NULL, NULL, "$Revision$");
 
-struct hash_commands
-{
+static struct hash_commands {
 	const char *cmd;
 	void (*handler) (struct Client * source_p);
+} rehash_commands[] = {
+	{"BANS",	rehash_bans_loc},
+	{"DNS", 	rehash_dns},
+	{"MOTD", 	rehash_motd},
+	{"OMOTD", 	rehash_omotd},
+	{"GLINES", 	rehash_glines},
+	{"PGLINES", 	rehash_pglines},
+	{"TKLINES", 	rehash_tklines},
+	{"TDLINES", 	rehash_tdlines},
+	{"TXLINES",	rehash_txlines},
+	{"TRESVS",	rehash_tresvs},
+	{"REJECTCACHE",	rehash_rejectcache},
+	{"HELP", 	rehash_help},
+	{NULL, 		NULL},
 };
 
 static void
 rehash_bans_loc(struct Client *source_p)
 {
 	sendto_realops_flags(UMODE_ALL, L_ALL, "%s is rehashing bans",
-				get_oper_name(source_p));
+		get_oper_name(source_p));
 
 	rehash_bans(0);
 }
@@ -74,7 +108,7 @@ static void
 rehash_dns(struct Client *source_p)
 {
 	sendto_realops_flags(UMODE_ALL, L_ALL, "%s is rehashing DNS", 
-			     get_oper_name(source_p));
+		get_oper_name(source_p));
 
 	/* reread /etc/resolv.conf and reopen res socket */
 	restart_resolver();
@@ -84,8 +118,8 @@ static void
 rehash_motd(struct Client *source_p)
 {
 	sendto_realops_flags(UMODE_ALL, L_ALL,
-			     "%s is forcing re-reading of MOTD file",
-			     get_oper_name(source_p));
+		"%s is forcing re-reading of MOTD file",
+		get_oper_name(source_p));
 
 	free_cachefile(user_motd);
 	user_motd = cache_file(MPATH, "ircd.motd", 0);
@@ -95,8 +129,8 @@ static void
 rehash_omotd(struct Client *source_p)
 {
 	sendto_realops_flags(UMODE_ALL, L_ALL,
-			     "%s is forcing re-reading of OPER MOTD file",
-			     get_oper_name(source_p));
+		"%s is forcing re-reading of OPER MOTD file",
+		get_oper_name(source_p));
 
 	free_cachefile(oper_motd);
 	oper_motd = cache_file(OPATH, "opers.motd", 0);
@@ -109,7 +143,7 @@ rehash_glines(struct Client *source_p)
 	dlink_node *ptr, *next_ptr;
 
 	sendto_realops_flags(UMODE_ALL, L_ALL, "%s is clearing G-lines",
-				get_oper_name(source_p));
+		get_oper_name(source_p));
 
 	DLINK_FOREACH_SAFE(ptr, next_ptr, glines.head)
 	{
@@ -149,7 +183,7 @@ rehash_tklines(struct Client *source_p)
 	int i;
 
 	sendto_realops_flags(UMODE_ALL, L_ALL, "%s is clearing temp klines",
-				get_oper_name(source_p));
+		get_oper_name(source_p));
 
 	for(i = 0; i < LAST_TEMP_TYPE; i++)
 	{
@@ -171,7 +205,7 @@ rehash_tdlines(struct Client *source_p)
 	int i;
 
 	sendto_realops_flags(UMODE_ALL, L_ALL, "%s is clearing temp dlines",
-				get_oper_name(source_p));
+		get_oper_name(source_p));
 
 	for(i = 0; i < LAST_TEMP_TYPE; i++)
 	{
@@ -193,7 +227,7 @@ rehash_txlines(struct Client *source_p)
 	dlink_node *next_ptr;
 
 	sendto_realops_flags(UMODE_ALL, L_ALL, "%s is clearing temp xlines",
-				get_oper_name(source_p));
+		get_oper_name(source_p));
 
 	DLINK_FOREACH_SAFE(ptr, next_ptr, xline_conf_list.head)
 	{
@@ -216,7 +250,7 @@ rehash_tresvs(struct Client *source_p)
 	int i;
 
 	sendto_realops_flags(UMODE_ALL, L_ALL, "%s is clearing temp resvs",
-				get_oper_name(source_p));
+		get_oper_name(source_p));
 
 	HASH_WALK_SAFE(i, R_MAX, ptr, next_ptr, resvTable)
 	{
@@ -246,95 +280,150 @@ static void
 rehash_rejectcache(struct Client *source_p)
 {
 	sendto_realops_flags(UMODE_ALL, L_ALL, "%s is clearing reject cache",
-				get_oper_name(source_p));
+		get_oper_name(source_p));
 	flush_reject();
-
 }
 
 static void
 rehash_help(struct Client *source_p)
 {
 	sendto_realops_flags(UMODE_ALL, L_ALL,
-			     "%s is forcing re-reading of HELP files", 
-			     get_oper_name(source_p));
+		"%s is forcing re-reading of HELP files", 
+		get_oper_name(source_p));
 	clear_help_hash();
 	load_help();
 }
 
-/* *INDENT-OFF* */
-static struct hash_commands rehash_commands[] =
-{
-	{"BANS",	rehash_bans_loc		},
-	{"DNS", 	rehash_dns		},
-	{"MOTD", 	rehash_motd		},
-	{"OMOTD", 	rehash_omotd		},
-	{"GLINES", 	rehash_glines		},
-	{"PGLINES", 	rehash_pglines		},
-	{"TKLINES", 	rehash_tklines		},
-	{"TDLINES", 	rehash_tdlines		},
-	{"TXLINES",	rehash_txlines		},
-	{"TRESVS",	rehash_tresvs		},
-	{"REJECTCACHE",	rehash_rejectcache	},
-	{"HELP", 	rehash_help		},
-	{NULL, 		NULL 			}
-};
-/* *INDENT-ON* */
-
-/*
- * mo_rehash - REHASH message handler
- *
- */
 static int
-mo_rehash(struct Client *client_p, struct Client *source_p, int parc, const char *parv[])
+do_rehash (struct Client *source_p, const char *cmd)
 {
-	if(!IsOperRehash(source_p))
-	{
-		sendto_one(source_p, form_str(ERR_NOPRIVS),
-			   me.name, source_p->name, "rehash");
-		return 0;
-	}
+	int	i;
+	char	cmdbuf[100] = "";
 
-	if(parc > 1)
-	{
-		int x;
-		char cmdbuf[100];
-
-		for (x = 0; rehash_commands[x].cmd != NULL && rehash_commands[x].handler != NULL;
-		     x++)
-		{
-			if(irccmp(parv[1], rehash_commands[x].cmd) == 0)
-			{
-				sendto_one(source_p, form_str(RPL_REHASHING), me.name,
-					   source_p->name, rehash_commands[x].cmd);
-				rehash_commands[x].handler(source_p);
-				ilog(L_MAIN, "REHASH %s From %s[%s]", parv[1],
-				     get_oper_name(source_p), source_p->sockhost);
+	if (cmd != NULL) {
+		for (i = 0; rehash_commands[i].cmd != NULL &&
+				rehash_commands[i].handler != NULL; i++) {
+			if (irccmp(cmd, rehash_commands[i].cmd) == 0) {
+				sendto_one(source_p, form_str(RPL_REHASHING),
+					me.name, source_p->name,
+					rehash_commands[i].cmd);
+				rehash_commands[i].handler(source_p);
+				ilog(L_MAIN, "REHASH %s From %s[%s]", cmd,
+					get_oper_name(source_p),
+					source_p->sockhost);
 				return 0;
 			}
 		}
 
-		/* We are still here..we didn't match */
-		cmdbuf[0] = '\0';
-		for (x = 0; rehash_commands[x].cmd != NULL && rehash_commands[x].handler != NULL;
-		     x++)
-		{
+		/* No match... */
+		for (i = 0; rehash_commands[i].cmd != NULL &&
+				rehash_commands[i].handler != NULL; i++) {
 			strlcat(cmdbuf, " ", sizeof(cmdbuf));
-			strlcat(cmdbuf, rehash_commands[x].cmd, sizeof(cmdbuf));
+			strlcat(cmdbuf, rehash_commands[i].cmd, sizeof(cmdbuf));
 		}
-		sendto_one(source_p, ":%s NOTICE %s :rehash one of:%s", me.name, source_p->name,
-			   cmdbuf);
-	}
-	else
-	{
-		sendto_one(source_p, form_str(RPL_REHASHING), me.name, source_p->name,
-			   ConfigFileEntry.configfile);
-		sendto_realops_flags(UMODE_ALL, L_ALL,
-				     "%s is rehashing server config file", get_oper_name(source_p));
-		ilog(L_MAIN, "REHASH From %s[%s]", get_oper_name(source_p),
-		     source_p->sockhost);
-		rehash(0);
+
+		sendto_one(source_p, ":%s NOTICE %s :rehash one of:%s",
+			me.name, source_p->name, cmdbuf);
 		return 0;
 	}
 
+	sendto_one(source_p, form_str(RPL_REHASHING), me.name, source_p->name,
+			ConfigFileEntry.configfile);
+	sendto_realops_flags(UMODE_ALL, L_ALL,
+		"%s is rehashing server config file",
+		get_oper_name(source_p));
+	ilog(L_MAIN, "REHASH From %s[%s]", get_oper_name(source_p),
+		source_p->sockhost);
+	rehash(0);
+
 	return 0;
 }
+
+static inline int
+contains_generic_wild (const char *str)
+{
+	const char *p = str;
+
+	s_assert(str != NULL);
+
+	while (*p) {
+		if (IsGenWildChar(*p))
+			return YES;
+	}
+
+	return NO;
+}
+
+/*
+ * mo_rehash - REHASH message handler
+ *
+ * parv[1] = rehash command or target server
+ * parv[2] = target server
+ */
+static int
+mo_rehash (struct Client *client_p, struct Client *source_p,
+	int parc, const char **parv)
+{
+	const char	*cmd = "";
+	const char	*target_server = NULL;
+
+	if(!IsOperRehash(source_p)) {
+		sendto_one(source_p, form_str(ERR_NOPRIVS), me.name,
+			   source_p->name, "rehash");
+		return 0;
+	} else if (parc > 3) {
+		sendto_one(source_p,
+			":%s NOTICE %s :REHASH takes at most two arguments",
+			me.name, source_p->name);
+		return 0;
+	}
+
+	if (parc > 2)
+		cmd = parv[1], target_server = parv[2];
+	else if (parc > 1 && contains_generic_wild(parv[1]))
+		target_server = parv[1];
+
+	sendto_realops_flags(UMODE_DEBUG, L_ALL,
+		"%s is attempting to rehash%s%s%s%s",
+		get_oper_name(source_p),
+		*cmd != '\0' ? " " : "",
+		*cmd != '\0' ? cmd : "",
+		target_server != NULL ? " on " : "",
+		target_server != NULL ? target_server : "");
+
+	if (target_server != NULL) {
+		if (!IsOperRemote(source_p)) {
+			sendto_one(source_p, form_str(ERR_NOPRIVS), me.name,
+				source_p->name, "remote");
+			return 0;
+		}
+
+		sendto_match_servs(source_p, target_server, CAP_ENCAP, NOCAPS,
+			"ENCAP %s REHASH %s", target_server, cmd);
+		if (!match(target_server, me.name))
+			return 0;
+	}
+
+	return do_rehash(source_p, cmd);
+}
+
+/* {{{ me_rehash()
+ *
+ * parv[1] = rehash command
+ */
+static int
+me_rehash (struct Client *client_p, struct Client *source_p,
+	int parc, const char **parv)
+{
+	if (!IsPerson(source_p))
+		return 0;
+	if (!find_shared_conf_client(source_p, SHARED_REHASH))
+		return 0;
+
+	return do_rehash(source_p, parc > 1 ? parv[1] : NULL);
+}
+/* }}} */
+
+/*
+ * vim: ts=8 sw=8 noet fdm=marker tw=80
+ */

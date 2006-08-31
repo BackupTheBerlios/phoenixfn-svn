@@ -157,6 +157,7 @@ extern const unsigned int CharAttrs[];
 #define MWILD_C  0x8000
 #define LET_C   0x10000 /* an actual letter */
 #define FCHAN_C 0x20000 /* a 'fake' channel char */
+#define GWILD_C 0x40000 /* generic wild char ('*' and '?') */
 
 #define IsHostChar(c)   (CharAttrs[(unsigned char)(c)] & HOST_C)
 #define IsUserChar(c)   (CharAttrs[(unsigned char)(c)] & USER_C)
@@ -165,6 +166,7 @@ extern const unsigned int CharAttrs[];
 #define IsFakeChanChar(c)	(CharAttrs[(unsigned char)(c)] & FCHAN_C)
 #define IsKWildChar(c)  (CharAttrs[(unsigned char)(c)] & KWILD_C)
 #define IsMWildChar(c)  (CharAttrs[(unsigned char)(c)] & MWILD_C)
+#define IsGenWildChar(c) (CharAttrs[(unsigned char)(c)] & GWILD_C)
 #define IsNickChar(c)   (CharAttrs[(unsigned char)(c)] & NICK_C)
 #define IsServChar(c)   (CharAttrs[(unsigned char)(c)] & (NICK_C | SERV_C))
 #define IsIdChar(c)	(CharAttrs[(unsigned char)(c)] & (DIGIT_C | LET_C))
