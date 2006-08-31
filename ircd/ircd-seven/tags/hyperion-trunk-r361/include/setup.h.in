@@ -1,0 +1,125 @@
+/* include/setup.h.in.  Generated from configure.ac by autoheader.  */
+
+/* ./configure run time */
+#undef BUILD_TIME
+
+/* uname of build system */
+#undef BUILD_UNAME
+
+/* gcc-style attribute declarations available */
+#undef HAVE_ATTRIBUTE
+
+/* Define to 1 if you have the `getpagesize' function. */
+#undef HAVE_GETPAGESIZE
+
+/* Define to 1 if you have the <inttypes.h> header file. */
+#undef HAVE_INTTYPES_H
+
+/* Define to 1 if you have the `c_p' library (-lc_p). */
+#undef HAVE_LIBC_P
+
+/* Define to 1 if you have the `nsl' library (-lnsl). */
+#undef HAVE_LIBNSL
+
+/* Define to 1 if you have the `resolv' library (-lresolv). */
+#undef HAVE_LIBRESOLV
+
+/* Define to 1 if you have the `socket' library (-lsocket). */
+#undef HAVE_LIBSOCKET
+
+/* Define to 1 if you have the `z' library (-lz). */
+#undef HAVE_LIBZ
+
+/* gcc extension type long long is available */
+#undef HAVE_LONG_LONG
+
+/* Define to 1 if you have the <memory.h> header file. */
+#undef HAVE_MEMORY_H
+
+/* Define to 1 if you have a working `mmap' system call. */
+#undef HAVE_MMAP
+
+/* %zd printf conversion available */
+#undef HAVE_PRINTF_ZD
+
+/* Define to 1 if you have the <stdint.h> header file. */
+#undef HAVE_STDINT_H
+
+/* Define to 1 if you have the <stdlib.h> header file. */
+#undef HAVE_STDLIB_H
+
+/* Define to 1 if you have the <strings.h> header file. */
+#undef HAVE_STRINGS_H
+
+/* Define to 1 if you have the <string.h> header file. */
+#undef HAVE_STRING_H
+
+/* Define to 1 if you have the <sys/stat.h> header file. */
+#undef HAVE_SYS_STAT_H
+
+/* Define to 1 if you have the <sys/types.h> header file. */
+#undef HAVE_SYS_TYPES_H
+
+/* Define to 1 if you have the <unistd.h> header file. */
+#undef HAVE_UNISTD_H
+
+/* Using BSD non-blocking sockets (O_NDELAY) */
+#undef NBLOCK_BSD
+
+/* Using POSIX non-blocking sockets (O_NONBLOCK) */
+#undef NBLOCK_POSIX
+
+/* Using SysV non-blocking sockets (FIONBIO) */
+#undef NBLOCK_SYSV
+
+/* use local va_copy macro */
+#undef NEED_VA_COPY
+
+/* Name of package */
+#undef PACKAGE
+
+/* Define to the address where bug reports for this package should be sent. */
+#undef PACKAGE_BUGREPORT
+
+/* Define to the full name of this package. */
+#undef PACKAGE_NAME
+
+/* Define to the full name and version of this package. */
+#undef PACKAGE_STRING
+
+/* Define to the one symbol short name of this package. */
+#undef PACKAGE_TARNAME
+
+/* Define to the version of this package. */
+#undef PACKAGE_VERSION
+
+/* Description of build */
+#undef SERIAL_ADDENDUM
+
+/* Define to 1 if you have the ANSI C header files. */
+#undef STDC_HEADERS
+
+/* poll() system call is available */
+#undef USE_POLL
+
+/* Version number of package */
+#undef VERSION
+
+/* Define to 1 if your processor stores words with the most significant byte
+   first (like Motorola and SPARC, unlike Intel and VAX). */
+#undef WORDS_BIGENDIAN
+
+/* Support for __attribute__((malloc)) */
+#undef malloc_attribute
+
+/* Support for __attribute__((noreturn)) */
+#undef noreturn_attribute
+
+/* Support for __attribute__((pure)) */
+#undef pure_attribute
+
+/* Define to `unsigned long' if <sys/types.h> does not define. */
+#undef u_int32_t
+
+/* va_copy macro */
+#undef va_copy

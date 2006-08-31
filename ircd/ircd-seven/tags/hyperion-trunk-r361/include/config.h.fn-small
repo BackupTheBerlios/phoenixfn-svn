@@ -1,0 +1,50 @@
+/****** Hey, emacs! This is a -*- C -*- file ****************************
+ *   IRC - Internet Relay Chat, include/config.h
+ *   Copyright (C) 1990 Jarkko Oikarinen
+ *
+ *   This program is free software; you can redistribute it and/or modify
+ *   it under the terms of the GNU General Public License as published by
+ *   the Free Software Foundation; either version 1, or (at your option)
+ *   any later version.
+ *
+ *   This program is distributed in the hope that it will be useful,
+ *   but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *   GNU General Public License for more details.
+ *
+ *   You should have received a copy of the GNU General Public License
+ *   along with this program; if not, write to the Free Software
+ *   Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
+ */
+
+#ifndef INCLUDED_config_h
+#define INCLUDED_config_h
+#ifndef INCLUDED_setup_h
+#include "setup.h"
+#define INCLUDED_setup_h
+#endif
+
+/***************** MAKE SURE THIS IS CORRECT!!!!!!!!! **************/
+/* ONLY EDIT "HARD_FDLIMIT_" and "INIT_MAXCLIENTS" */
+
+/* You may also need to hand edit the Makefile to increase
+ * the value of FD_SETSIZE 
+ */
+
+/* These ultra low values pretty much guarantee the server will
+ * come up initially, then you can increase these values to fit your
+ * system limits. If you know what you are doing, increase them now
+ */
+
+#define HARD_FDLIMIT_   256 /* was 256 */
+#define INIT_MAXCLIENTS 200 /* was 200 */
+
+/*
+ * This is how many 'buffer connections' we allow... 
+ * Remember, MAX_BUFFER + MAX_CLIENTS can't exceed HARD_FDLIMIT :)
+ */
+#define MAX_BUFFER      30
+
+#include "config.h.fn-include"
+
+#endif /* INCLUDED_config_h */

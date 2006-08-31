@@ -1,0 +1,49 @@
+hyperion 1.0
+------------
+
+NOTE: I does not develop this code anymore. Please do not bother me
+with bugs/features/whatever about this.
+
+-- jilles, Dec 19 2005
+
+This is the current hyperion ircd tree, forked from dancer-ircd 1.0.35+pre2.
+Installation: ./configure with options, edit include/config.h and make && make
+install. For the configuration file, go to ${prefix}/etc/dancer-ircd/,
+copy example.conf to ircd.conf and edit it. Logs are under
+${prefix}/var/log/dancer-ircd/.
+
+Important: Make sure to update your client Y:lines when updating from
+any version before r336 to r336 or later, otherwise there will not be
+any per-IP limiting! See example.conf for the new format.
+
+For any possible updates see the Subversion repository:
+http://svn.freenode.net/hyperion/trunk/
+
+This is the current code for the freenode network. The network is looking at
+new options for its further development, but will continue to support this
+code, at least in the short term.
+
+There are some misc patches in patches/.
+
+There is some formal documentation in doc/sgml/. General TSora documentation
+can be useful in understanding the server-server protocol but is not included
+here.
+
+Please mail bug reports to bugs@freenode.net, or ask in #hyperion
+on freenode.
+
+There are Debian packages available on http://debian.duckcorp.org/
+but freenode has nothing to do with these. We have included
+this link for the sole reason that many people ask for packages.
+If you have a problem with the packages, please try compiling
+from source if possible.
+
+Services: Hyperion is designed to run with services; we know of two compatible
+services packages: theia, which is a fork of dancer-services (from hybserv2)
+and can be checked out from Subversion http://svn.freenode.net/theia/trunk/
+and atheme, see http://www.atheme.org and http://www.atheme.net.
+Freenode-registry will also run with hyperion, but it comprises a somewhat
+unorthodox approach to authentication and authorization which may not meet the
+needs of conventional IRC networks.
+
+-- jilles

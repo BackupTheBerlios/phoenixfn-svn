@@ -1,0 +1,115 @@
+Credits for hyperion:
+
+The following individuals continued work from dancer-ircd 1.0.35,
+in alphabetical order of nick:
+
+alindeman      Andrew Lindeman          lindeman@freenode.net
+GXTi           Michael Tharp            gxti@partiallystapled.com
+jilles         Jilles Tjoelker          jilles@stack.nl
+lilo           Robert Levin             lilo@freenode.net
+nenolod        William Pitcock          nenolod@nenolod.net
+
+Thanks go to the ircd-ratbox development team for the 005 (RPL_ISUPPORT)
+code.
+
+---------------------------------------------------------------------
+Credits for dancer:
+
+The dancer server is largely based on hybrid, and has been arranged and
+generally slaughtered by the following individuals:
+
+andy           Andre Guibert de Bruet   andy@properkernel.com
+asuffield      Andrew Suffield          asuffield@freenode.net
+dent           Daniel Dent              ddent@vc.bc.ca
+innerFIRE      Gerard Mack              gmack@innerfire.net
+lilo           Robert Levin             lilo@freenode.net
+netgod         Johnie Ingram            johnie@netgod.net 
+robster        Rob Bradford             rob@funky-penguin.co.uk
+
+Other important and friendly, but less involved contributors:
+
+cdlu           David Graham             cdlu@freenode.net
+crystalize     Justin Bajko             crystalize@dal.net
+dark           Richard Brackman         dark@xs4all.nl
+draco          Draco Benden             -
+drow           Daniel Jacobowitz        dan@debian.org
+john           John Rowan               john@tdkt.org
+matthewg       Matthew Sachs            matthewg@zevils.com
+peidran        Peter Abrahamsen         peidran@serv9.lly.org
+xsdg           -                        xsdg@softhome.net
+tuxje          Gerard Oskamp            gerard@mediadesign.nl
+rik            Rik Rose			rich@rdrose.org
+
+Numerous others should certainly be here but have been forgotten
+in the haste to release this version of dancer-ircd.  Remind us ;).
+
+Thanks also goes to those persons not mentioned here who have added
+their advice, opinions, and code to IRC.
+
+Comments and bug reports to dancer-devel@linuxfr.org
+
+---------------------------------------------------------------------
+Original challenge-reponse patch:
+Idea and logics by ievil & einride
+Implemented by einride
+
+---------------------------------------------------------------------
+These are the credits from hybrid-6 itself:
+
+Based on the original code written by Jarkko Oikarinen
+Copyright 1988, 1989, 1990, 1991 University of Oulu, Computing Center
+
+This program is free software; you can redistribute it and/or
+modify it under the terms of the GNU General Public License as
+published by the Free Software Foundation; either version 1, or
+(at your option) any later version.
+
+The core Hybrid Team as of this major release:
+
+cosine              Patrick Alken       wnder@uwns.underworld.net
+Dianora             Diane Bruce         db@db.net
+is-                 Edward Brocklesby   ejb@leguin.org.uk
+Neph|l|m            Adel Mezibra        adel@cybercable.fr
+billy-jon           Bill Jonus          proggy@earthling.net
+Rodder              Jon Lusky           lusky@blown.net
+Wohali              Joan Touzet         jolo@cadence.com
+
+The following people have contributed to this release of hybrid
+in nick alphabetical order:
+
+Bleep               Thomas Helvey       tomh@inxpress.net
+CBongo              Chris Bongaarts     cab@tc.umn.edu
+comstud             Chris Behrens       cbehrens@concentric.net
+echo                Adam J. Durana      adam@caca.com
+FlashMan            Craig A. Huegen     chuegen@quadrunner.com
+jailbird            Dustin Marquess     jailbird@alcatraz.fdf.net
+johan               Johannes Erdfelt    jerdfelt@eng.mindspring.net
+LarZ                Matthew Ramsey      mjr@blackened.com
+orabidoo            Roger Espel Llima   espel@unix.bigots.org
+Seaner              Sean McVeigh        sdlmcvei@uwaterloo.ca
+Shadowfax           Michael Pearce      mpearce@varner.com
+Slowaris            Ryan Parker         rjp@wpmedia.com
+ThemBones           Brian Kraemer       kraemer@u.washington.edu
+White_Dragon        Chip Norkus         wd@dal.net
+WintrHawk           Jake Khuon          khuon@GCtr.Net
+
+
+Developers and Contributors for previous versions:
+
+Chris Portman       Keith Fralick       Jon Mischo
+Sam Noble           Taner Halicioglu    Darren Reed
+Markku Savela       Greg Lindahl        Jarkko Oikarinen
+Armin Gruner        Matthew Green       Chuck Kane
+Matt Lyle           Vesa Ruokonen       Nicolas PIOCH
+Stellan Klebom      Dan Goodwin         Mike Bolotski
+Ian Frechette       Markku Jarvinen     Kimmo Suominen
+Jeff Trim           Vijay Subramaniam   Karl Kleinpaste
+Bill Wisner         Tom Davis           Hugo Calendar
+Tom Hopkins         Stephen van den Berg
+Bo Adler            Michael Sandrof     Jon Solomon
+Jan Peterson        Helen Rose          Paul Graham
+
+Thanks also goes to those persons not mentioned here who have added
+their advice, opinions, and code to IRC.
+Thanks also to those who provide the kind sys admins who let me and
+others continue to develop IRC.

@@ -1,0 +1,180 @@
+  <chapter id="intro">
+    <title>Introduction</title>
+    <sect1>
+      <title>Scope of this document</title>
+      <para>
+	This document describes the commands and functions available to operators in
+	the dancer ircd, version 1.0, as used on the <ulink url="http://www.freenode.net">Freenode Network</ulink>.
+      </para>
+      <para>
+	This document also details some of the basic philosophies and procedures of
+	the Freenode IRC network. It is recommended that you read the dancer
+	users guide for more complete details of normal network operation from the
+	perspective of the users.
+      </para>
+      <para>
+	While this document may be of some interest to the users of dancer servers,
+	it is intended as a reference for operators.
+      </para>
+      <para>
+	The dancer ircd is based on hybrid-6, although much has changed. hybrid-6 is
+	commonly used on efnet, and some other networks.
+      </para>
+    </sect1>
+    <sect1 id="philosophy">
+      <title>Freenode Philosophy</title>
+      <para>
+	The dancer IRC server was written for the <ulink url="http://www.freenode.net">Freenode Network</ulink>,
+	and designed with FN philosophy in mind. As such, it may have features which are at odds with other networks
+	and their philosophies.
+      </para>
+      <para>
+	The Freenode Net philosophy has several components. FN exists to 
+	provide interactive services to projects and groups involved with 
+	"Open Source, Open Technology and Open Information." We work to provide 
+	an interaction environment in which free software community members can 
+	improve their skills in the areas of communication and coordination of 
+	effort. We also try to provide an environment which serves to introduce
+	new participants to the free software community.
+      </para>
+      <sect2>
+	<title>Principals</title>
+	<para>
+	  The basic principles of FN are:
+	</para>
+	<itemizedlist>
+	  <listitem>
+	    <para>
+	      Community members benefit from better access to each other. Putting a 
+	      number of projects in close proximity in an interactive environment 
+	      creates linkages between developers and projects, and helps community 
+	      members take better advantage of each other's work.
+	    </para>
+	  </listitem>
+	  <listitem>
+	    <para>
+	      Communication and coordination skills are important to community projects.
+	      Free software and open source work because the paradigm works. Developers 
+	      and community members are not unusually gifted at project coordination and
+	      communication. But improving those skills can make projects work better.
+	    </para>
+	  </listitem>
+	  <listitem>
+	    <para>
+	      Friendly interaction is more efficient than flaming. Calm, relaxed discourse
+	      without angry contention provides for better exchange of information. Flaming
+	      produces situations in which the listener must contend with the state of
+	      his or her emotions at least as much as with the comprehension of a speaker's comments.
+	    </para>
+	  </listitem>
+	  <listitem>
+	    <para>
+	      Open source developers are self-driven. No one guarantees your work will 
+	      be used, but only you decide whether a project is worth doing. There is no
+	      single right approach to any coding or support problem, and friendly 
+	      competition is a fundamentally good thing.
+	    </para>
+	  </listitem>
+	  <listitem>
+	    <para>
+	      The free software community is small, and needs to grow. Many valuable
+	      projects chronically lack skilled, motivated developers with time to devote 
+	      to them. Our potential developer base includes programmers in all fields and
+	      disciplines, and both students and working professionals. Our potential user 
+	      base includes individuals and organizations standing to benefit from software
+	      projects we successfully pursue. The community must continue to grow.
+	    </para>
+	  </listitem>
+	  <listitem>
+	    <para>
+	      Free software is about the software. Free software and open source were not
+	      born in the recent venture-capital, pre-IPO environment. Our roots are in
+	      coders coding software for the benefit of themselves and their organizations, 
+	      and for the pleasure of producing quality work. It is completely legitimate to
+	      profit monetarily from coding and supporting free and open applications. 
+	      Corporate sponsors of open source projects are welcome on FN. It's time, 
+	      though, for the community to get back to its roots.
+	    </para>
+	  </listitem>
+	</itemizedlist>
+      </sect2>
+      <sect2>
+	<title>Practicalities</title>
+	<para>
+	  The FN IRC network provides a controlled environment in which open projects can
+	  communicate between developers and users. To this end, FN is centrally maintained,
+	  and operators are expected to try and resolve situations without actually exercising
+	  their power when possible. They are also expected to stay out of channel politics and
+	  arguments, so don't bother asking them to intervene if you disagree with the people
+	  who run a channel. They won't.
+	</para>
+	<para>
+	  FN runs a full services implementation, which allows nicks and channels
+	  to be registered and protected by the server, thusly making channel takeovers largely
+	  impossible, while maintaining a consistant interface for channels to be managed.
+	</para>
+	<para>
+	  If an individual has somehow gained ops on a channel, then the channel founder, or
+	  people with an appropriate level of access, can handle it themselves with chanserv;
+	  refer to the dancer users guide for details. If somebody has managed to take
+	  founder access (by guessing the founder password, or whatever), then the original
+	  founder should come to channel #freenode ASAP so that the situation can be resolved.
+	</para>
+      </sect2>
+    </sect1>
+    <sect1 id="newopers">
+      <title>Dancer operators</title>
+      <para>
+	The most visible change from vanilla hybrid, and most other IRC servers, is with relation
+	to operators. In most IRC servers, an operator has considerable power, being able to use
+	KILL and KLINE to remove people from the network, and possibly more. In the now aging
+	dancer-ircu, operators were gods, able to join any channel, kick, ban, etc. This is not
+	the case in dancer. These are the things that any operator can now do:
+      </para>
+      <itemizedlist>
+	<listitem>
+	  <para>
+	    See the oper help, and motd
+	  </para>
+	</listitem>
+	<listitem>
+	  <para>
+	    When attempting to gain a restricted mode they do not have access to, opers
+	    will be told that. Normal users will be told there is no such mode.
+	  </para>
+	</listitem>
+	<listitem>
+	  <para>
+	    Show up as operators in commands like WHOIS and TRACE, if the person who invoked
+	    the command can see operators.
+	  </para>
+	</listitem>
+	<listitem>
+	  <para>
+	    Be counted in LUSERS and similar commands as an oper.
+	  </para>
+	</listitem>
+      </itemizedlist>
+      <para>
+	That's it. No more. All other functionality has been distributed across the umodes, which can be
+	individually granted in ircd.conf.
+      </para>
+    </sect1>
+  </chapter>
+<!-- Keep this comment at the end of the file
+Local variables:
+mode: sgml
+sgml-omittag:t
+sgml-shorttag:t
+sgml-namecase-general:t
+sgml-general-insert-case:lower
+sgml-minimize-attributes:nil
+sgml-always-quote-attributes:t
+sgml-indent-step:2
+sgml-indent-data:t
+sgml-parent-document: ("dancer-oper-guide.sgml" "book")
+sgml-exposed-tags:nil
+fill-column:105
+sgml-validate-command: "nsgmls -e -g -s -u dancer-oper-guide.sgml"
+End:
+-->

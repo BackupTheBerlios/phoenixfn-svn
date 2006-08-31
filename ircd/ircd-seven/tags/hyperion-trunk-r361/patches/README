@@ -1,0 +1,33 @@
+hyperion patches
+----------------
+
+These patches include features that are contrary to freenode goals or
+are not tested enough yet.
+
+To apply a patch, execute from the top level source directory something like:
+patch -p0 <patches/hyperion-patchname.patch
+
+To create patches, do from the top level source directory of a modified
+Subversion checkout (e.g. trunk/) something like:
+svn diff >patches/hyperion-newpatch.patch
+
+Usable patches: (if any of these does not apply, please contact us)
+
+hyperion-full-stats-d.patch: show all exceptions in /stats D, instead of
+just ones that exempt part of a broader D:line. This is likely to have an
+adverse effect on server IP hiding.
+
+Work in progress patches: (DO NOT simply apply)
+
+hyperion-encap.patch: a (crude) shot at an ENCAP implementation, by jilles
+
+hyperion-newparse.patch: a patch improving the command parsing, by nenolod
+
+hyperion-svsnick.patch: a patch adding an SVSNICK command to change a user's
+nick from services, killing any existing user first; same purpose as
+ircd-ratbox's RSFNC; written by GXTi and jilles
+
+hyperion-use-adns.patch: move from the old resolver code to adns, by nenolod
+
+-- 
+jilles, 6 August 2005

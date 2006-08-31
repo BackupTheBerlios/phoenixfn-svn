@@ -1,0 +1,89 @@
+UMODES
+
+              +a, user auspex
+              +A, server auspex
+              +b, see bots
+              +B, edit other people
+              +c, see client connections
+              +C, block ctcp
+              +d, debug
+              +D, die command
+              +e, identified
+              +E, reject messages from unidentified users
+              +f, full warning
+              +F, immune to flood protection
+              +G, global kill
+              +h, high priority
+              +H, rehash
+              +i, invisible
+              +I, refuse invite
+              +j, autodline
+              +k, server kill notices
+              +K, local kill
+              +l, channel creation notices
+              +m, immune
+              +M, mass notices
+              +n, nick change notices
+              +N, use any nick
+              +o, operator
+              +p, god mode
+              +P, setname and setident
+              +Q, disable forwarding
+              +r, notices on name rejections
+              +R, server routing
+              +s, server notices
+              +S, run commands remotely
+              +T, appear in STATS p
+              +u, join more channels
+              +U, unkline
+              +v, view privileges
+              +V, view routing
+              +w, receive wallops
+              +W, send wallops
+              +x, see servers joining
+              +X, experimental features
+              +y, spy
+              +Y, misc server connect notices
+              +z, receive operwall
+              +Z, send operwall
+              +0, see opers
+              +1, see connection settings
+              +2, see network bans
+              +3, see nick bans
+              +4, see STATS T
+              +5, see STATS ?
+              +6, send/receive regardless of +E/noidprivmsg
+              +9, use testline
+              +*, grant umodes
+              +@, free hostname spoofing
+
+COMMANDS
+
+        Network management commands
+
+              CONNECT
+              SQUIT
+              REHASH
+              RESTART
+              DIE
+              HTM
+              SET
+              HASH
+              DNS
+
+        User management commands
+
+              KILL
+              CLOSE
+              KLINE, UNKLINE
+              DLINE, UNDLINE
+              TESTLINE
+              SETNAME, SETIDENT, SETHOST
+              SCAN
+
+        Miscellaneous commands
+
+              STATS
+              TRACE
+              WALLOPS
+              OPERWALL

@@ -1,0 +1,65 @@
+Index: src/dline_conf.c
+===================================================================
+--- src/dline_conf.c	(revision 312)
++++ src/dline_conf.c	(working copy)
+@@ -838,25 +838,14 @@
+   leftover=NULL;
+ }
+ 
+-/*
+- * walk_the_dlines - inorder traversal of a Dline tree, printing Dlines and
+- * exceptions.
+- * -good
+- */
+-void walk_the_dlines(aClient *sptr, struct ip_subtree *tree)
++static void report_dline_list(aClient *sptr, aConfItem *first)
+ {
+   aConfItem *scan;
+   char *name, *host, *pass, *user;
+   int port;
+   char c;               /* D,d or K */
+ 
+-  if (!tree) return;
+-  
+-  /* do an inorder traversal of the tree */
+-  walk_the_dlines(sptr, tree->left);
+-  scan=tree->conf;
+-
+-  for(scan=tree->conf;scan;scan=scan->next)
++  for(scan=first;scan;scan=scan->next)
+     {
+       if(!(scan->status & CONF_DLINE))
+         continue;
+@@ -871,6 +860,23 @@
+       sendto_one(sptr, form_str(RPL_STATSDLINE), me.name,
+                  sptr->name, c, host, pass);
+     }
++}
++
++/*
++ * walk_the_dlines - inorder traversal of a Dline tree, printing Dlines and
++ * exceptions.
++ * -good
++ */
++void walk_the_dlines(aClient *sptr, struct ip_subtree *tree)
++{
++
++  if (!tree) return;
++  
++  /* do an inorder traversal of the tree */
++  walk_the_dlines(sptr, tree->left);
++
++  report_dline_list(sptr, tree->conf);
++
+   walk_the_dlines(sptr, tree->right);
+ }
+ 
+@@ -878,6 +884,8 @@
+ {
+   int i;
+   for (i=0;i<256;i++) walk_the_dlines(sptr, Dline[i]);
++  /* don't forget leftover d:lines -- jilles */
++  report_dline_list(sptr, leftover);
+ }
+ 
+ 

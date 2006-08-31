@@ -1,0 +1,123 @@
+In order to accomodate the broad control over what an oper can do
+implemented in hyperion, the umode system has been expanded to be
+considerably more powerful. Instead of the old tables and simple
+32-bit field in struct Client that used to contain umodes, compound
+bitfield macros have been added to umodes.h which can handle
+consdierably more than 32 umodes.
+
+A new umode can be trivially added as follows:
+
+Add a constant index number for it to umodes.h. These are the UMODE_*
+#defines.
+
+Add a field to the array in umodes.h to attach a mode letter to the
+constant.
+
+All the other tables are created at start time from the table in
+umodes.h, and all functions (such as user_mode()) which parse actual
+umodes in IRC messages should iterate over this array. If anything
+special has to be done when the umode is set/unset, it should be added
+to user_mode() in client.c in the large switch() in the middle. The
+examples are the unsetting of umode o (UMODE_OPER), and the setting of
+umode e (UMODE_IDENTIFIED).
+
+If a umode should be settable by any user, rather than limited to
+O:lines, then a single line calling the SetBit macro should be added
+to init_umodes() at the bottom of s_user.c, setting that bit in
+user_umodes.
+
+Should it be necessary to manipulate the umode structures by hand (as
+when working with the functions which parse umodes in IRC messages),
+it should always be done via the macros (if an operation is missing,
+and cannot be constructed from a simple combination of macros, a new
+macro should be added). umode_t is a typedef to the array of bitfields
+used to store umodes. The macros currently provided are:
+
+SetBit(bitfield, bit)
+ClearBit(bitfield, bit)
+
+These set and clear individual bits in the fields. The "bit" parameter
+should be one of the UMODE_* constants defined in client.h. Example:
+
+-------
+umode_t umodes;
+SetBit(umodes, UMODE_INVISIBLE);
+ClearBit(umodes, UMODE_IDENTIFIED);
+-------
+
+TestBit(field, bit)
+
+This will be true if the given bit is set and false
+otherwise. Example:
+
+-------
+if (!TestBit(user_umodes, UMODE_GRANT))
+-------
+
+HasUmode(cptr, mode)
+SetUmode(cptr, mode)
+ClearUmode(cptr, mode)
+
+These are the counterparts of TestBit, SetBit, and ClearBit, which
+take a struct Client and work on it's umodes field. Purely for
+convinience, these are used in preference to the others.
+
+AndUmodes(destination, a, b)
+
+This logically ANDs the contents of a with b, and stores the result in
+destination. It is usually used to mask out umodes which shouldn't be
+set:
+
+------- Remove all umodes not in allowed_umodes from umodes
+AndUmodes(sptr->umodes, sptr->umodes, sptr->allowed_umodes);
+-------
+
+OrUmodes(destination, a, b)
+NotUmodes(destination, a)
+
+These do the corresponding boolean operations
+
+AndNotUmodes(destination, a, b)
+
+This is 'destination = a &~ b', the mask form of ClearBit() and
+counterpart to AndUmodes()
+
+CopyUmodes(destination, source)
+
+This copies the contents of source to destination.
+
+ClearBitfield(f)
+
+This clears all bits in f (sets all bits to 0).
+
+AnyBits(field)
+
+This is true if the given umode_t has *any* bits set.
+------------------------------------------------------------------------
+
+Currently, the bitfields are allocated with space for 63 umodes (1-63,
+0 is reserved). If more are needed, in client.h, change:
+
+The line "typedef u_int32_t umode_t[2];" to allocate more 32 bit words
+to the bitfields.
+
+The #define BITFIELD_SIZE to be the total number of bits allocated.
+
+All the boolean macros just below these values (excluding SetBit,
+ClearBit, and TestBit, which will always work) to also act on the new
+members of the array.
+
+
+To convert back from mode letters to umode indices, index the
+character into user_modes_from_c_to_bitmask[]:
+
+-------
+for (c = parv[2]; *c; c++)
+  switch(user_modes_from_c_to_bitmask[(unsigned char) c])
+    {
+      case UMODE_IDENTIFIED:
+      ...
+      default:
+      ...
+    };
+-------

@@ -1,0 +1,8 @@
+/* freenode testnet config */
+#include "config.h.fn-large"
+#undef NETWORK_REALNAME
+#define NETWORK_REALNAME "freenode_testnet IRC"
+#undef SPLIT_SMALLNET_SIZE
+#undef SPLIT_SMALLNET_USER_SIZE
+#define SPLIT_SMALLNET_SIZE 2
+#define SPLIT_SMALLNET_USER_SIZE 2

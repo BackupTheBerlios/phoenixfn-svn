@@ -1,0 +1,56 @@
+  <chapter id="channels">
+    <title>Channel management</title>
+    <para>
+      It is strongly recommended that channels be registered on FN. To do this, become a channel
+      operator somehow and "/msg chanserv register #channel password". You can access full online help
+      for chanserv, as well as the other services, with "/msg chanserv help". The channel access list
+      controls who can do what on the channel, and allows considerable flexibility. Use this rather than
+      channel management bots, it's more reliable and avoids sillyness like IRC wars.
+    </para>
+    <para>
+      Channel bans and quiets both prevent a person from talking on the channel, but it is recommended
+      that you use quiets (+q) if you merely want to shut somebody up; bans are rather deprecated for
+      this purpose and their semantics will change at some point in the future.  Generally you should
+      assume that a ban means you don't want the person on the channel, while a quiet means you don't
+      want them saying anything. Please don't kick people, it's rarely necessary or appropriate, and it
+      generates needless noise (as well as raising the channel temperature).
+    </para>
+    <para>
+      Hybrid (and therefore dancer) provides ban exceptions. If you have problems from an ISP which
+      allows users to trivially change their IP addresses then you may find yourself forced to place a
+      ban on the entire ISP. This often catches legitimate users. Set ban exceptions just like normal
+      bans, but with mode +e (/mode #channel +e nick!user@host). These users will then be exempt from
+      bans. You can then ban by host, but allow specific users by nick, should you need to.
+    </para>
+    <para>
+      Another system available is the channel invex list. A channel which is set +i is invite-only, but
+      masks can be added to the invex list with mode +I in the same manner, and the people on the list
+      will be able to join without being invited. Note that services cannot (at present) maintain invex
+      or exception lists. If a person needs permanent access, then add them to the channel access list in
+      chanserv with a level that gives them CMDINVITE access; then can then /msg chanserv invite #channel
+      and chanserv will invite them.
+    </para>
+    <para>
+      Channels which have the +g umode set allow anybody to use the INVITE command; on channels where it
+      is unset, only channel operators may use INVITE.
+    </para>
+    <para>
+      The REMOVE command can be used exactly like the KICK command, only it sends out PART messages.
+    </para>
+  </chapter>
+<!-- Keep this comment at the end of the file
+Local variables:
+mode: sgml
+sgml-omittag:t
+sgml-shorttag:t
+sgml-namecase-general:t
+sgml-general-insert-case:lower
+sgml-minimize-attributes:nil
+sgml-always-quote-attributes:t
+sgml-indent-step:2
+sgml-indent-data:t
+sgml-parent-document:("dancer-user-guide.sgml" "book")
+sgml-exposed-tags:nil
+fill-column:105
+End:
+-->
