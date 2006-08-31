@@ -297,8 +297,8 @@ rehash_help(struct Client *source_p)
 static int
 do_rehash (struct Client *source_p, const char *cmd)
 {
-	int	i;
-	char	cmdbuf[100] = "";
+	int		i;
+	static char	cmdbuf[100];
 
 	if (cmd != NULL) {
 		for (i = 0; rehash_commands[i].cmd != NULL &&
@@ -316,6 +316,7 @@ do_rehash (struct Client *source_p, const char *cmd)
 		}
 
 		/* No match... */
+		cmdbuf[0] = '\0';
 		for (i = 0; rehash_commands[i].cmd != NULL &&
 				rehash_commands[i].handler != NULL; i++) {
 			strlcat(cmdbuf, " ", sizeof(cmdbuf));
@@ -364,7 +365,7 @@ static int
 mo_rehash (struct Client *client_p, struct Client *source_p,
 	int parc, const char **parv)
 {
-	const char	*cmd = "";
+	const char	*cmd = NULL;
 	const char	*target_server = NULL;
 
 	if(!IsOperRehash(source_p)) {
@@ -386,8 +387,8 @@ mo_rehash (struct Client *client_p, struct Client *source_p,
 	sendto_realops_flags(UMODE_DEBUG, L_ALL,
 		"%s is attempting to rehash%s%s%s%s",
 		get_oper_name(source_p),
-		*cmd != '\0' ? " " : "",
-		*cmd != '\0' ? cmd : "",
+		cmd != NULL ? " " : "",
+		cmd != NULL ? cmd : "",
 		target_server != NULL ? " on " : "",
 		target_server != NULL ? target_server : "");
 
@@ -399,7 +400,8 @@ mo_rehash (struct Client *client_p, struct Client *source_p,
 		}
 
 		sendto_match_servs(source_p, target_server, CAP_ENCAP, NOCAPS,
-			"ENCAP %s REHASH %s", target_server, cmd);
+			"ENCAP %s REHASH %s", target_server,
+			cmd != NULL ? cmd : "");
 		if (!match(target_server, me.name))
 			return 0;
 	}
