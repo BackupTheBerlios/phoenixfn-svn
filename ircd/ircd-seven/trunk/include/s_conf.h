@@ -155,7 +155,6 @@ struct config_file_entry
 	char *fname_killlog;
 	char *fname_glinelog;
 	char *fname_klinelog;
-	char *fname_operspylog;
 	char *fname_ioerrorlog;
 
 	unsigned char compression_level;
@@ -198,7 +197,6 @@ struct config_file_entry
 	int non_redundant_klines;
 	int oper_only_umodes;
 	int oper_umodes;
-	int operspy_admin_only;
 	int pace_wait;
 	int pace_wait_simple;
 	int ping_cookie;

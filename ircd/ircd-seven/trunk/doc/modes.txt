@@ -22,7 +22,6 @@ User Modes:
 +x - external   - See remote server connection and split notices
 +y - spy        - See LINKS, STATS (if configured), TRACE notices
 +z - operwall   - See oper generated WALLOPS
-+Z - operspy	- See operspy notices
 
 Channel Modes:
 

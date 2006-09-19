@@ -56,7 +56,7 @@ DECLARE_MODULE_AV1(who, NULL, NULL, who_clist, NULL, NULL, "$Revision$");
 static void do_who_on_channel(struct Client *source_p, struct Channel *chptr,
 			      int server_oper, int member);
 
-static void who_global(struct Client *source_p, const char *mask, int server_oper, int operspy);
+static void who_global(struct Client *source_p, const char *mask, int server_oper, int auspex);
 
 static void do_who(struct Client *source_p,
 		   struct Client *target_p, const char *chname, const char *op_flags);
@@ -79,7 +79,7 @@ m_who(struct Client *client_p, struct Client *source_p, int parc, const char *pa
 	struct Channel *chptr = NULL;
 	int server_oper = parc > 2 ? (*parv[2] == 'o') : 0;	/* Show OPERS only */
 	int member;
-	int operspy = 0;
+	int auspex = 0;
 
 	mask = LOCAL_COPY(parv[1]);
 
@@ -102,10 +102,9 @@ m_who(struct Client *client_p, struct Client *source_p, int parc, const char *pa
 		return 0;
 	}
 
-	if(IsOperSpy(source_p) && *mask == '!')
+	if(IsAuspex(source_p))
 	{
-		mask++;
-		operspy = 1;
+		auspex = 1;
 
 		if(EmptyString(mask))
 		{
@@ -122,10 +121,7 @@ m_who(struct Client *client_p, struct Client *source_p, int parc, const char *pa
 		chptr = find_channel(mask);
 		if(chptr != NULL)
 		{
-			if(operspy)
-				report_operspy(source_p, "WHO", chptr->chname);
-
-			if(IsMember(source_p, chptr) || operspy)
+			if(IsMember(source_p, chptr) || auspex)
 				do_who_on_channel(source_p, chptr, server_oper, YES);
 			else if(!SecretChannel(chptr))
 				do_who_on_channel(source_p, chptr, server_oper, NO);
@@ -196,7 +192,7 @@ m_who(struct Client *client_p, struct Client *source_p, int parc, const char *pa
 	if((*(mask + 1) == '\0') && (*mask == '0'))
 		who_global(source_p, NULL, server_oper, 0);
 	else
-		who_global(source_p, mask, server_oper, operspy);
+		who_global(source_p, mask, server_oper, auspex);
 
 	sendto_one(source_p, form_str(RPL_ENDOFWHO),
 		   me.name, source_p->name, mask);
@@ -262,7 +258,7 @@ who_common_channel(struct Client *source_p, struct Channel *chptr,
  *		  and will be left cleared on return
  */
 static void
-who_global(struct Client *source_p, const char *mask, int server_oper, int operspy)
+who_global(struct Client *source_p, const char *mask, int server_oper, int auspex)
 {
 	struct membership *msptr;
 	struct Client *target_p;
@@ -270,9 +266,9 @@ who_global(struct Client *source_p, const char *mask, int server_oper, int opers
 	int maxmatches = 500;
 
 	/* first, list all matching INvisible clients on common channels
-	 * if this is not an operspy who
+	 * if this is not an auspex who
 	 */
-	if(!operspy)
+	if(!auspex)
 	{
 		DLINK_FOREACH(lp, source_p->user->channel.head)
 		{
@@ -280,12 +276,10 @@ who_global(struct Client *source_p, const char *mask, int server_oper, int opers
 			who_common_channel(source_p, msptr->chptr, mask, server_oper, &maxmatches);
 		}
 	}
-	else
-		report_operspy(source_p, "WHO", mask);
 
 	/* second, list all matching visible clients and clear all marks
 	 * on invisible clients
-	 * if this is an operspy who, list all matching clients, no need
+	 * if this is an auspex who, list all matching clients, no need
 	 * to clear marks
 	 */
 	DLINK_FOREACH(ptr, global_client_list.head)
@@ -294,7 +288,7 @@ who_global(struct Client *source_p, const char *mask, int server_oper, int opers
 		if(!IsPerson(target_p))
 			continue;
 
-		if(IsInvisible(target_p) && !operspy)
+		if(IsInvisible(target_p) && !auspex)
 		{
 			ClearMark(target_p);
 			continue;

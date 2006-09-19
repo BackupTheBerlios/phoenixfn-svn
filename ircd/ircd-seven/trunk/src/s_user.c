@@ -93,7 +93,6 @@ static struct flag_item user_modes[] = {
 	{UMODE_EXTERNAL,	'x'},
 	{UMODE_SPY,		'y'},
 	{UMODE_OPERWALL,	'z'},
-	{UMODE_OPERSPY,		'Z'},
 	{0, 0}
 };
 
@@ -133,7 +132,7 @@ int user_modes_from_c_to_bitmask[] = {
 	0,			/* W */
 	0,			/* X */
 	0,			/* Y */
-	UMODE_OPERSPY,		/* Z */
+	0,			/* Z */
 	/* 0x5B */ 0, 0, 0, 0, 0, 0, /* 0x60 */
 	UMODE_ADMIN,		/* a */
 	UMODE_BOTS,		/* b */

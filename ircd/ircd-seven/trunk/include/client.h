@@ -384,7 +384,6 @@ struct exit_client_hook
 #define UMODE_CALLERID     0x2000	/* block unless caller id's */
 #define UMODE_UNAUTH       0x4000	/* show unauth connects here */
 #define UMODE_LOCOPS       0x8000	/* show locops */
-#define UMODE_OPERSPY	   0x10000
 #define UMODE_CCONNEXT     0x20000	/* extended client connections */
 #define UMODE_SERVICE      0x40000
 #define UMODE_DEAF	   0x80000
@@ -419,7 +418,7 @@ struct exit_client_hook
                       UMODE_NCHANGE | UMODE_OPERWALL | UMODE_DEBUG | \
                       UMODE_BOTS | UMODE_EXTERNAL | UMODE_LOCOPS | \
  		      UMODE_ADMIN | UMODE_UNAUTH | UMODE_CALLERID | \
-		      UMODE_OPERSPY | UMODE_CCONNEXT | UMODE_SERVICE | \
+		      UMODE_CCONNEXT | UMODE_SERVICE | \
 		      UMODE_DEAF)
 
 #define CLICAP_MULTI_PREFIX	0x0001

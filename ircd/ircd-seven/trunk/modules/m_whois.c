@@ -47,7 +47,7 @@
 #include "s_newconf.h"
 
 static void do_whois(struct Client *client_p, struct Client *source_p, int parc, const char *parv[]);
-static void single_whois(struct Client *source_p, struct Client *target_p, int operspy);
+static void single_whois(struct Client *source_p, struct Client *target_p, int auspex);
 
 static int m_whois(struct Client *, struct Client *, int, const char **);
 static int ms_whois(struct Client *, struct Client *, int, const char **);
@@ -179,33 +179,31 @@ do_whois(struct Client *client_p, struct Client *source_p, int parc, const char 
 	struct Client *target_p;
 	char *nick;
 	char *p = NULL;
-	int operspy = 0;
+	int auspex = 0;
 
 	nick = LOCAL_COPY(parv[1]);
 	if((p = strchr(parv[1], ',')))
 		*p = '\0';
 
-	if(IsOperSpy(source_p) && *nick == '!')
+	if(IsAuspex(source_p))
 	{
-		operspy = 1;
-		nick++;
+		auspex = 1;
 	}
 
 	target_p = find_named_person(nick);
 
 	if(target_p != NULL)
 	{
-		if(operspy)
+		if(auspex)
 		{
 			char buffer[BUFSIZE];
 
 			snprintf(buffer, sizeof(buffer), "%s!%s@%s %s",
 				target_p->name, target_p->username,
 				target_p->host, target_p->servptr->name);
-			report_operspy(source_p, "WHOIS", buffer);
 		}
 
-		single_whois(source_p, target_p, operspy);
+		single_whois(source_p, target_p, auspex);
 	}
 	else
 		sendto_one_numeric(source_p, ERR_NOSUCHNICK,
@@ -227,7 +225,7 @@ do_whois(struct Client *client_p, struct Client *source_p, int parc, const char 
  * 		  writing results to source_p
  */
 static void
-single_whois(struct Client *source_p, struct Client *target_p, int operspy)
+single_whois(struct Client *source_p, struct Client *target_p, int auspex)
 {
 	char buf[BUFSIZE];
 	dlink_node *ptr;
@@ -278,7 +276,7 @@ single_whois(struct Client *source_p, struct Client *target_p, int operspy)
 
 		visible = ShowChannel(source_p, chptr);
 
-		if(visible || operspy)
+		if(visible || auspex)
 		{
 			if((cur_len + strlen(chptr->chname) + 3) > (BUFSIZE - 5))
 			{

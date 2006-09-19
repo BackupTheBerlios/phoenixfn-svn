@@ -766,7 +766,6 @@ set_default_conf(void)
 	ConfigFileEntry.stats_y_oper_only = NO;
 	ConfigFileEntry.stats_h_oper_only = NO;
 	ConfigFileEntry.map_oper_only = YES;
-	ConfigFileEntry.operspy_admin_only = NO;
 	ConfigFileEntry.pace_wait = 10;
 	ConfigFileEntry.caller_id_wait = 60;
 	ConfigFileEntry.pace_wait_simple = 1;
@@ -780,7 +779,6 @@ set_default_conf(void)
 	ConfigFileEntry.fname_serverlog = NULL;
 	ConfigFileEntry.fname_glinelog = NULL;
 	ConfigFileEntry.fname_klinelog = NULL;
-	ConfigFileEntry.fname_operspylog = NULL;
 	ConfigFileEntry.fname_ioerrorlog = NULL;
 	ConfigFileEntry.glines = NO;
 	ConfigFileEntry.use_egd = NO;
@@ -803,7 +801,7 @@ set_default_conf(void)
 
 	ConfigFileEntry.oper_umodes = UMODE_LOCOPS | UMODE_SERVNOTICE |
 		UMODE_OPERWALL | UMODE_WALLOP;
-	ConfigFileEntry.oper_only_umodes = UMODE_DEBUG|UMODE_OPERSPY;
+	ConfigFileEntry.oper_only_umodes = UMODE_DEBUG;
 
 	ConfigChannel.use_except = YES;
 	ConfigChannel.use_invex = YES;

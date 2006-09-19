@@ -231,12 +231,6 @@ static struct InfoStruct info_table[] = {
 		"GLINE log file"
 	},
 	{
-		"fname_operspylog",
-		OUTPUT_STRING,
-		&ConfigFileEntry.fname_operspylog,
-		"Oper spy log file"
-	},
-	{
 		"fname_ioerrorlog",
 		OUTPUT_STRING,
 		&ConfigFileEntry.fname_ioerrorlog,
@@ -391,12 +385,6 @@ static struct InfoStruct info_table[] = {
 		OUTPUT_BOOLEAN,
 		&ConfigFileEntry.non_redundant_klines,
 		"Check for and disallow redundant K-lines"
-	},
-	{
-		"operspy_admin_only",
-		OUTPUT_BOOLEAN,
-		&ConfigFileEntry.operspy_admin_only,
-		"Send +Z operspy notices to admins only"
 	},
 	{
 		"pace_wait",
