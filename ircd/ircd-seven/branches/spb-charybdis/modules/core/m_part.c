@@ -21,7 +21,7 @@
  *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307
  *  USA
  *
- *  $Id: m_part.c 98 2005-09-11 03:37:47Z nenolod $
+ *  $Id$
  */
 
 #include "stdinc.h"
@@ -50,7 +50,7 @@ struct Message part_msgtab = {
 
 mapi_clist_av1 part_clist[] = { &part_msgtab, NULL };
 
-DECLARE_MODULE_AV1(part, NULL, NULL, part_clist, NULL, NULL, "$Revision: 98 $");
+DECLARE_MODULE_AV1(part, NULL, NULL, part_clist, NULL, NULL, "$Revision$");
 
 static void part_one_client(struct Client *client_p,
 			    struct Client *source_p, char *name, char *reason);

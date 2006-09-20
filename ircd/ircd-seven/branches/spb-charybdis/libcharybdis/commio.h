@@ -21,7 +21,7 @@
  *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307
  *  USA
  *
- *  $Id: commio.h 1757 2006-07-25 23:34:45Z jilles $
+ *  $Id$
  */
 
 #ifndef INCLUDED_commio_h

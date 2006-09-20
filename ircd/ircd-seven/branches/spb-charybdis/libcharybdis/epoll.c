@@ -23,7 +23,7 @@
  *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307
  *  USA
  *
- *  $Id: epoll.c 390 2005-12-07 18:46:56Z nenolod $
+ *  $Id$
  */
 
 #include "config.h"

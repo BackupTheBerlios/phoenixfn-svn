@@ -21,7 +21,7 @@
  *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307
  *  USA
  *
- *  $Id: m_dline.c 494 2006-01-15 16:08:28Z jilles $
+ *  $Id$
  */
 
 #include "stdinc.h"
@@ -59,7 +59,7 @@ struct Message undline_msgtab = {
 };
 
 mapi_clist_av1 dline_clist[] = { &dline_msgtab, &undline_msgtab, NULL };
-DECLARE_MODULE_AV1(dline, NULL, NULL, dline_clist, NULL, NULL, "$Revision: 494 $");
+DECLARE_MODULE_AV1(dline, NULL, NULL, dline_clist, NULL, NULL, "$Revision$");
 
 static int valid_comment(char *comment);
 static int flush_write(struct Client *, FILE *, char *, char *);

@@ -23,7 +23,7 @@
  *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307
  *  USA
  *
- *  $Id: m_olist.c 6 2005-09-10 01:02:21Z nenolod $
+ *  $Id$
  */
 
 #include "stdinc.h"
@@ -56,7 +56,7 @@ struct Message olist_msgtab = {
 
 mapi_clist_av1 olist_clist[] = { &olist_msgtab, NULL };
 
-DECLARE_MODULE_AV1(okick, NULL, NULL, olist_clist, NULL, NULL, "$Revision: 6 $");
+DECLARE_MODULE_AV1(okick, NULL, NULL, olist_clist, NULL, NULL, "$Revision$");
 
 #endif
 

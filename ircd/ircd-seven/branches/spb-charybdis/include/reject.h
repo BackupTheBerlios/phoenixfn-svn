@@ -21,7 +21,7 @@
  *  USA
  *
  *
- *  $Id: reject.h 6 2005-09-10 01:02:21Z nenolod $
+ *  $Id$
  */
 #ifndef INCLUDED_reject_h
 #define INCLUDED_reject_h

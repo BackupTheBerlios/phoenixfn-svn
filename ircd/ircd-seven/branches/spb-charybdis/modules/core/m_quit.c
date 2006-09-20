@@ -21,7 +21,7 @@
  *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307
  *  USA
  *
- *  $Id: m_quit.c 1333 2006-05-14 13:47:33Z jilles $
+ *  $Id$
  */
 
 #include "stdinc.h"
@@ -46,7 +46,7 @@ struct Message quit_msgtab = {
 
 mapi_clist_av1 quit_clist[] = { &quit_msgtab, NULL };
 
-DECLARE_MODULE_AV1(quit, NULL, NULL, quit_clist, NULL, NULL, "$Revision: 1333 $");
+DECLARE_MODULE_AV1(quit, NULL, NULL, quit_clist, NULL, NULL, "$Revision$");
 
 /*
 ** m_quit

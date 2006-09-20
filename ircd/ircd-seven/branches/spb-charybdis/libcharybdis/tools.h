@@ -21,7 +21,7 @@
  *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307
  *  USA
  *
- *  $Id: tools.h 382 2005-12-07 15:15:59Z nenolod $
+ *  $Id$
  */
 
 #ifndef __TOOLS_H__

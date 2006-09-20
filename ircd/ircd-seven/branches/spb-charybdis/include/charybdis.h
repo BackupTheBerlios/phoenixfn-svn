@@ -21,7 +21,7 @@
  *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307
  *  USA
  *
- *  $Id: charybdis.h 238 2005-09-21 05:26:03Z nenolod $
+ *  $Id$
  */
 
 #ifndef CHARYBDIS_H

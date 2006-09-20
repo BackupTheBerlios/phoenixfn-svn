@@ -21,7 +21,7 @@
  *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307
  *  USA
  *
- *  $Id: m_ison.c 254 2005-09-21 23:35:12Z nenolod $
+ *  $Id$
  */
 
 #include "stdinc.h"
@@ -48,7 +48,7 @@ struct Message ison_msgtab = {
 };
 
 mapi_clist_av1 ison_clist[] = { &ison_msgtab, NULL };
-DECLARE_MODULE_AV1(ison, NULL, NULL, ison_clist, NULL, NULL, "$Revision: 254 $");
+DECLARE_MODULE_AV1(ison, NULL, NULL, ison_clist, NULL, NULL, "$Revision$");
 
 static char buf[BUFSIZE];
 static char buf2[BUFSIZE];

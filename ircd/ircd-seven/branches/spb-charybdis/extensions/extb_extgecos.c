@@ -3,7 +3,7 @@
  * Requested by Lockwood.
  *  - nenolod
  *
- * $Id: extb_realname.c 1339 2006-05-17 00:45:40Z nenolod $
+ * $Id$
  */
 
 #include "stdinc.h"
@@ -15,7 +15,7 @@ static int _modinit(void);
 static void _moddeinit(void);
 static int eb_extended(const char *data, struct Client *client_p, struct Channel *chptr, long mode_type);
 
-DECLARE_MODULE_AV1(extb_extended, _modinit, _moddeinit, NULL, NULL, NULL, "$Revision: 1339 $");
+DECLARE_MODULE_AV1(extb_extended, _modinit, _moddeinit, NULL, NULL, NULL, "$Revision$");
 
 static int
 _modinit(void)

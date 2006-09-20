@@ -2,7 +2,7 @@
  * Account extban type: bans all users with any/matching account
  * -- jilles
  *
- * $Id: extb_account.c 1299 2006-05-11 15:43:03Z jilles $
+ * $Id$
  */
 
 #include "stdinc.h"
@@ -14,7 +14,7 @@ static int _modinit(void);
 static void _moddeinit(void);
 static int eb_account(const char *data, struct Client *client_p, struct Channel *chptr, long mode_type);
 
-DECLARE_MODULE_AV1(extb_account, _modinit, _moddeinit, NULL, NULL, NULL, "$Revision: 1299 $");
+DECLARE_MODULE_AV1(extb_account, _modinit, _moddeinit, NULL, NULL, NULL, "$Revision$");
 
 static int
 _modinit(void)

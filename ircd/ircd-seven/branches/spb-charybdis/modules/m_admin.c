@@ -21,7 +21,7 @@
  *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307
  *  USA
  *
- *  $Id: m_admin.c 254 2005-09-21 23:35:12Z nenolod $
+ *  $Id$
  */
 
 #include "stdinc.h"
@@ -56,7 +56,7 @@ mapi_hlist_av1 admin_hlist[] = {
 	{ NULL, NULL }
 };
 
-DECLARE_MODULE_AV1(admin, NULL, NULL, admin_clist, admin_hlist, NULL, "$Revision: 254 $");
+DECLARE_MODULE_AV1(admin, NULL, NULL, admin_clist, admin_hlist, NULL, "$Revision$");
 
 /*
  * mr_admin - ADMIN command handler

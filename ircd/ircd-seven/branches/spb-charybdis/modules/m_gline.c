@@ -21,7 +21,7 @@
  *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307
  *  USA
  *
- *  $Id: m_gline.c 1146 2006-04-07 22:52:35Z jilles $
+ *  $Id$
  */
 
 #include "stdinc.h"
@@ -63,7 +63,7 @@ struct Message ungline_msgtab = {
 };
 
 mapi_clist_av1 gline_clist[] = { &gline_msgtab, &ungline_msgtab, NULL };
-DECLARE_MODULE_AV1(gline, NULL, NULL, gline_clist, NULL, NULL, "$Revision: 1146 $");
+DECLARE_MODULE_AV1(gline, NULL, NULL, gline_clist, NULL, NULL, "$Revision$");
 
 static int majority_gline(struct Client *source_p, const char *user,
 			  const char *host, const char *reason);

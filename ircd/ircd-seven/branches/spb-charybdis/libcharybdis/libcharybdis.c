@@ -22,7 +22,7 @@
  *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307
  *  USA
  *
- *  $Id: libcharybdis.c 386 2005-12-07 16:21:24Z nenolod $
+ *  $Id$
  */
 
 #include "stdinc.h"

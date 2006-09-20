@@ -1,7 +1,7 @@
 /*
  * Remote oper up notices.
  *
- * $Id: sno_globaloper.c 639 2006-01-29 21:42:06Z jilles $
+ * $Id$
  */
 
 #include "stdinc.h"
@@ -20,7 +20,7 @@ mapi_hfn_list_av1 sgo_hfnlist[] = {
 	{ NULL, NULL }
 };
 
-DECLARE_MODULE_AV1(sno_globaloper, NULL, NULL, NULL, NULL, sgo_hfnlist, "$Revision: 639 $");
+DECLARE_MODULE_AV1(sno_globaloper, NULL, NULL, NULL, NULL, sgo_hfnlist, "$Revision$");
 
 static void
 h_sgo_umode_changed(void *vdata)

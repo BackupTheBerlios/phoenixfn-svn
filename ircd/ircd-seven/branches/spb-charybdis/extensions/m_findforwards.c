@@ -17,7 +17,7 @@
  *   along with this program; if not, write to the Free Software
  *   Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
  *
- *   $Id: m_findforwards.c 986 2006-03-08 00:10:46Z jilles $
+ *   $Id$
  */
 #include "stdinc.h"
 #include "tools.h"
@@ -46,7 +46,7 @@ struct Message findforwards_msgtab = {
 
 mapi_clist_av1 findforwards_clist[] = { &findforwards_msgtab, NULL };
 
-DECLARE_MODULE_AV1(findforwards, NULL, NULL, findforwards_clist, NULL, NULL, "$Revision: 986 $");
+DECLARE_MODULE_AV1(findforwards, NULL, NULL, findforwards_clist, NULL, NULL, "$Revision$");
 
 /*
 ** mo_findforwards

@@ -21,7 +21,7 @@
  *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307
  *  USA
  *
- *  $Id: m_time.c 254 2005-09-21 23:35:12Z nenolod $
+ *  $Id$
  */
 
 #include "stdinc.h"
@@ -46,7 +46,7 @@ struct Message time_msgtab = {
 };
 
 mapi_clist_av1 time_clist[] = { &time_msgtab, NULL };
-DECLARE_MODULE_AV1(time, NULL, NULL, time_clist, NULL, NULL, "$Revision: 254 $");
+DECLARE_MODULE_AV1(time, NULL, NULL, time_clist, NULL, NULL, "$Revision$");
 
 static const char *months[] = {
 	"January", "February", "March", "April",

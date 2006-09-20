@@ -21,7 +21,7 @@
  *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307
  *  USA
  *
- *  $Id: hash.h 722 2006-02-08 21:51:28Z nenolod $
+ *  $Id$
  */
 
 #ifndef INCLUDED_hash_h

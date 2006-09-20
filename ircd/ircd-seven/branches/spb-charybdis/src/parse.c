@@ -21,7 +21,7 @@
  *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307
  *  USA
  *
- *  $Id: parse.c 1599 2006-06-04 01:55:34Z jilles $
+ *  $Id$
  */
 
 #include "stdinc.h"

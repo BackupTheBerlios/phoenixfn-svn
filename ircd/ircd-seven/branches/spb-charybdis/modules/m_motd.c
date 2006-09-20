@@ -21,7 +21,7 @@
  *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307
  *  USA
  *
- *  $Id: m_motd.c 254 2005-09-21 23:35:12Z nenolod $
+ *  $Id$
  */
 
 #include "stdinc.h"
@@ -54,7 +54,7 @@ mapi_hlist_av1 motd_hlist[] = {
 	{ NULL, NULL }
 };
 
-DECLARE_MODULE_AV1(motd, NULL, NULL, motd_clist, motd_hlist, NULL, "$Revision: 254 $");
+DECLARE_MODULE_AV1(motd, NULL, NULL, motd_clist, motd_hlist, NULL, "$Revision$");
 
 static void motd_spy(struct Client *);
 

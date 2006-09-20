@@ -1,4 +1,4 @@
-# $Id: Makefile.in 138 2005-09-12 00:48:18Z nenolod $
+# $Id$
 CC		= @CC@
 INSTALL		= @INSTALL@
 INSTALL_BIN	= @INSTALL_PROGRAM@

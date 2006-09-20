@@ -5,7 +5,7 @@
  * of all clients.
  * -- jilles
  *
- * $Id: sno_farconnect.c 1869 2006-08-27 14:24:25Z jilles $
+ * $Id$
  */
 
 #include "stdinc.h"
@@ -28,7 +28,7 @@ mapi_hfn_list_av1 gcn_hfnlist[] = {
 	{ NULL, NULL }
 };
 
-DECLARE_MODULE_AV1(globalconnexit, _modinit, _moddeinit, NULL, NULL, gcn_hfnlist, "$Revision: 1869 $");
+DECLARE_MODULE_AV1(globalconnexit, _modinit, _moddeinit, NULL, NULL, gcn_hfnlist, "$Revision$");
 
 static int
 _modinit(void)

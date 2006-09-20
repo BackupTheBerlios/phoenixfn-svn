@@ -1,7 +1,7 @@
 #
 # Makefile.in for ircd/unsupported
 #
-# $Id: Makefile.in 1425 2006-05-23 16:41:33Z jilles $
+# $Id$
 #
 CC		= @CC@
 RM		= @RM@

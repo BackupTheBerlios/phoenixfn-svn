@@ -1,4 +1,4 @@
-$Id: ts6.txt 6 2005-09-10 01:02:21Z nenolod $
+$Id$
 
 TS6 Proposal (v7)
 Written by Lee H <lee@leeh.co.uk>

@@ -26,7 +26,7 @@
  * IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  *
- * $Id: m_signon.c 1192 2006-04-21 16:21:02Z jilles $
+ * $Id$
  */
 
 #include "stdinc.h"
@@ -72,7 +72,7 @@ mapi_clist_av1 signon_clist[] = {
 	&svslogin_msgtab, &signon_msgtab, NULL
 };
 
-DECLARE_MODULE_AV1(signon, NULL, NULL, signon_clist, NULL, NULL, "$Revision: 1192 $");
+DECLARE_MODULE_AV1(signon, NULL, NULL, signon_clist, NULL, NULL, "$Revision$");
 
 #define NICK_VALID	1
 #define USER_VALID	2

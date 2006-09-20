@@ -21,7 +21,7 @@
  *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307
  *  USA
  *
- *  $Id: m_webirc.c 1983 2006-09-01 19:42:07Z jilles $
+ *  $Id$
  */
 /* Usage:
  * auth {
@@ -63,7 +63,7 @@ struct Message webirc_msgtab = {
 };
 
 mapi_clist_av1 webirc_clist[] = { &webirc_msgtab, NULL };
-DECLARE_MODULE_AV1(webirc, NULL, NULL, webirc_clist, NULL, NULL, "$Revision: 20702 $");
+DECLARE_MODULE_AV1(webirc, NULL, NULL, webirc_clist, NULL, NULL, "$Revision$");
 
 /*
  * mr_webirc - webirc message handler

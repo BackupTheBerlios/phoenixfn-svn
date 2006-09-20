@@ -1,6 +1,6 @@
 MONITOR - Protocol for notification of when clients become online/offline
              Lee Hardy <lee -at- leeh.co.uk>
-$Id: monitor.txt 6 2005-09-10 01:02:21Z nenolod $
+$Id$
 -------------------------------------------------------------------------
 
 Currently, ISON requests by clients use a large amount of bandwidth.  It is

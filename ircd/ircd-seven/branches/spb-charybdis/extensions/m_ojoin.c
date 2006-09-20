@@ -16,7 +16,7 @@
  *   along with this program; if not, write to the Free Software
  *   Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
  *
- *   $Id: m_ojoin.c 1116 2006-03-30 10:11:21Z jilles $
+ *   $Id$
  */
 
 #include "stdinc.h"
@@ -48,7 +48,7 @@ struct Message ojoin_msgtab = {
 
 mapi_clist_av1 ojoin_clist[] = { &ojoin_msgtab, NULL };
 
-DECLARE_MODULE_AV1(ojoin, NULL, NULL, ojoin_clist, NULL, NULL, "$Revision: 1116 $");
+DECLARE_MODULE_AV1(ojoin, NULL, NULL, ojoin_clist, NULL, NULL, "$Revision$");
 
 /*
 ** mo_ojoin

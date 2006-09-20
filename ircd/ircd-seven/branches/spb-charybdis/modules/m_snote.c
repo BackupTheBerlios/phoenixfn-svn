@@ -28,7 +28,7 @@
  *  IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  *  POSSIBILITY OF SUCH DAMAGE.
  *
- *  $Id: m_snote.c 623 2006-01-29 13:47:35Z jilles $
+ *  $Id$
  */
 
 #include "stdinc.h"
@@ -59,7 +59,7 @@ struct Message snote_msgtab = {
 };
 
 mapi_clist_av1 snote_clist[] = { &snote_msgtab, NULL };
-DECLARE_MODULE_AV1(snote, NULL, NULL, snote_clist, NULL, NULL, "$Revision: 623 $");
+DECLARE_MODULE_AV1(snote, NULL, NULL, snote_clist, NULL, NULL, "$Revision$");
 
 /*
  * me_snote

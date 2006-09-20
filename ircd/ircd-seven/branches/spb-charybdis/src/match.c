@@ -16,7 +16,7 @@
  *   along with this program; if not, write to the Free Software
  *   Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
  *
- * $Id: match.c 708 2006-02-05 22:44:03Z jilles $
+ * $Id$
  *
  */
 #include "stdinc.h"

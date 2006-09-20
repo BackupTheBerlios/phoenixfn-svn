@@ -29,7 +29,7 @@
  * IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  *
- * $Id: s_newconf.c 1747 2006-07-25 21:22:45Z jilles $
+ * $Id$
  */
 
 #include "stdinc.h"

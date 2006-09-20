@@ -1,4 +1,4 @@
-/* $Id: ip_cloaking.c 1871 2006-08-27 15:36:00Z jilles $ */
+/* $Id$ */
 
 #include "stdinc.h"
 #include "modules.h"
@@ -42,7 +42,7 @@ mapi_hfn_list_av1 ip_cloaking_hfnlist[] = {
 };
 
 DECLARE_MODULE_AV1(ip_cloaking, _modinit, _moddeinit, NULL, NULL,
-			ip_cloaking_hfnlist, "$Revision: 1871 $");
+			ip_cloaking_hfnlist, "$Revision$");
 
 static void
 distribute_hostchange(struct Client *client)

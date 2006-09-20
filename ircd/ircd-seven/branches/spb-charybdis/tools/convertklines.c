@@ -15,7 +15,7 @@
  *   along with this program; if not, write to the Free Software
  *   Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
  *
- * $Id: convertklines.c 6 2005-09-10 01:02:21Z nenolod $
+ * $Id$
  */
 
 #include <stdio.h>

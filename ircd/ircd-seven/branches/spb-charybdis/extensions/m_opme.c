@@ -16,7 +16,7 @@
  *   along with this program; if not, write to the Free Software
  *   Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
  *
- *   $Id: m_opme.c 6 2005-09-10 01:02:21Z nenolod $
+ *   $Id$
  */
 #include "stdinc.h"
 #include "tools.h"
@@ -45,7 +45,7 @@ struct Message opme_msgtab = {
 
 mapi_clist_av1 opme_clist[] = { &opme_msgtab, NULL };
 
-DECLARE_MODULE_AV1(opme, NULL, NULL, opme_clist, NULL, NULL, "$Revision: 6 $");
+DECLARE_MODULE_AV1(opme, NULL, NULL, opme_clist, NULL, NULL, "$Revision$");
 
 
 /*

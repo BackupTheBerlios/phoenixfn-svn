@@ -1,5 +1,5 @@
 /* This code is in the public domain.
- * $Id: newconf.c 1853 2006-08-24 18:30:52Z jilles $
+ * $Id$
  */
 
 #include "stdinc.h"

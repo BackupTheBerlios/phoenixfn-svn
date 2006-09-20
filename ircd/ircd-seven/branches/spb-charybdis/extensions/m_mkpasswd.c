@@ -6,7 +6,7 @@
  *
  *  You can use this code in any way as long as these names remain.
  *
- *  $Id: m_mkpasswd.c 6 2005-09-10 01:02:21Z nenolod $
+ *  $Id$
  */
 
 /* List of ircd includes from ../include/ */
@@ -47,7 +47,7 @@ struct Message mkpasswd_msgtab = {
 
 mapi_clist_av1 mkpasswd_clist[] = { &mkpasswd_msgtab, NULL };
 
-DECLARE_MODULE_AV1(mkpasswd, NULL, NULL, mkpasswd_clist, NULL, NULL, "$Revision: 6 $");
+DECLARE_MODULE_AV1(mkpasswd, NULL, NULL, mkpasswd_clist, NULL, NULL, "$Revision$");
 
 
 static int

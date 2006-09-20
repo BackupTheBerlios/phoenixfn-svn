@@ -22,7 +22,7 @@
  *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307
  *  USA
  *
- *  $Id: client.h 2023 2006-09-02 23:47:27Z jilles $
+ *  $Id$
  */
 
 #ifndef INCLUDED_client_h

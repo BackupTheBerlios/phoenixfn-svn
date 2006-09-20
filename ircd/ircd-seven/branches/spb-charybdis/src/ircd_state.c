@@ -30,7 +30,7 @@
  * IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  *
- * $Id: main.c 867 2006-02-16 14:25:09Z nenolod $
+ * $Id$
  */
 
 #include "stdinc.h"

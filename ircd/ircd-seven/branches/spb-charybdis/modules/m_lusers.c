@@ -21,7 +21,7 @@
  *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307
  *  USA
  *
- *  $Id: m_lusers.c 254 2005-09-21 23:35:12Z nenolod $
+ *  $Id$
  */
 
 #include "stdinc.h"
@@ -45,7 +45,7 @@ struct Message lusers_msgtab = {
 };
 
 mapi_clist_av1 lusers_clist[] = { &lusers_msgtab, NULL };
-DECLARE_MODULE_AV1(lusers, NULL, NULL, lusers_clist, NULL, NULL, "$Revision: 254 $");
+DECLARE_MODULE_AV1(lusers, NULL, NULL, lusers_clist, NULL, NULL, "$Revision$");
 
 /*
  * m_lusers - LUSERS message handler

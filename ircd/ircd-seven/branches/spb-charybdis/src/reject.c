@@ -20,7 +20,7 @@
  *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307
  *  USA
  *
- *  $Id: reject.c 849 2006-02-15 01:33:43Z jilles $
+ *  $Id$
  */
 
 #include "stdinc.h"

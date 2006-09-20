@@ -21,7 +21,7 @@
  *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307
  *  USA
  *
- *  $Id: hash.c 1321 2006-05-13 23:49:14Z nenolod $
+ *  $Id$
  */
 
 #include "stdinc.h"

@@ -1,4 +1,4 @@
-$Id: whats-new-2.0.txt 6 2005-09-10 01:02:21Z nenolod $
+$Id$
 
 The following is a list of major changes between ircd-ratbox-1.x and
 ircd-ratbox-2.0

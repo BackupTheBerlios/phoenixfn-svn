@@ -21,7 +21,7 @@
  *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307
  *  USA
  *
- *  $Id: irc_string.c 678 2006-02-03 20:25:01Z jilles $
+ *  $Id$
  */
 
 #include "stdinc.h"

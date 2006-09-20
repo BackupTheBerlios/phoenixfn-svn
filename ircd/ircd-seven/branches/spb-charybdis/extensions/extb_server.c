@@ -2,7 +2,7 @@
  * Server name extban type: bans all users using a certain server
  * -- jilles
  *
- * $Id: extb_server.c 1299 2006-05-11 15:43:03Z jilles $
+ * $Id$
  */
 
 #include "stdinc.h"
@@ -14,7 +14,7 @@ static int _modinit(void);
 static void _moddeinit(void);
 static int eb_server(const char *data, struct Client *client_p, struct Channel *chptr, long mode_type);
 
-DECLARE_MODULE_AV1(extb_server, _modinit, _moddeinit, NULL, NULL, NULL, "$Revision: 1299 $");
+DECLARE_MODULE_AV1(extb_server, _modinit, _moddeinit, NULL, NULL, NULL, "$Revision$");
 
 static int
 _modinit(void)

@@ -21,7 +21,7 @@
  *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307
  *  USA
  *
- *  $Id: packet.c 262 2005-09-22 00:38:45Z jilles $
+ *  $Id$
  */
 #include "stdinc.h"
 #include "tools.h"

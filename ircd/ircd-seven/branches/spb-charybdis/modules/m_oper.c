@@ -21,7 +21,7 @@
  *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307
  *  USA
  *
- *  $Id: m_oper.c 1483 2006-05-27 18:58:12Z jilles $
+ *  $Id$
  */
 
 #include "stdinc.h"
@@ -51,7 +51,7 @@ struct Message oper_msgtab = {
 };
 
 mapi_clist_av1 oper_clist[] = { &oper_msgtab, NULL };
-DECLARE_MODULE_AV1(oper, NULL, NULL, oper_clist, NULL, NULL, "$Revision: 1483 $");
+DECLARE_MODULE_AV1(oper, NULL, NULL, oper_clist, NULL, NULL, "$Revision$");
 
 static int match_oper_password(const char *password, struct oper_conf *oper_p);
 extern char *crypt();

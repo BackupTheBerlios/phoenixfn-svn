@@ -137,4 +137,4 @@ We hope that these goals are obtained.
 
 --
 W. Campbell
-$Id: modeg.txt 6 2005-09-10 01:02:21Z nenolod $
+$Id$

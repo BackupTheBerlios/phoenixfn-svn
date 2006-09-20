@@ -21,7 +21,7 @@
  *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307
  *  USA
  *
- *  $Id: m_kick.c 258 2005-09-21 23:57:17Z nenolod $
+ *  $Id$
  */
 
 #include "stdinc.h"
@@ -49,7 +49,7 @@ struct Message kick_msgtab = {
 
 mapi_clist_av1 kick_clist[] = { &kick_msgtab, NULL };
 
-DECLARE_MODULE_AV1(kick, NULL, NULL, kick_clist, NULL, NULL, "$Revision: 258 $");
+DECLARE_MODULE_AV1(kick, NULL, NULL, kick_clist, NULL, NULL, "$Revision$");
 
 /*
 ** m_kick

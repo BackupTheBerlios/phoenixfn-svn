@@ -21,7 +21,7 @@
  *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307
  *  USA
  *
- *  $Id: m_stats.c 1608 2006-06-04 02:11:40Z jilles $
+ *  $Id$
  */
 
 #include "stdinc.h"
@@ -69,7 +69,7 @@ mapi_hlist_av1 stats_hlist[] = {
 	{ NULL, NULL }
 };
 
-DECLARE_MODULE_AV1(stats, NULL, NULL, stats_clist, stats_hlist, NULL, "$Revision: 1608 $");
+DECLARE_MODULE_AV1(stats, NULL, NULL, stats_clist, stats_hlist, NULL, "$Revision$");
 
 const char *Lformat = "%s %u %u %u %u %u :%u %u %s";
 

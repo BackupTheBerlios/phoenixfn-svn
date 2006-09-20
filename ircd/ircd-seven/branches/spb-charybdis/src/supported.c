@@ -28,7 +28,7 @@
  * IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  *
- *  $Id: supported.c 1887 2006-08-29 13:42:56Z jilles $
+ *  $Id$
  */
 
 /* From the old supported.h which is

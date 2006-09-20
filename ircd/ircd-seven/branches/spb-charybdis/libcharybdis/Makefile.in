@@ -1,7 +1,7 @@
 #
 # Makefile.in for ircd/src/io
 #
-# $Id: Makefile.in 1269 2006-04-30 16:51:11Z nenolod $
+# $Id$
 #
 CC		= @CC@
 INSTALL		= @INSTALL@

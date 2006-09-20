@@ -22,7 +22,7 @@
  *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307
  *  USA
  *
- *  $Id: hostmask.h 553 2006-01-23 15:01:41Z nenolod $
+ *  $Id$
  */
 
 #ifndef INCLUDE_hostmask_h

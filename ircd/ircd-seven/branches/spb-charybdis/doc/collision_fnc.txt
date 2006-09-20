@@ -38,4 +38,4 @@ in several other cases if the destination supports SAVE. In other cases, a
 normal nick change or introduction with the UID as nick is sent.
 
 -- 
-$Id: collision_fnc.txt 276 2005-10-02 20:23:15Z jilles $
+$Id$

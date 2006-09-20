@@ -1,7 +1,7 @@
 /*
  * viconf.c
  *
- * $Id: viconf.c 6 2005-09-10 01:02:21Z nenolod $
+ * $Id$
  */
 #include <stdio.h>
 #include <unistd.h>

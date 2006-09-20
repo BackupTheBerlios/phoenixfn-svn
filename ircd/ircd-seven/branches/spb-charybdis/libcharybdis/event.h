@@ -21,7 +21,7 @@
  *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307
  *  USA
  *
- *  $Id: event.h 380 2005-12-07 15:08:37Z nenolod $
+ *  $Id$
  */
 
 #ifndef INCLUDED_event_h

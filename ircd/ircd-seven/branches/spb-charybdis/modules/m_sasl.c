@@ -26,7 +26,7 @@
  * IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  *
- * $Id: m_sasl.c 1409 2006-05-21 14:46:17Z jilles $
+ * $Id$
  */
 
 #include "stdinc.h"
@@ -65,7 +65,7 @@ mapi_hfn_list_av1 sasl_hfnlist[] = {
 	{ NULL, NULL }
 };
 
-DECLARE_MODULE_AV1(sasl, NULL, NULL, sasl_clist, NULL, sasl_hfnlist, "$Revision: 1409 $");
+DECLARE_MODULE_AV1(sasl, NULL, NULL, sasl_clist, NULL, sasl_hfnlist, "$Revision$");
 
 static int
 mr_authenticate(struct Client *client_p, struct Client *source_p,

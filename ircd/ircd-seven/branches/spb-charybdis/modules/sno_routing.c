@@ -28,7 +28,7 @@
  *  IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  *  POSSIBILITY OF SUCH DAMAGE.
  *
- *  $Id: sno_routing.c 1172 2006-04-18 13:49:18Z jilles $
+ *  $Id$
  */
 
 #include "stdinc.h"
@@ -47,7 +47,7 @@ mapi_hfn_list_av1 nn_hfnlist[] = {
 	{ NULL, NULL }
 };
 
-DECLARE_MODULE_AV1(networknotice, NULL, NULL, NULL, NULL, nn_hfnlist, "$Revision: 1172 $");
+DECLARE_MODULE_AV1(networknotice, NULL, NULL, NULL, NULL, nn_hfnlist, "$Revision$");
 
 /*
  * count_mark_downlinks

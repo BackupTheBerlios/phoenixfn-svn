@@ -19,7 +19,7 @@
  *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307
  *  USA
  *
- *  $Id: spy_info_notice.c 498 2006-01-15 16:40:33Z jilles $
+ *  $Id$
  */
 #include "stdinc.h"
 #include "modules.h"
@@ -35,7 +35,7 @@ mapi_hfn_list_av1 info_hfnlist[] = {
 	{NULL, NULL}
 };
 
-DECLARE_MODULE_AV1(info_spy, NULL, NULL, NULL, NULL, info_hfnlist, "$Revision: 498 $");
+DECLARE_MODULE_AV1(info_spy, NULL, NULL, NULL, NULL, info_hfnlist, "$Revision$");
 
 void
 show_info(hook_data *data)

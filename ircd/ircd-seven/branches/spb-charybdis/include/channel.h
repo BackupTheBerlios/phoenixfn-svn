@@ -21,7 +21,7 @@
  *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307
  *  USA
  *
- *  $Id: channel.h 1363 2006-05-18 17:59:35Z jilles $
+ *  $Id$
  */
 
 #ifndef INCLUDED_channel_h

@@ -21,7 +21,7 @@
  *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307
  *  USA
  *
- *  $Id: m_info.c 1853 2006-08-24 18:30:52Z jilles $
+ *  $Id$
  */
 
 #include "stdinc.h"
@@ -63,7 +63,7 @@ mapi_hlist_av1 info_hlist[] = {
 	{ NULL, NULL }
 };
 
-DECLARE_MODULE_AV1(info, NULL, NULL, info_clist, info_hlist, NULL, "$Revision: 1853 $");
+DECLARE_MODULE_AV1(info, NULL, NULL, info_clist, info_hlist, NULL, "$Revision$");
 
 /*
  * jdc -- Structure for our configuration value table

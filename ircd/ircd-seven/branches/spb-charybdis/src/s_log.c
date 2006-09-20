@@ -28,7 +28,7 @@
  * IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  *
- * $Id: s_log.c 1563 2006-06-02 00:43:35Z nenolod $
+ * $Id$
  */
 
 #include "stdinc.h"

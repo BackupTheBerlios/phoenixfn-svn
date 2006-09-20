@@ -26,7 +26,7 @@
  *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307
  *  USA
  *
- *  $Id: balloc.c 388 2005-12-07 16:34:40Z nenolod $
+ *  $Id$
  */
 
 /* 

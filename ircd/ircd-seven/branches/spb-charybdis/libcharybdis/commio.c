@@ -21,7 +21,7 @@
  *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307
  *  USA
  *
- *  $Id: commio.c 1779 2006-07-30 16:36:39Z jilles $
+ *  $Id$
  */
 
 #include "libcharybdis.h"

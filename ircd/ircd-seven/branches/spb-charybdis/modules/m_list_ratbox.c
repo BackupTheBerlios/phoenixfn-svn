@@ -21,7 +21,7 @@
  *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307
  *  USA
  *
- *  $Id: m_list_ratbox.c 722 2006-02-08 21:51:28Z nenolod $
+ *  $Id$
  */
 
 #include "stdinc.h"
@@ -49,7 +49,7 @@ struct Message list_msgtab = {
 };
 
 mapi_clist_av1 list_clist[] = { &list_msgtab, NULL };
-DECLARE_MODULE_AV1(list, NULL, NULL, list_clist, NULL, NULL, "$Revision: 722 $");
+DECLARE_MODULE_AV1(list, NULL, NULL, list_clist, NULL, NULL, "$Revision$");
 
 static void list_all_channels(struct Client *source_p);
 static void list_limit_channels(struct Client *source_p, const char *param);

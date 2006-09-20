@@ -15,7 +15,7 @@
  *   along with this program; if not, write to the Free Software
  *   Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
  *
- *   $Id: control.c 1285 2006-05-05 15:03:53Z nenolod $
+ *   $Id$
  */
 
 #include "setup.h"

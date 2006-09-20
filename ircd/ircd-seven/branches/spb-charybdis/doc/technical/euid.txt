@@ -1,4 +1,4 @@
-$Id: euid.txt 1863 2006-08-27 13:40:37Z jilles $
+$Id$
 
 Extended UID command proposal
 Jilles Tjoelker <jilles@stack.nl>

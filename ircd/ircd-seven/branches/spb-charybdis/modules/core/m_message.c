@@ -21,7 +21,7 @@
  *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307
  *  USA
  *
- *  $Id: m_message.c 1761 2006-07-27 19:27:49Z jilles $
+ *  $Id$
  */
 
 #include "stdinc.h"
@@ -76,7 +76,7 @@ struct Message notice_msgtab = {
 
 mapi_clist_av1 message_clist[] = { &privmsg_msgtab, &notice_msgtab, NULL };
 
-DECLARE_MODULE_AV1(message, modinit, moddeinit, message_clist, NULL, NULL, "$Revision: 1761 $");
+DECLARE_MODULE_AV1(message, modinit, moddeinit, message_clist, NULL, NULL, "$Revision$");
 
 struct entity
 {

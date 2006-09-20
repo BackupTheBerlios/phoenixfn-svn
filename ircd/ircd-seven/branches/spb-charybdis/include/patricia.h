@@ -1,5 +1,5 @@
 /*
- * $Id: patricia.h 6 2005-09-10 01:02:21Z nenolod $
+ * $Id$
  * Dave Plonka <plonka@doit.wisc.edu>
  *
  * This product includes software developed by the University of Michigan,

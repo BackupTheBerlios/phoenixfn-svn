@@ -29,7 +29,7 @@
  * IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  *
- * $Id: cache.c 254 2005-09-21 23:35:12Z nenolod $
+ * $Id$
  */
 
 #include "stdinc.h"

@@ -21,7 +21,7 @@
  *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307
  *  USA
  *
- *  $Id: s_conf.h 1853 2006-08-24 18:30:52Z jilles $
+ *  $Id$
  */
 
 #ifndef INCLUDED_s_conf_h

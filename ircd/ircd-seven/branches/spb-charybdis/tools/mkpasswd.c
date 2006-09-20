@@ -9,7 +9,7 @@
 ** /dev/random for salt generation added by 
 ** Aaron Sethman <androsyn@ratbox.org>
 **
-** $Id: mkpasswd.c 6 2005-09-10 01:02:21Z nenolod $
+** $Id$
 */
 #include <stdio.h>
 #include <string.h>

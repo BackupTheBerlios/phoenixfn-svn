@@ -5,7 +5,7 @@
  * return ERR_NEEDREGGEDNICK on failure.
  *    -- nenolod
  *
- * $Id: createauthonly.c 833 2006-02-15 00:27:59Z jilles $
+ * $Id$
  */
 
 #include "stdinc.h"
@@ -25,7 +25,7 @@ mapi_hfn_list_av1 restrict_hfnlist[] = {
 	{ NULL, NULL }
 };
 
-DECLARE_MODULE_AV1(createauthonly, NULL, NULL, NULL, NULL, restrict_hfnlist, "$Revision: 833 $");
+DECLARE_MODULE_AV1(createauthonly, NULL, NULL, NULL, NULL, restrict_hfnlist, "$Revision$");
 
 static void
 h_can_create_channel_authenticated(hook_data_client_approval *data)

@@ -21,7 +21,7 @@
  *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307
  *  USA
  *
- *  $Id: send.h 661 2006-02-03 04:20:31Z gxti $
+ *  $Id$
  */
 
 #ifndef INCLUDED_send_h

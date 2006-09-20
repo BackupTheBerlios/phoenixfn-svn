@@ -28,7 +28,7 @@
  * IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  *
- * $Id: m_identify.c 962 2006-03-07 12:54:53Z jilles $
+ * $Id$
  */
 
 #include "stdinc.h"

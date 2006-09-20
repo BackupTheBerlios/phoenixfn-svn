@@ -1,4 +1,4 @@
-/* $Id: cache.h 6 2005-09-10 01:02:21Z nenolod $ */
+/* $Id$ */
 #ifndef INCLUDED_CACHE_H
 #define INCLUDED_CACHE_H
 

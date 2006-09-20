@@ -21,7 +21,7 @@
  *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307
  *  USA
  *
- *  $Id: m_post.c 498 2006-01-15 16:40:33Z jilles $
+ *  $Id$
  */
 
 #include "stdinc.h"
@@ -54,7 +54,7 @@ struct Message put_msgtab = {
 mapi_clist_av1 post_clist[] = {
 	&post_msgtab, &get_msgtab, &put_msgtab, NULL
 };
-DECLARE_MODULE_AV1(post, NULL, NULL, post_clist, NULL, NULL, "$Revision: 498 $");
+DECLARE_MODULE_AV1(post, NULL, NULL, post_clist, NULL, NULL, "$Revision$");
 
 
 /*

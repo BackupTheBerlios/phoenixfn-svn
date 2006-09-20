@@ -21,7 +21,7 @@
  *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307
  *  USA
  *
- *  $Id: linebuf.h 376 2005-12-07 15:00:41Z nenolod $
+ *  $Id$
  */
 
 #ifndef __LINEBUF_H__

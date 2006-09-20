@@ -1,7 +1,7 @@
 Overview of the file management subsystem
 Adrian Chadd <adrian@creative.net.au>
 
-$Id: file-management.txt 6 2005-09-10 01:02:21Z nenolod $
+$Id$
 
 
 File operations

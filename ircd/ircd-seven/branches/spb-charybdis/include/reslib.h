@@ -1,7 +1,7 @@
 /*
  * include/irc_reslib.h
  *
- * $Id: reslib.h 446 2006-02-12 02:46:54Z db $
+ * $Id$
  */
 
 #ifndef _CHARYBDIS_RESLIB_H

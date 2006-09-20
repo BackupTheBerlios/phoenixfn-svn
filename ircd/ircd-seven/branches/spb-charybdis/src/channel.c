@@ -21,7 +21,7 @@
  *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307
  *  USA
  *
- *  $Id: channel.c 1861 2006-08-26 23:21:42Z jilles $
+ *  $Id$
  */
 
 #include "stdinc.h"

@@ -22,7 +22,7 @@
  *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307
  *  USA
  *
- *  $Id: kqueue.c 398 2005-12-12 18:12:46Z nenolod $
+ *  $Id$
  */
 
 #include "stdinc.h"

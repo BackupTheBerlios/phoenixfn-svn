@@ -19,7 +19,7 @@
  *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307
  *  USA
  *
- *  $Id: fnvhash.s 1329 2006-05-14 02:09:30Z nenolod $
+ *  $Id$
  */
 
 /* Safely moves hashv from %edx to %eax and returns back to the calling parent. */

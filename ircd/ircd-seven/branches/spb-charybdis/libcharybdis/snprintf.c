@@ -6,7 +6,7 @@
  * do so under the terms of the GNU General Public License under which
  * this library is distributed.
  *
- * $Id: snprintf.c 382 2005-12-07 15:15:59Z nenolod $
+ * $Id$
  */
 
 #include <stdio.h>

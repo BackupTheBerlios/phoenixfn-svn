@@ -22,7 +22,7 @@
  *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307
  *  USA
  *
- *  $Id: m_omode.c 1421 2006-05-23 16:06:01Z jilles $
+ *  $Id$
  */
 
 #include "stdinc.h"
@@ -52,7 +52,7 @@ struct Message omode_msgtab = {
 
 mapi_clist_av1 omode_clist[] = { &omode_msgtab, NULL };
 
-DECLARE_MODULE_AV1(omode, NULL, NULL, omode_clist, NULL, NULL, "$Revision: 1421 $");
+DECLARE_MODULE_AV1(omode, NULL, NULL, omode_clist, NULL, NULL, "$Revision$");
 
 /*
  * mo_omode - MODE command handler

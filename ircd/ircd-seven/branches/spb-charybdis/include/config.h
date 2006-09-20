@@ -21,7 +21,7 @@
  *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307
  *  USA
  *
- *  $Id: config.h 1701 2006-06-27 16:25:52Z jilles $
+ *  $Id$
  */
 
 #ifndef INCLUDED_config_h

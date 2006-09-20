@@ -21,7 +21,7 @@
  *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307
  *  USA
  *
- *  $Id: modules.c 1509 2006-05-28 02:35:58Z nenolod $
+ *  $Id$
  */
 
 #include "stdinc.h"

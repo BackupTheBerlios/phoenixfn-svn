@@ -21,7 +21,7 @@
  *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307
  *  USA
  *
- *  $Id: m_mode.c 1006 2006-03-09 15:32:14Z nenolod $
+ *  $Id$
  */
 
 #include "stdinc.h"
@@ -65,7 +65,7 @@ struct Message bmask_msgtab = {
 
 mapi_clist_av1 mode_clist[] = { &mode_msgtab, &tmode_msgtab, &bmask_msgtab, NULL };
 
-DECLARE_MODULE_AV1(mode, NULL, NULL, mode_clist, NULL, NULL, "$Revision: 1006 $");
+DECLARE_MODULE_AV1(mode, NULL, NULL, mode_clist, NULL, NULL, "$Revision$");
 
 /*
  * m_mode - MODE command handler

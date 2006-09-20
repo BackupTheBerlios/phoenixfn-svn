@@ -21,7 +21,7 @@
  *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307
  *  USA
  *
- *  $Id: m_version.c 1887 2006-08-29 13:42:56Z jilles $
+ *  $Id$
  */
 
 #include <stdinc.h>
@@ -47,7 +47,7 @@ struct Message version_msgtab = {
 };
 
 mapi_clist_av1 version_clist[] = { &version_msgtab, NULL };
-DECLARE_MODULE_AV1(version, NULL, NULL, version_clist, NULL, NULL, "$Revision: 1887 $");
+DECLARE_MODULE_AV1(version, NULL, NULL, version_clist, NULL, NULL, "$Revision$");
 
 /*
  * m_version - VERSION command handler

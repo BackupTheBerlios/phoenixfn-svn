@@ -4,7 +4,7 @@
  * Copyright (C) 2006 charybdis development team
  * All rights reserved
  *
- * $Id: hurt.c 1905 2006-08-29 14:51:31Z jilles $
+ * $Id$
  */
 #include "stdinc.h"
 #include "modules.h"
@@ -115,7 +115,7 @@ DECLARE_MODULE_AV1(
 	hurt_clist,
 	NULL,
 	hurt_hfnlist,
-	"$Revision: 1905 $"
+	"$Revision$"
 );
 /* }}} */
 

@@ -21,7 +21,7 @@
  *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307
  *  USA
  *
- *  $Id: m_kill.c 1699 2006-06-27 15:29:10Z jilles $
+ *  $Id$
  */
 
 #include "stdinc.h"
@@ -55,7 +55,7 @@ struct Message kill_msgtab = {
 
 mapi_clist_av1 kill_clist[] = { &kill_msgtab, NULL };
 
-DECLARE_MODULE_AV1(kill, NULL, NULL, kill_clist, NULL, NULL, "$Revision: 1699 $");
+DECLARE_MODULE_AV1(kill, NULL, NULL, kill_clist, NULL, NULL, "$Revision$");
 
 /*
 ** mo_kill

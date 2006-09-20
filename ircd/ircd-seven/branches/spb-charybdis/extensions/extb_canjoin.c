@@ -3,7 +3,7 @@
  * specified channel.
  *    -- nenolod/jilles
  *
- * $Id: extb_canjoin.c 1841 2006-08-22 17:30:03Z jilles $
+ * $Id$
  */
 
 #include "stdinc.h"
@@ -17,7 +17,7 @@ static int _modinit(void);
 static void _moddeinit(void);
 static int eb_canjoin(const char *data, struct Client *client_p, struct Channel *chptr, long mode_type);
 
-DECLARE_MODULE_AV1(extb_canjoin, _modinit, _moddeinit, NULL, NULL, NULL, "$Revision: 1841 $");
+DECLARE_MODULE_AV1(extb_canjoin, _modinit, _moddeinit, NULL, NULL, NULL, "$Revision$");
 
 static int
 _modinit(void)
