@@ -40,15 +40,10 @@ SRCS =                          \
   sno_farconnect.c		\
   sno_globalkline.c		\
   sno_globaloper.c		\
-  m_42.c			\
   m_findforwards.c		\
   m_identify.c			\
   m_mkpasswd.c                  \
-  m_ojoin.c			\
-  m_olist.c			\
-  m_okick.c			\
   m_omode.c			\
-  m_opme.c			\
   m_webirc.c			\
   no_oper_invis.c		\
   spy_admin_notice.c		\
@@ -58,8 +53,6 @@ SRCS =                          \
   spy_stats_notice.c            \
   spy_stats_p_notice.c		\
   spy_trace_notice.c		\
-  spy_whois_notice.c            \
-  spy_whois_notice_global.c	\
   example_module.c
 
 OBJS = ${SRCS:.c=.so}
