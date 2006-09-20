@@ -10,7 +10,7 @@ AC_PREREQ(2.57)
 dnl Sneaky way to get an Id tag into the configure script
 AC_COPYRIGHT([$Id$])
 
-AC_INIT([charybdis],[2.1.0])
+AC_INIT([ircd-seven],[0.0.1])
 
 AC_CONFIG_HEADER(include/setup.h)
 
@@ -1308,5 +1308,5 @@ Configuration:
 	Nickname length    : $NICKLEN
 	Topic length       : $TOPICLEN
 
-Use make to compile Charybdis, then make install to install it.
+Use make to compile ircd-seven, then make install to install it.
 "
