@@ -7,6 +7,10 @@ see the NEWS file.
 
 2006-09-20 Stephen Bennett <spb@gentoo.org>
 
+	* src/messages.tab: New RPL_YOUREOPER.
+
+2006-09-20 Stephen Bennett <spb@gentoo.org>
+
 	* extensions/Makefile.in, extensions/spy_whois_notice.c,
 	extensions/spy_whois_notice_global.c, extensions/m_olist.c,
 	extensions/m_okick.c, extensions/m_42.c, extensions/m_opme.c,
