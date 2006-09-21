@@ -1,0 +1,11 @@
+Help for SET URL:
+
+SET URL allows you to change or set the URL
+associated with a channel. This is shown
+to all users joining the channel. Specify
+an <url> of NONE to clear the URL.
+
+Syntax: SET <channel> URL <url>
+
+Example:
+    /msg &nick& SET #chat URL http://slashdot.org

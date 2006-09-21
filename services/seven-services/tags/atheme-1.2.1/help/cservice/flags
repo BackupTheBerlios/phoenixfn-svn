@@ -1,0 +1,53 @@
+Help for FLAGS:
+
+The FLAGS command allows for the granting/removal of channel
+privileges on a more specific, non-generalized level. It
+supports both nicknames and hostmasks as targets.
+
+When only the channel argument is given, a listing of
+permissions granted to users will be displayed.
+
+Syntax: FLAGS <#channel>
+
+Otherwise, an access entry is modified. A modification may be
+specified by a template name (changes the access to the
+template) or a flags change (starts with + or -). See the
+TEMPLATE help entry for more information about templates.
+
+If you are not the founder, you may only manipulate flags you
+have yourself, and may not edit users that have flags you
+don't have. For this purpose, +v grants +V, +h grants +H,
++o grants +O and +r grants +b.
+
+If you do not have +f you may still remove your own access
+with -*.
+
+Syntax: FLAGS <#channel> [nickname|hostmask template]
+Syntax: FLAGS <#channel> [nickname|hostmask flag_changes]
+
+Permissions:
+    +v - Enables use of the voice/devoice commands.
+    +V - Enables automatic voice.
+    +h - Enables use of the halfop/dehalfop commands.
+    +H - Enables automatic halfop.
+    +o - Enables use of the op/deop commands.
+    +O - Enables automatic op.
+    +s - Enables use of the set command.
+    +i - Enables use of the invite and getkey commands.
+    +r - Enables use of the kick, ban, and kickban commands.
+    +R - Enables use of the recover and clear commands.
+    +f - Enables modification of channel access lists.
+    +t - Enables use of the topic and topicappend commands.
+    +A - Enables viewing of channel access lists.
+    +b - Enables automatic kickban.
+
+The special permission +* adds all permissions except +b.
+The special permission -* removes all permissions including +b.
+
+Examples:
+    /msg &nick& FLAGS #foo
+    /msg &nick& FLAGS #foo foo!*@bar.com VOP
+    /msg &nick& FLAGS #foo foo!*@bar.com -V+oO
+    /msg &nick& FLAGS #foo foo!*@bar.com -*
+    /msg &nick& FLAGS #foo foo +oOtsi
+    /msg &nick& FLAGS #foo TroubleUser!*@*.troubleisp.net +b

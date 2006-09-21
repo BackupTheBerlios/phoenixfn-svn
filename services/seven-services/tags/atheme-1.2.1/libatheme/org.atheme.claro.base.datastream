@@ -1,0 +1,26 @@
+/*
+ * Copyright (c) 2005 Atheme Development Group
+ * Rights to this code are as documented in doc/LICENSE.
+ *
+ * Datastream query stuff.
+ *
+ * $Id: org.atheme.claro.base.datastream 3027 2005-10-19 05:37:42Z nenolod $
+ */
+#ifndef __CLARODATASTREAM
+#define __CLARODATASTREAM
+
+typedef struct sendq datastream_t;
+
+/* sendq struct */
+struct sendq {
+	char *buf;
+	int len;
+	int pos;
+};
+
+E list_t sendq;
+
+E void sendq_add(connection_t *cptr, char *buf, int len, int pos);
+E void sendq_flush(connection_t *cptr);
+
+#endif
