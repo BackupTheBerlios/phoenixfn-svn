@@ -1,0 +1,106 @@
+Current ratbox/charybdis flags:
+    admin (A) -- module loading, "various privileges"
+    remoteban (B) -- set k/xlines, resvs remotely, remote rehash
+    local_kill (C)
+    die (D) -- die, restart
+    gline (G)
+    rehash (H)
+    kline (K) -- kline, dline
+    operwall (L)
+    nick_changes (N)
+    global_kill (O)
+    hidden_oper (P) -- does nothing
+    remote (R) -- remote connect/squit
+    oper_spy (S)
+    unkline (U) -- unkline, undline, ungline iff G is also present
+    xline (X) -- xline, unxline
+    Plus various privileges granted to all opers regardless of
+      flags.
+
+Current hyperion flags:
+    Too many to list.
+
+
+Ratbox/charybdis flags corresponding to hyperion privs:
+    Existing ratbox operflags cover:
+        A - nothing I can see.
+        B - irrelevant; all hyperion bans are global
+        C - +K, or part thereof
+        D - +D
+        G - irrelevant; no glines.
+        H - +H
+        K - other half of +K
+        L - +zZ
+        N - +n
+        O - +G
+        P - irrelevant; all hyperion opers are hidden
+        R - +S
+        S - somewhat analogous to +a; see below.
+        U - +U
+        X - no equivalent; hyperion xlines are all done via config.
+    Privileges granted to all opers:
+        All notice umodes except n -- +bcdfklrsxyY
+        Ability to use all STATS commands, though some may be
+            restricted to admin-only in config -- +0123459v
+        Overrides +g -- closest equivalent is probably +6?
+        Ability to wallop and mass-notice -- +MW
+        Flood immunity, higher priority(?) -- +hF
+        Exemption from channel limits -- +u
+        Ability to CONNECT and SQUIT locally -- +R
+        Ability to see routing information -- +V, part of +A
+        Ability to use TRACE and friends -- other half of +A
+        Ability to set oper-only cmodes(+LP) (charybdis only) --
+            this is split between +X and +P in hyperion.
+        Ability to use SCAN -- other half of +X
+        So, all ratbox opers have the equivalent of
+            +bcdfklrsxyY +0123459v +MW +hF +R +VA +X +u6 and the
+            ability to set cmode +P.
+    Hyperion privileges not in ratbox:
+        +BjmNpPT*@. The actions associated with these privilege
+            flags have no analogy. For P@, CHGHOST is supported,
+            but only accepted from remote servers (ie services),
+            not from opers.
+        +a warrants a note: the oper_spy privilege is somewhat
+            analogous, though not entirely. Use of oper spy
+            requires a special form of the command in question,
+            emits snotes to all opers globally with +Z, and is
+            logged.
+
+New privilege set:
+    All existing ratbox/charybdis oper flags except BGNPS should
+        stay, with the following additions (naming arbitrary and
+        subject to change):
+    O and C (local and global kill) should be folded together.
+    wallop -- can send wallops (+W)
+    mass_notice -- can send mass notices (+M)
+    routing -- CONNECT, SQUIT, sees through serverhide, view
+        connection settings, stats ? (+R, +VA, +1. +5). Fold 
+        'remote' into this.
+    flood_immune -- immune to flood protection (+F)
+    immune -- allows access to umode +m.
+    override -- join anywhere, talk anywhere, op anywhere (+p)
+    oper_cmodes -- can set +L, +P on channels. (parts of +p, +X)
+    scan -- allows SCAN (part of +X)
+    auspex -- replaces oper_spy and acts like +a.
+    see_bans -- can list network bans and use TESTLINE (+239)
+    helper -- can set equivalent to umode +T
+    Server notice privileges -- set an allowed_snomask field in
+        the oper block controlling what notices can be seen.
+
+    current flags B, G, N, P are to be removed. S (operspy) is
+        replaced by auspex. N is obsoleted by 'allowed snomasks',
+        G-lines are to be removed since klines are clustered, and
+        P is irrelevant since /stats p is reworked. B (remoteban)
+        is to be implicit in K (kline)
+
+    All opers can then be granted +u6 -- these are given out by
+        services to non-opers at present, so granted them widely
+        should not be a problem.
+
+    This leave +BjNP*@ without equivalents. Auto-dline (+j) should
+        be given its own flag if implemented.
+
+
+TODO:
+    stats T (+4). Not sure where to put it.
+    umode +v.
