@@ -88,6 +88,7 @@ static struct flag_item user_modes[] = {
 #ifdef ENABLE_SERVICES
 	{UMODE_SERVICE,		'S'},
 #endif
+	{UMODE_HELPER,		'T'},
 	{UMODE_UNAUTH,		'u'},
 	{UMODE_WALLOP,		'w'},
 	{UMODE_EXTERNAL,	'x'},
@@ -126,7 +127,7 @@ int user_modes_from_c_to_bitmask[] = {
 #else
 	0,			/* S */
 #endif
-	0,			/* T */
+	UMODE_HELPER,		/* T */
 	0,			/* U */
 	0,			/* V */
 	0,			/* W */
@@ -908,7 +909,7 @@ user_mode(struct Client *client_p, struct Client *source_p, int parc, const char
 					if(MyConnect(source_p))
 					{
 						source_p->umodes &= ~ConfigFileEntry.oper_only_umodes;
-						source_p->flags2 &= ~OPER_FLAGS;
+						source_p->operflags = 0;
 
 						MyFree(source_p->localClient->opername);
 						source_p->localClient->opername = NULL;
@@ -962,17 +963,37 @@ user_mode(struct Client *client_p, struct Client *source_p, int parc, const char
 
 	if((source_p->umodes & UMODE_NCHANGE) && !IsOperN(source_p))
 	{
-		sendto_one(source_p,
-			   ":%s NOTICE %s :*** You need oper and N flag for +n", me.name, parv[0]);
+		if(IsOper(source_p))
+			sendto_one(source_p,
+				   ":%s NOTICE %s :*** You need oper and N flag for +n", me.name, parv[0]);
+		else
+			sendto_one(source_p, form_str(ERR_UMODEUNKNOWNFLAG), me.name, source_p->name);
+
 		source_p->umodes &= ~UMODE_NCHANGE;	/* only tcm's really need this */
 	}
 
 	if(MyConnect(source_p) && (source_p->umodes & UMODE_ADMIN) &&
 	   (!IsOperAdmin(source_p) || IsOperHiddenAdmin(source_p)))
 	{
-		sendto_one(source_p,
-			   ":%s NOTICE %s :*** You need oper and A flag for +a", me.name, parv[0]);
+		if(IsOper(source_p))
+			sendto_one(source_p,
+				   ":%s NOTICE %s :*** You need oper and A flag for +a", me.name, parv[0]);
+		else
+			sendto_one(source_p, form_str(ERR_UMODEUNKNOWNFLAG), me.name, source_p->name);
+
 		source_p->umodes &= ~UMODE_ADMIN;
+	}
+
+	if(MyConnect(source_p) && (source_p->umodes & UMODE_HELPER) &&
+	    !IsOperHelper(source_p))
+	{
+		if(IsOper(source_p))
+			sendto_one(source_p,
+				    ":%s NOTICE %s :*** You need oper and T flag for +T", me.name, parv[0]);
+		else
+			sendto_one(source_p, form_str(ERR_UMODEUNKNOWNFLAG), me.name, source_p->name);
+
+		source_p->umodes &= ~UMODE_HELPER;
 	}
 
 
@@ -1144,7 +1165,7 @@ oper_up(struct Client *source_p, struct oper_conf *oper_p)
 
 	SetExemptKline(source_p);
 
-	source_p->flags2 |= oper_p->flags;
+	source_p->operflags = oper_p->flags;
 	MyFree(source_p->localClient->opername);
 	DupString(source_p->localClient->opername, oper_p->name);
 

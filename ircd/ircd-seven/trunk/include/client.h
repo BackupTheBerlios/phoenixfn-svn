@@ -124,6 +124,7 @@ struct Client
 	unsigned int umodes;	/* opers, normal users subset */
 	unsigned int flags;	/* client flags */
 	unsigned int flags2;	/* ugh. overflow */
+	unsigned int operflags;	/* ugh. overflow again. */
 
 	unsigned short status;	/* Client type */
 	unsigned char handler;	/* Handler index */
@@ -297,6 +298,7 @@ struct exit_client_hook
 
 #define IsOper(x)		((x)->umodes & UMODE_OPER)
 #define IsAdmin(x)		((x)->umodes & UMODE_ADMIN)
+#define IsHelper(x)		((x)->umodes & UMODE_HELPER)
 
 #define SetReject(x)		{(x)->status = STAT_REJECT; \
 				 (x)->handler = UNREGISTERED_HANDLER; }
@@ -391,6 +393,7 @@ struct exit_client_hook
 /* user information flags, only settable by remote mode or local oper */
 #define UMODE_OPER         0x100000	/* Operator */
 #define UMODE_ADMIN        0x200000	/* Admin on server */
+#define UMODE_HELPER	   0x400000	/* Helper -- shows in /stats p */
 
 #define UMODE_ALL	   UMODE_SERVNOTICE
 
@@ -418,8 +421,8 @@ struct exit_client_hook
                       UMODE_NCHANGE | UMODE_OPERWALL | UMODE_DEBUG | \
                       UMODE_BOTS | UMODE_EXTERNAL | UMODE_LOCOPS | \
  		      UMODE_ADMIN | UMODE_UNAUTH | UMODE_CALLERID | \
-		      UMODE_CCONNEXT | UMODE_SERVICE | \
-		      UMODE_DEAF)
+		      UMODE_CCONNEXT | UMODE_SERVICE | UMODE_DEAF | \
+		      UMODE_HELPER)
 
 #define CLICAP_MULTI_PREFIX	0x0001
 

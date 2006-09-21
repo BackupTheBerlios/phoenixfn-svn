@@ -76,9 +76,6 @@ static void stats_l_list(struct Client *s, const char *, int, int, dlink_list *,
 static void stats_l_client(struct Client *source_p, struct Client *target_p,
 				char statchar);
 
-static void stats_spy(struct Client *, char, const char *);
-static void stats_p_spy(struct Client *);
-
 /* Heres our struct for the stats table */
 struct StatsStruct
 {
@@ -211,9 +208,6 @@ m_stats(struct Client *client_p, struct Client *source_p, int parc, const char *
 
 	if(hunt_server (client_p, source_p, ":%s STATS %s :%s", 2, parc, parv) != HUNTED_ISME)
 		return 0;
-
-	if((statchar != 'L') && (statchar != 'l'))
-		stats_spy(source_p, statchar, NULL);
 
 	for (i = 0; stats_cmd_table[i].handler; i++)
 	{
@@ -754,34 +748,19 @@ stats_operedup (struct Client *source_p)
 	{
 		target_p = oper_ptr->data;
 
-		if(IsOperInvis(target_p) && !IsOper(source_p))
+		if(!IsHelper(target_p) || target_p->user->away != NULL)
 			continue;
 
 		count++;
 
-		if(MyClient (source_p) && IsOper (source_p))
-		{
-			sendto_one_numeric(source_p, RPL_STATSDEBUG,
-					   "p :[%c][%s] %s (%s@%s) Idle: %d",
-					   IsAdmin (target_p) ? 'A' : 'O',
-					   get_oper_privs(target_p->flags2),
-					   target_p->name, target_p->username, target_p->host,
-					   (int) (CurrentTime - target_p->localClient->last));
-		}
-		else
-		{
-			sendto_one_numeric(source_p, RPL_STATSDEBUG,
-					   "p :[%c] %s (%s@%s) Idle: %d",
-					   IsAdmin (target_p) ? 'A' : 'O',
-					   target_p->name, target_p->username, target_p->host,
-					   (int) (CurrentTime - target_p->localClient->last));
-		}
+		sendto_one_numeric(source_p, RPL_STATSDEBUG,
+				   "p :%s (%s@%s) Idle: %d",
+				   target_p->name, target_p->username, target_p->host,
+				   (int) (CurrentTime - target_p->localClient->last));
 	}
 
 	sendto_one_numeric(source_p, RPL_STATSDEBUG,
-				"p :%u OPER(s)", count);
-
-	stats_p_spy (source_p);
+				"p :%u staff member(s)", count);
 }
 
 static void
@@ -1240,7 +1219,6 @@ stats_ltrace(struct Client *source_p, int parc, const char *parv[])
 
 			if(target_p != NULL)
 			{
-				stats_spy(source_p, statchar, target_p->name);
 				stats_l_client(source_p, target_p, statchar);
 			}
 			else
@@ -1256,8 +1234,6 @@ stats_ltrace(struct Client *source_p, int parc, const char *parv[])
 		name = me.name;
 		doall = 1;
 	}
-
-	stats_spy(source_p, statchar, name);
 
 	if(doall)
 	{
@@ -1361,46 +1337,3 @@ stats_l_client(struct Client *source_p, struct Client *target_p,
 				   "-");
 	}
 }
-
-/*
- * stats_spy
- *
- * inputs	- pointer to client doing the /stats
- *		- char letter they are doing /stats on
- * output	- none
- * side effects -
- * This little helper function reports to opers if configured.
- * personally, I don't see why opers need to see stats requests
- * at all. They are just "noise" to an oper, and users can't do
- * any damage with stats requests now anyway. So, why show them?
- * -Dianora
- */
-static void
-stats_spy(struct Client *source_p, char statchar, const char *name)
-{
-	hook_data_int data;
-
-	data.client = source_p;
-	data.arg1 = name;
-	data.arg2 = (int) statchar;
-
-	call_hook(doing_stats_hook, &data);
-}
-
-/* stats_p_spy()
- *
- * input	- pointer to client doing stats
- * ouput	-
- * side effects - call hook doing_stats_p
- */
-static void
-stats_p_spy (struct Client *source_p)
-{
-	hook_data data;
-
-	data.client = source_p;
-	data.arg1 = data.arg2 = NULL;
-
-	call_hook(doing_stats_p_hook, &data);
-}
-
