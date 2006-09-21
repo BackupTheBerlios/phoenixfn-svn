@@ -1,0 +1,134 @@
+# Copyright (c) 2005 Atheme Development Group
+# Rights to this code are documented in doc/LICENSE.
+#
+# This file contains build instructions.
+#
+# $Id: Makefile.in 5738 2006-07-05 16:37:22Z jilles $
+#
+
+CC		= @CC@
+RM		= @RM@
+MV		= @MV@
+CP		= @CP@
+INSTALL		= @INSTALL@
+prefix		= @prefix@
+exec_prefix	= @exec_prefix@
+bindir		= @bindir@
+datadir		= @datadir@
+sysconfdir		= @sysconfdir@
+libdir		= @libdir@
+sbindir		= @sbindir@
+DOCDIR		= @DOCDIR@
+MODDIR		= @MODDIR@
+SHAREDIR	= @SHAREDIR@
+BIN		= atheme@EXEEXT@
+MKDEP		= @MKDEP@ -DPREFIX=\"@prefix@\" -I../include -I../libatheme @PGINC@
+CFLAGS		= @CFLAGS@ -I../include -I../libatheme @PGINC@
+
+VERSION		= @PACKAGE_VERSION@
+
+LIBS		= @LIBS@ @PQLIB@ -L../libatheme -lorg.atheme.claro.base
+LDFLAGS		= @LDFLAGS@
+CPPFLAGS	= @CPPFLAGS@
+
+default: all
+
+BASE_SRCS =		\
+	atheme.c	\
+	authcookie.c	\
+	base64.c	\
+	cmode.c		\
+	commandtree.c	\
+	conf.c		\
+	confparse.c	\
+	crypto.c	\
+	culture.c	\
+	dbhandler.c	\
+	flags.c		\
+	function.c	\
+	help.c		\
+	match.c		\
+	md5.c		\
+	module.c	\
+	node.c		\
+	packet.c	\
+	parse.c		\
+	phandler.c	\
+	pmodule.c	\
+	privs.c		\
+	ptasks.c	\
+	services.c	\
+	servtree.c	\
+	send.c		\
+	signal.c	\
+	template.c	\
+	tokenize.c	\
+	ubase64.c	\
+	uid.c		\
+	uplink.c	\
+	xmlrpc.c	\
+	version.c
+
+SRCS = ${BASE_SRCS}
+
+OBJS = ${SRCS:.c=.o}
+
+all: atheme
+
+build: all
+
+atheme: $(OBJS)
+	${CC} ${CFLAGS} ${LDFLAGS} -o $@ ${OBJS} ${LIBS}
+	$(MV) version.c version.c.last
+
+install: build
+	$(INSTALL) -m 755 -d $(prefix)
+	$(INSTALL) -m 755 -d $(prefix)/bin
+	$(INSTALL) -m 755 -d $(prefix)/etc
+	$(INSTALL) -m 755 -d $(prefix)/var
+	$(INSTALL) -m 755 -d $(DOCDIR)
+	$(INSTALL) -m 755 -d $(SHAREDIR)/help
+	$(INSTALL) -m 755 -c $(BIN) $(prefix)/bin
+	$(INSTALL) -m 640 -c ../dist/example.conf $(prefix)/etc
+	$(INSTALL) -m 640 -c ../dist/example.motd $(prefix)/etc
+	$(INSTALL) -m 640 -c ../dist/example.userserv.conf $(prefix)/etc
+	$(INSTALL) -m 640 -c ../dist/atheme.chk $(prefix)/etc/atheme.chk.sample
+	(cd ../doc; for i in *; do install -m 644 $$i $(DOCDIR); done)
+	(cd ../help; for i in *; do \
+		[ -f $$i ] && install -m 644 $$i $(SHAREDIR)/help; \
+		if [ -d $$i ]; then \
+			cd $$i; \
+			install -m 755 -d $(SHAREDIR)/help/$$i; \
+			for j in *; do \
+				[ -f $$j ] && install -m 644 $$j $(SHAREDIR)/help/$$i; \
+			done; \
+			cd ..; \
+		fi; \
+	done)
+
+	@echo "----------------------------------------------------------------"
+	@echo ">>> Remember to cd to ${prefix} and edit your config file.";
+	@echo "----------------------------------------------------------------"
+
+#deinstall:
+#	if [ -d ${prefix} ] ; then \
+#		$(RM) -rf ${prefix}; \
+#	fi
+
+version.c:
+	/bin/sh ./version.sh $(VERSION)
+
+.c.o:
+	${CC} ${CPPFLAGS} ${CFLAGS} -c $< -o $@
+
+.PHONY: depend clean distclean
+depend:
+	${MKDEP} ${CPPFLAGS} ${BASE_SRCS} > .depend
+
+clean:
+	${RM} -f *.o *.exe *~ version.c atheme.core core atheme
+
+distclean: clean
+	${RM} -f Makefile version.c.last
+
+include .depend

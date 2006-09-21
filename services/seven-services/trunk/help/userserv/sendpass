@@ -1,0 +1,9 @@
+Help for SENDPASS:
+
+SENDPASS emails the password for the specified
+account to the corresponding email address.
+
+Syntax: SENDPASS <account>
+
+Examples:
+    /msg &nick& SENDPASS foo

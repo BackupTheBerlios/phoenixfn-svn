@@ -1,0 +1,151 @@
+#!/bin/sh
+#
+# Copyright (c) 2005 Atheme Development Group
+# Rights to this code are documented in doc/LICENSE.
+#
+# This file is a simple setup script.
+#
+# $Id: setup 5816 2006-07-09 16:21:28Z jilles $
+
+PREFIX="$HOME/atheme"
+LARGENET="no"
+SASL="yes"
+VERSION=`grep AC_INIT configure.ac | awk '{print \$2}' | sed s:\,::g`
+
+export ok INPUT
+
+clear
+
+cat .logo
+echo "                     version $VERSION"
+
+echo ""
+
+if [ -f doc/RELEASE ] ; then
+  ok=0
+  echo "Would you like to read the release notes (recommended)?"
+  while [ $ok -eq 0 ] ; do
+    echo -n "[Yes] "
+    if read INPUT ; then : ; else echo "" ; exit 1 ; fi
+      if [ ! "$INPUT" ] ; then
+        echo ""
+        more doc/RELEASE
+        echo ""
+        echo "-----"
+        ok=1
+      fi
+      case $INPUT in
+        [Yy]*)
+          echo ""
+          more doc/RELEASE
+          ok=1
+          ;;
+        [Nn]*)
+          ok=1
+          ;;
+      esac
+  done
+  echo ""
+fi
+
+ok=0
+echo "Where do you want Atheme to be installed?"
+echo "Press enter for the default, or type a new destination."
+while [ $ok -eq 0 ] ; do
+  echo -n "[$PREFIX] "
+  if read INPUT ; then : ; else echo "" ; exit 1 ; fi
+  if [ ! "$INPUT" ] ; then
+    INPUT=$PREFIX
+    ok=1
+  else
+    ok=1
+  fi
+done
+PREFIX=$INPUT
+
+echo ""
+
+ok=0
+echo "Are you running a large network (more than 2000 users)?"
+while [ $ok -eq 0 ] ; do
+  echo -n "[$LARGENET] "
+  if read INPUT ; then : ; else echo "" ; exit 1 ; fi
+  if [ ! "$INPUT" ] ; then
+    INPUT=$LARGENET
+    ok=1
+  else
+    ok=1
+  fi
+done
+LARGENET=$INPUT
+
+ARGS="--prefix=$PREFIX"
+
+case "$LARGENET" in
+  [Yy])
+    ARGS="--prefix=$PREFIX --enable-large-net"
+    ;;
+  Yes)
+    ARGS="--prefix=$PREFIX --enable-large-net"
+    ;;
+  yes)
+    ARGS="--prefix=$PREFIX --enable-large-net"
+    ;;
+esac
+
+echo ""
+
+ok=0
+echo "Would you like to pass any additional options to configure? If so,"
+echo "place them here:"
+while [ $ok -eq 0 ] ; do
+  echo -n "[no] "
+  if read INPUT ; then : ; else echo "" ; exit 1 ; fi
+  if [ ! "$INPUT" ] ; then
+    INPUT=""
+    ok=1
+  else
+    ok=1
+  fi
+done
+ARGS="$ARGS $INPUT"
+
+sh configure $ARGS
+if [ $? != 0 ]; then
+	echo "Configure failed"
+	echo "Command was: sh configure $ARGS"
+	echo "Please fix this and try again"
+	exit 1
+fi
+
+echo ""
+echo "Press enter to begin compilation."
+echo -n ""
+if read INPUT ; then : ; else echo "" ; exit 1 ; fi
+
+make
+if [ $? != 0 ]; then
+	echo "Compilation failed"
+	echo "Command was: make"
+	echo "Please fix this and try again"
+	exit 1
+fi
+
+echo ""
+echo "Press enter to begin installation."
+echo -n ""
+if read INPUT ; then : ; else echo "" ; exit 1 ; fi
+
+make install
+if [ $? != 0 ]; then
+	echo "Installation failed"
+	echo "Command was: make install"
+	echo "Please fix this and try again"
+	exit 1
+fi
+
+echo "----------------------------------------------------------------"
+echo ">>> Atheme setup completed on `date`"
+echo "----------------------------------------------------------------"
+
+exit 0

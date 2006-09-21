@@ -1,0 +1,262 @@
+$Id: RELEASE 5844 2006-07-10 13:25:07Z jilles $
+
+Atheme 1.2.1 Release Notes
+==========================
+- Fix a bug in nickserv/userserv set that could cause crashes.
+
+Atheme 1.2 Release Notes
+========================
+[MERGED] indicates items merged to the 1.1 branch
+ircd protocol
+- Allow using TS changes to reliably deop people recreating channels
+  with the new chanserv::changets config option (for charybdis, ratbox,
+  hybrid, bahamut, solidircd).
+- Put netwide end of burst detection in the core. This is used for suppressing
+  various notices to users coming back from a netsplit or services restart.
+- Add modules which disable use of halfops, channel protection and founder
+  statuses to contrib.
+- Only set owner/protect modes if the user has the +O (autoop) flag.
+- Remove the Chunky Monkey protocol module.
+- Update Plexus protocol module to Plexus 3. [MERGED]
+- Fix global notices in the P10 protocol modules. [MERGED]
+- Fix login handling in the nefarious protocol module. [MERGED]
+- Support more modes in the inspircd protocol module. [MERGED]
+- Use m_services_account.so in inspircd to track services logins better.
+  Using this module is required. [MERGED]
+- Make the PTlink protocol module work. [MERGED]
+- Make the DreamForge and sorcery protocol modules work better. [MERGED]
+
+channels
+- Make the last used time for channels more accurate and show it in /cs info.
+- Get rid of many redundant mode lock checks.
+- Add full support for non-standard simple modes with parameters, like join
+  throttling. These can now be mode locked, etc.
+- Add GETKEY command to chanserv, returns the current key (+k) to users who
+  have +i flag.
+- Rewrite a lot of code relating to channel modes. Among other things, this
+  removes the Cygnus mode stacker.
+- Don't allow users with an unverified email address to register channels.
+- Add cs_kickdots contrib module, kicks users for saying "...". [MERGED]
+
+oper
+- Remove alias KLINE for AKILL.
+- Make modrestart work again.
+- Improve rehash error handling.
+- Global notices now include the oper's nick in the first line.
+- Show more detailed version information in atheme -v. [MERGED]
+
+other
+- Fix crash when a module tries to use something in another module which is
+  not loaded. This protection requires changes in modules using other modules
+  to be effective, see include/module.h.
+- Add command line option -l to change the log file.
+- Rewrite nickserv/userserv set command handling, allowing modules to
+  provide extra set options.
+- Merge modules/saslserv/sasl module into modules/saslserv/main. You should
+  remove modules/saslserv/sasl from your config file, it will be deleted
+  automatically by make install.
+- Clean up stale SASL sessions periodically.
+- Mention FANTASY in /cs help set.
+- Remove the MySQL backend. If you were using this, first start the old version
+  with backend/mysql, then load a supported backend like backend/flatfile and
+  /msg operserv update, to convert your data. See doc/SQL for more information.
+- Improve flatfile error handling. [MERGED]
+- Change maximum length of memos from 129 to 300. [MERGED]
+- Improve handling for network errors. [MERGED]
+- Many bugfixes and documentation improvements. Some [MERGED]
+
+Atheme 1.1 Release Notes
+========================
+- Shorten /msg chanserv/nickserv/userserv help, the full command list
+  is on /msg *serv help commands.
+- Add XMLRPC method atheme.channel.access.get.
+- Disallow vhosts which are too long or contain @!*?
+- Don't introduce a service with a UID if the ircd does not support UIDs
+  when loading it at runtime.
+- Change regex_match API to be more efficient.
+- Disable modrestart, it cannot possibly work. (It used to crash.)
+- Add wumpus, a service providing a game, to contrib.
+- Add source of the message to hook_cmessage_data_t.
+- Add optional new syntax for operclass{} blocks.
+- Add SASL support, this allows users on charybdis networks to log in
+  before registration to the network; among other things this ensures
+  the real host behind a services vhost is not shown to nonopers.
+- Add support for /motd <atheme>, uses PREFIX/etc/atheme.motd.
+- Allow users to GHOST other nicks which are logged into their account.
+- Allow other services than chanserv to process fantasy commands.
+- Allow specification of akill duration in hours (h), days (d) and weeks (w).
+- Add /os akill sync, sends all akills to all servers.
+- Ultimate3 improvements.
+- Add support for Nefarious IRCu 0.4.x or later.
+- Several UserServ bugfixes.
+- InspIRCd improvements.
+- Ensure kline exempt fully exempts from akills; do not kill akilled users
+  at any time.
+- Avoid sending out klines with negative expiry time.
+- Add IP glob akill matching, for ircds that send user IP addresses.
+- Move akill checking to operserv/akill module.
+- Don't allocate me.name/me.numeric on rehash. This fixes a known P10
+  issue.
+- Add support for ircu2.10.12's +D mode, which was already implemented
+  in Asuka.
+- Always send both the channel TS and the topic TS when setting a topic
+  under P10 ircd's.
+- Several other minor tweaks and bugfixes.
+
+
+Atheme 1.0 Release Notes
+========================
+- Add ability to use =<nick> where accounts are used. (it aliases to the
+  User's account).
+- Deop users recreating registered channels if they do not have op flags.
+  This attempts not to affect channels created longer ago.
+- Add separate protocol module for ircd-hybrid, with CHGHOST support.
+- Add ircd name to /version output.
+- Add atheme.account.vhost XMLRPC for setting and removing vhosts. Note
+  that this, unlike the other XMLRPCs, allows things that the given
+  credentials would not normally (over IRC) be allowed to.
+- Remove the incomplete and cluttering nickname linking system (this was
+  actually done in 1.0rc1, but we forgot to mention it).
+- Don't allocate me.name/me.numeric on rehash. This fixes a known P10
+  issue.
+- Add support for ircu2.10.12's +D mode, which was already implemented
+  in Asuka.
+- Always send both the channel TS and the topic TS when setting a topic
+  under P10 ircd's.
+
+Atheme 1.0rc1 Release Notes
+===========================
+- Add capabilities to protocol modules:
+  - forced nick change (aka SVSNICK)
+  - invite
+  - channel op notice (aka WALLCHOPS)
+- Don't unkline temp akills if they have already expired.
+- AKILL wildcard checking changed to ratbox algorithm.
+- Further simplification of access checking.
+- Hostmask access entries now check vhost, not host. This means services
+  cloaks now work in access lists.
+- InspIRCd module updated to beta6 and above (tree linking instead of mesh).
+- For akicks, use a matching +b'ed hostmask if possible.
+- For ircds with dalnet-like +r umodes, don't set it for userserv.
+- Add /cs forcexop to reset access levels to xOP values. Useful if CA_?OP
+  are changed.
+- Make CA_?OP configurable in atheme.conf.
+- Add channel_info hook on /cs info.
+- Add per-channel flags templates. Templates can be specified in the flags
+  command, avoiding the need to memorize complicated flags strings.
+  Templates are manipulated with the TEMPLATE command which is similar to the
+  FLAGS command.  The xOP levels can also be used as templates.
+- Add per-channel fantasy command disable.
+- Fix NEVEROP and NOOP options.
+- If fantasy commands are globally disabled, mark services clients as "deaf"
+  for some ircds.
+- Add /cs set verbose ops, works like /cs set verbose on but only shows to
+  channel ops.
+- Allow users to remove their own access from channels (except akicks of
+  course).
+- Some improvements to network I/O.
+- Add support for permanent (+P) channels in charybdis/hyperion/shadowircd.
+- Add support for more FHS-like paths (not really complete but should still
+  be helpful for packagers).
+- Add fine grained services operator privileges. IRCops get certain
+  privileges, and registered accounts can be granted privileges. This
+  works via atheme.conf. You will need to redo the operator part of your
+  configuration. See the new example.conf and doc/PRIVILEGES for more
+  information.
+- Add message translation support.
+- /cs voice/halfop/op now notifies the target user who did it.
+- /cs flags mentions who gave the command in the verbose notice.
+- Remove many redundant confirming notices.
+- Regardless of join_chans/leave_chans, join chanserv temporarily to
+  channels which would otherwise be empty to enforce akick or staffonly.
+- Add nickserv enforcement (FNC users who do not identify in time) to
+  contrib.
+- Drastically improve P10 support.
+- Add solidircd support.
+- Add support for ban exceptions and other ban-like modes.
+- Remove possibilities to log in to accounts without password by changing
+  nick during a netsplit on an ircd that does not clear +r (or similar) on
+  nick changes.
+- Various minor tweaks and bugfixes.
+
+Atheme 0.3 Release Notes
+========================
+- All services have been entirely modularized. You will need to
+  redo your configuration. An authentication service has been
+  added (choose from either NickServ or UserServ,) for
+  UserServ you should use example.userserv.conf.
+- The way modules work has been changed almost entirely. Please try
+  loading bad modules especially on macintosh and AIX systems, thanks!
+  (Report any negative findings to the tracker.)
+- The way sockets work has also changed entirely. We'd love to know
+  how well the new poll and kqueue code is working, and if there
+  are any issues with it.
+- Support for poll() and kqueue() have been added, please comment on
+  performance differentials.
+- Most static object structures are now described as metadata, please
+  comment on how well this transition is working for you.
+- PostgreSQL support is starting to freeze. Please note schema changes
+  in SQL/atheme_init.sql.
+- The build system has been reworked. You may need to use gmake on
+  BSD systems. Please comment on any trouble you have had with building
+  Atheme (on the tracker, of course.)
+- protocol/hyperion supports login session tracking now, please comment
+  on how well it is working for you.
+- protocol/ratbox support for login sessions has also vastly improved.
+- dbtool is most likely broken right now. This is not likely to change
+  any time soon.
+- The configuration parser has been overhauled. Please report any crashes
+  when parsing configurations.
+- Channel passwords have been removed.
+- Most access checking has been simplified, please make sure it is working
+  properly on your network.
+- w00t has gone and entirely tokenized the Unreal protocol support. Please
+  report any issues with this that you find.
+- STATS is now abstracted instead of living in 15 different protocol modules.
+- Probably much more that we have missed :)
+
+Atheme 0.2 Release Notes
+========================
+- Way too many things to note.
+
+Atheme 0.2rc1 Release Notes
+========================
+- Protocol support has been modularized.
+- The configuration format has drastically changed. Please redo your config.
+- The core has been modularized. Please provide feedback if something is not
+  working as it should.
+- Module support has been added. To compile third party modules, add them to
+  the modules directory and rerun setup/configure. Any modules in your
+  installation's modules/ directory will be automatically loaded at startup.
+- Metadata support has been added. To experiment with it, see our wiki
+  information on the topic:
+
+  http://wiki.oscnet.org/index.php/Atheme:Experimenting_with_Metadata
+- Several NickServ-related bugs have been fixed.
+- IRCNet support is marked as experimental. If you run this ircd,
+  please give us feedback on how well it functions.
+
+Atheme 0.1 Release Notes
+========================
+
+- Dancer/Hyperion IRCd support is marked as experimental. If you run this ircd,
+  please give us feedback on how well it functions.
+- Chunky Monkey IRCd is also marked as experimental. If you run this ircd,
+  please give us feedback on how well it functions.
+- NickServ support is experimental. We would like suggestions on how to improve it.
+  If you would like to use it, you should use the example-traditional.conf file,
+  instead of the example.conf. This will set up a logical environment for NickServ to
+  operate in.
+- InspIRCd support passes our regression tests, however, we would like feedback
+  concerning how well it works. Features added by optional modules are not supported
+  at this time. You will need the m_services.so module loaded to make things work
+  100% properly.
+- UnrealIRCd support is implemented fairly well, but not all features are supported.
+- Bahamut 1.8 support has not been tested against 1.8.4, though it is expected that
+  1.8.4 should work fine.
+- TSora IRCd support (ratbox) does not support TS6, and probably never will.
+
+If you need help, drop by AthemeNet and ask:
+  irc.atheme.org #atheme
+
+Thanks!
