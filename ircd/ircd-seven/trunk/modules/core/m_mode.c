@@ -741,7 +741,7 @@ chm_staff(struct Client *source_p, struct Channel *chptr,
 	  int alevel, int parc, int *parn,
 	  const char **parv, int *errors, int dir, char c, long mode_type)
 {
-	if(!IsOperCModes(source_p) && !IsServer(source_p))
+	if(!IsServer(source_p) && (MyClient(source_p) && !IsOperCModes(source_p)) )
 	{
 		if(!(*errors & SM_ERR_NOPRIVS))
 		{
