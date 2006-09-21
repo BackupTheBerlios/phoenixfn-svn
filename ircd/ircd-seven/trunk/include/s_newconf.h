@@ -154,6 +154,7 @@ extern void cluster_generic(struct Client *, const char *, int cltype,
 #define OPER_INVIS	0x08000
 #define OPER_AUSPEX	0x10000
 #define OPER_REMOTEBAN	0x20000
+#define OPER_CMODES	0x40000
 /*			0x40000 	*/
 /* 0x80000 and above are in client.h */
 
@@ -161,7 +162,7 @@ extern void cluster_generic(struct Client *, const char *, int cltype,
 			 OPER_REMOTE|OPER_GLINE|OPER_XLINE|OPER_RESV|\
 			 OPER_NICKS|OPER_REHASH|OPER_DIE|OPER_ADMIN|\
 			 OPER_HADMIN|OPER_OPERWALL|OPER_INVIS|OPER_AUSPEX|\
-			 OPER_REMOTEBAN)
+			 OPER_REMOTEBAN|OPER_CMODES)
 
 #define IsOperConfEncrypted(x)	((x)->flags & OPER_ENCRYPTED)
 
@@ -182,6 +183,7 @@ extern void cluster_generic(struct Client *, const char *, int cltype,
 #define IsAuspex(x)             ((x)->flags2 & OPER_AUSPEX)
 #define IsOperInvis(x)          ((x)->flags2 & OPER_INVIS)
 #define IsOperRemoteBan(x)	((x)->flags2 & OPER_REMOTEBAN)
+#define IsOperCModes(x)		((x)->flags2 & OPER_CMODES)
 
 extern struct oper_conf *make_oper_conf(void);
 extern void free_oper_conf(struct oper_conf *);

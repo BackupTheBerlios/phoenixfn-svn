@@ -330,6 +330,7 @@ static struct mode_table flag_table[] = {
 	{"auspex",		OPER_AUSPEX		},
 	{"hidden_oper",		OPER_INVIS		},
 	{"remoteban",		OPER_REMOTEBAN		},
+	{"set_cmodes",		OPER_CMODES		},
 	{NULL, 0}
 };
 
@@ -1904,6 +1905,7 @@ static struct ConfEntry conf_channel_table[] =
 	{ "knock_delay",	CF_TIME,  NULL, 0, &ConfigChannel.knock_delay		},
 	{ "knock_delay_channel",CF_TIME,  NULL, 0, &ConfigChannel.knock_delay_channel	},
 	{ "max_bans",		CF_INT,   NULL, 0, &ConfigChannel.max_bans		},
+	{ "max_bans_large",	CF_INT,   NULL, 0, &ConfigChannel.max_bans_large	},
 	{ "max_chans_per_user", CF_INT,   NULL, 0, &ConfigChannel.max_chans_per_user 	},
 	{ "no_create_on_split", CF_YESNO, NULL, 0, &ConfigChannel.no_create_on_split 	},
 	{ "no_join_on_split",	CF_YESNO, NULL, 0, &ConfigChannel.no_join_on_split	},

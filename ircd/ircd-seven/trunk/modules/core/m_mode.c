@@ -73,6 +73,7 @@ DECLARE_MODULE_AV1(mode, NULL, NULL, mode_clist, NULL, NULL, "$Revision$");
 #define SM_ERR_RPL_E            0x00000020
 #define SM_ERR_NOTONCHANNEL     0x00000040	/* Not on channel */
 #define SM_ERR_RPL_I            0x00000100
+#define SM_ERR_NOPRIVS		0x00000200
 
 static void set_channel_mode(struct Client *, struct Client *,
 			     struct Channel *, struct membership *,
@@ -164,7 +165,7 @@ m_mode(struct Client *client_p, struct Client *source_p, int parc, const char *p
 		}
 
 		set_channel_mode(client_p, source_p, chptr, msptr, 
-			         parc - n, parv + n);
+				 parc - n, parv + n);
 	}
 
 	return 0;
@@ -232,7 +233,7 @@ ms_tmode(struct Client *client_p, struct Client *source_p, int parc, const char 
 			return 0;
 
 		set_channel_mode(client_p, source_p, chptr, msptr, 
-			         parc - 3, parv + 3);
+				 parc - 3, parv + 3);
 	}
 
 	return 0;
@@ -404,7 +405,8 @@ add_id(struct Client *source_p, struct Channel *chptr, const char *banid,
 	 */
 	if(MyClient(source_p))
 	{
-		if(chptr->num_mask >= ConfigChannel.max_bans)
+		if(chptr->num_mask >= (chptr->mode.mode & MODE_EXLIMIT ?
+					ConfigChannel.max_bans_large : ConfigChannel.max_bans))
 		{
 			sendto_one(source_p, form_str(ERR_BANLISTFULL),
 				   me.name, source_p->name, chptr->chname, realban);
@@ -733,6 +735,53 @@ chm_simple(struct Client *source_p, struct Channel *chptr,
 		mode_changes[mode_count++].arg = NULL;
 	}
 }
+
+static void
+chm_staff(struct Client *source_p, struct Channel *chptr, 
+	  int alevel, int parc, int *parn,
+	  const char **parv, int *errors, int dir, char c, long mode_type)
+{
+	if(!IsOperCModes(source_p) && !IsServer(source_p))
+	{
+		if(!(*errors & SM_ERR_NOPRIVS))
+		{
+			if(IsOper(source_p))
+				sendto_one(source_p, form_str(ERR_NOPRIVS), me.name, source_p->name, "set_cmodes");
+			else
+				sendto_one_numeric(source_p, ERR_NOPRIVILEGES, form_str(ERR_NOPRIVILEGES));
+
+			*errors |= SM_ERR_NOPRIVS;
+			return;
+		}
+	}
+	/* setting + */
+	if((dir == MODE_ADD) && !(chptr->mode.mode & mode_type))
+	{
+		chptr->mode.mode |= mode_type;
+
+		mode_changes[mode_count].letter = c;
+		mode_changes[mode_count].dir = MODE_ADD;
+		mode_changes[mode_count].caps = 0;
+		mode_changes[mode_count].nocaps = 0;
+		mode_changes[mode_count].id = NULL;
+		mode_changes[mode_count].mems = ALL_MEMBERS;
+		mode_changes[mode_count++].arg = NULL;
+	}
+	else if((dir == MODE_DEL) && (chptr->mode.mode & mode_type))
+	{
+		chptr->mode.mode &= ~mode_type;
+
+		mode_changes[mode_count].letter = c;
+		mode_changes[mode_count].dir = MODE_DEL;
+		mode_changes[mode_count].caps = 0;
+		mode_changes[mode_count].nocaps = 0;
+		mode_changes[mode_count].mems = ALL_MEMBERS;
+		mode_changes[mode_count].id = NULL;
+		mode_changes[mode_count++].arg = NULL;
+	}
+}
+
+
 
 static void
 chm_ban(struct Client *source_p, struct Channel *chptr, 
@@ -1268,7 +1317,7 @@ static struct ChannelMode ModeTable[255] =
   {chm_ban,	CHFL_INVEX },                    /* I */
   {chm_nosuch,	0 },			/* J */
   {chm_nosuch,	0 },			/* K */
-  {chm_nosuch,	0 },			/* L */
+  {chm_staff,	MODE_EXLIMIT },		/* L */
   {chm_nosuch,	0 },			/* M */
   {chm_nosuch,	0 },			/* N */
   {chm_nosuch,	0 },			/* O */

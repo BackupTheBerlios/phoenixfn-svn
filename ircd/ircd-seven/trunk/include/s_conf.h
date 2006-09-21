@@ -230,6 +230,7 @@ struct config_channel_entry
 	int knock_delay;
 	int knock_delay_channel;
 	int max_bans;
+	int max_bans_large;
 	int max_chans_per_user;
 	int no_create_on_split;
 	int no_join_on_split;

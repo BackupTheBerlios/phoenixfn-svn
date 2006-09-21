@@ -342,6 +342,7 @@ static struct oper_flags oper_flagtable[] =
 	{ OPER_AUSPEX,		'S', 's' },
 	{ OPER_INVIS,		'P', 'p' },
 	{ OPER_REMOTEBAN,	'B', 'b' },
+	{ OPER_CMODES,		'M', 'm' },
 	{ 0,			'\0', '\0' }
 };
 
