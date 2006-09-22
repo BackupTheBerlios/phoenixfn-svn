@@ -38,6 +38,7 @@
 #include "hash.h"
 #include "packet.h"
 #include "s_serv.h"
+#include "s_newconf.h"
 
 static int m_kick(struct Client *, struct Client *, int, const char **);
 #define mg_kick { m_kick, 3 }

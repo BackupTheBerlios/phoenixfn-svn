@@ -40,6 +40,7 @@
 #include "parse.h"
 #include "modules.h"
 #include "packet.h"
+#include "s_newconf.h"
 
 static int m_topic(struct Client *, struct Client *, int, const char **);
 
