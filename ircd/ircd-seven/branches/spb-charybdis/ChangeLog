@@ -5,6 +5,19 @@ This file lists every change made except typo and formatting fixes, which are
 only listed in SVN log. For a summary of what has changed between releases,
 see the NEWS file.
 
+2006-09-22 Stephen Bennett <spb@gentoo.org>
+
+	* include/s_newconf.h, src/newconf.c, src/chmode.c, src/s_newconf.c:
+	Restrict setting of oper-only channel modes to those with the
+	set_cmodes flag.
+
+2006-09-22 Stephen Bennett <spb@gentoo.org>
+
+	* include/client.h, include/s_newconf.h, src/newconf.c, src/s_user.c,
+	src/s_client.c, src/s_newconf.c, modules/m_stats.c: Implement umode +T
+	to show in stats p. Also move oper flags from the flags2 field to new
+	operflags, and remove some spy notices from stats.
+
 2006-09-20 Stephen Bennett <spb@gentoo.org>
 
 	* src/messages.tab: New RPL_YOUREOPER.
