@@ -449,11 +449,13 @@ chm_staff(struct Client *source_p, struct Channel *chptr,
 	if(!IsServer(source_p) && MyClient(source_p) && !IsOperCModes(source_p))
 	{
 		if(!(*errors & SM_ERR_NOPRIVS))
+		{
 			if(IsOper(source_p))
 				sendto_one(source_p, form_str(ERR_NOPRIVS),
 						me.name, source_p->name, "set_cmode");
 			else
 				sendto_one_numeric(source_p, ERR_NOPRIVILEGES, form_str(ERR_NOPRIVILEGES));
+		}
 		*errors |= SM_ERR_NOPRIVS;
 		return;
 	}
