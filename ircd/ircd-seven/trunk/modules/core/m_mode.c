@@ -43,7 +43,6 @@
 #include "modules.h"
 #include "packet.h"
 #include "sprintf_irc.h"
-#include "patricia.h"
 #include "s_newconf.h"
 
 static int m_mode(struct Client *, struct Client *, int, const char **);
@@ -697,7 +696,7 @@ chm_simple(struct Client *source_p, struct Channel *chptr,
 	   int alevel, int parc, int *parn,
 	   const char **parv, int *errors, int dir, char c, long mode_type)
 {
-	if(!IsOperOverride(source_p) && alevel != CHFL_CHANOP)
+	if(alevel != CHFL_CHANOP)
 	{
 		if(!(*errors & SM_ERR_NOOPS))
 			sendto_one(source_p, form_str(ERR_CHANOPRIVSNEEDED),
@@ -861,7 +860,7 @@ chm_ban(struct Client *source_p, struct Channel *chptr,
 		*errors |= errorval;
 
 		/* non-ops cant see +eI lists.. */
-		if(!IsOperOverride(source_p) || (alevel != CHFL_CHANOP && mode_type != CHFL_BAN))
+		if(alevel != CHFL_CHANOP && mode_type != CHFL_BAN)
 		{
 			if(!(*errors & SM_ERR_NOOPS))
 				sendto_one(source_p, form_str(ERR_CHANOPRIVSNEEDED),
@@ -882,7 +881,7 @@ chm_ban(struct Client *source_p, struct Channel *chptr,
 		return;
 	}
 
-	if(alevel != CHFL_CHANOP && !IsOperOverride(source_p))
+	if(alevel != CHFL_CHANOP)
 	{
 		if(!(*errors & SM_ERR_NOOPS))
 			sendto_one(source_p, form_str(ERR_CHANOPRIVSNEEDED),
@@ -960,7 +959,7 @@ chm_op(struct Client *source_p, struct Channel *chptr,
 	const char *opnick;
 	struct Client *targ_p;
 
-	if(!IsOperOverride(source_p) && alevel != CHFL_CHANOP)
+	if(alevel != CHFL_CHANOP)
 	{
 		if(!(*errors & SM_ERR_NOOPS))
 			sendto_one(source_p, form_str(ERR_CHANOPRIVSNEEDED),
@@ -1004,8 +1003,11 @@ chm_op(struct Client *source_p, struct Channel *chptr,
 
 	if(dir == MODE_ADD)
 	{
+		/* Commented this out since it breaks oper-override opping of yourself.
+		 * Presumably though it was here for a reason. --spb
 		if(targ_p == source_p)
 			return;
+		*/
 
 		mode_changes[mode_count].letter = c;
 		mode_changes[mode_count].dir = MODE_ADD;
@@ -1053,7 +1055,7 @@ chm_voice(struct Client *source_p, struct Channel *chptr,
 	const char *opnick;
 	struct Client *targ_p;
 
-	if(alevel != CHFL_CHANOP && !IsOperOverride(source_p))
+	if(alevel != CHFL_CHANOP)
 	{
 		if(!(*errors & SM_ERR_NOOPS))
 			sendto_one(source_p, form_str(ERR_CHANOPRIVSNEEDED),
@@ -1132,7 +1134,7 @@ chm_limit(struct Client *source_p, struct Channel *chptr,
 	static char limitstr[30];
 	int limit;
 
-	if(alevel != CHFL_CHANOP && !IsOperOverride(source_p))
+	if(alevel != CHFL_CHANOP)
 	{
 		if(!(*errors & SM_ERR_NOOPS))
 			sendto_one(source_p, form_str(ERR_CHANOPRIVSNEEDED),
@@ -1188,7 +1190,7 @@ chm_key(struct Client *source_p, struct Channel *chptr,
 {
 	char *key;
 
-	if(alevel != CHFL_CHANOP && !IsOperOverride(source_p))
+	if(alevel != CHFL_CHANOP)
 	{
 		if(!(*errors & SM_ERR_NOOPS))
 			sendto_one(source_p, form_str(ERR_CHANOPRIVSNEEDED),
@@ -1263,7 +1265,7 @@ chm_regonly(struct Client *source_p, struct Channel *chptr,
 		int alevel, int parc, int *parn,
 		const char **parv, int *errors, int dir, char c, long mode_type)
 {
-	if(alevel != CHFL_CHANOP && !IsOperOverride(source_p))
+	if(alevel != CHFL_CHANOP)
 	{
 		if(!(*errors & SM_ERR_NOOPS))
 			sendto_one(source_p, form_str(ERR_CHANOPRIVSNEEDED),
@@ -1375,7 +1377,7 @@ static struct ChannelMode ModeTable[255] =
 static int
 get_channel_access(struct Client *source_p, struct membership *msptr)
 {
-	if(!MyClient(source_p) || is_chanop(msptr))
+	if(!MyClient(source_p) || is_chanop(msptr) || IsOperOverride(source_p))
 		return CHFL_CHANOP;
 
 	return CHFL_PEON;

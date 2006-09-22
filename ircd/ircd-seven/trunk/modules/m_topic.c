@@ -40,8 +40,6 @@
 #include "parse.h"
 #include "modules.h"
 #include "packet.h"
-#include "patricia.h"
-#include "s_newconf.h"
 
 static int m_topic(struct Client *, struct Client *, int, const char **);
 
@@ -100,8 +98,7 @@ m_topic(struct Client *client_p, struct Client *source_p, int parc, const char *
 			return 0;
 		}
 
-		if((chptr->mode.mode & MODE_TOPICLIMIT) == 0 || IsOperOverride(source_p) || !MyClient(source_p)
-				|| is_chanop(msptr))
+		if((chptr->mode.mode & MODE_TOPICLIMIT) == 0 || is_chanop(msptr) || !MyClient(source_p))
 		{
 			char topic_info[USERHOST_REPLYLEN];
 			ircsprintf(topic_info, "%s!%s@%s",
@@ -128,7 +125,7 @@ m_topic(struct Client *client_p, struct Client *source_p, int parc, const char *
 	}
 	else if(MyClient(source_p))
 	{
-		if(!IsOperOverride(source_p) && (!IsMember(source_p, chptr) && SecretChannel(chptr)))
+		if(!IsMember(source_p, chptr) && SecretChannel(chptr))
 		{
 			sendto_one_numeric(source_p, ERR_NOTONCHANNEL,
 					form_str(ERR_NOTONCHANNEL), parv[1]);

@@ -66,7 +66,7 @@ typedef struct
 {
 	char *ip;
 	time_t expiry;
-	patricia_node_t *pnode;
+	struct _patricia_node_t *pnode;
 	dlink_node node;
 } tgchange;
 
@@ -158,7 +158,7 @@ extern void cluster_generic(struct Client *, const char *, int cltype,
 #define OPER_HELPER	0x80000
 
 #define OPER_FLAGS	(OPER_KLINE|OPER_UNKLINE|OPER_LOCKILL|OPER_GLOBKILL|\
-			 OPER_REMOTE|OPER_GLINE|OPER_XLINE|OPER_RESV|\
+			 OPER_REMOTE|OPER_OVERRIDE|OPER_XLINE|OPER_RESV|\
 			 OPER_NICKS|OPER_REHASH|OPER_DIE|OPER_ADMIN|\
 			 OPER_HADMIN|OPER_OPERWALL|OPER_INVIS|OPER_AUSPEX|\
 			 OPER_REMOTEBAN|OPER_CMODES|OPER_HELPER)

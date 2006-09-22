@@ -38,8 +38,6 @@
 #include "hash.h"
 #include "packet.h"
 #include "s_serv.h"
-#include "patricia.h"
-#include "s_newconf.h"
 
 static int m_kick(struct Client *, struct Client *, int, const char **);
 #define mg_kick { m_kick, 3 }
@@ -104,7 +102,7 @@ m_kick(struct Client *client_p, struct Client *source_p, int parc, const char *p
 			return 0;
 		}
 
-		if(!IsOperOverride(source_p) && !is_chanop(msptr))
+		if(!is_chanop(msptr))
 		{
 			if(MyConnect(source_p))
 			{

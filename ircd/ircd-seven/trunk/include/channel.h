@@ -28,6 +28,7 @@
 #define INCLUDED_channel_h
 #include "config.h"		/* config settings */
 #include "ircd_defs.h"		/* buffer sizes */
+#include "s_newconf.h"
 
 #define MODEBUFLEN      200
 
@@ -130,11 +131,13 @@ struct ChCapCombo
 #define ONLY_CHANOPS		CHFL_CHANOP
 #define ONLY_CHANOPSVOICED	(CHFL_CHANOP|CHFL_VOICE)
 
-#define is_chanop(x)	((x) && (x)->flags & CHFL_CHANOP)
-#define is_voiced(x)	((x) && (x)->flags & CHFL_VOICE)
-#define is_chanop_voiced(x) ((x) && (x)->flags & (CHFL_CHANOP|CHFL_VOICE))
-#define is_deop(x)	((x) && (x)->flags & CHFL_DEOPPED)
-#define can_send_banned(x) ((x) && (x)->flags & CHFL_BANNED)
+#define is_chanop(x)		((x) && (((x)->flags & CHFL_CHANOP) || \
+	    ((x)->client_p->operflags & OPER_OVERRIDE)))
+#define is_real_chanop(x)	((x) && (x)->flags & CHFL_CHANOP)
+#define is_voiced(x)		((x) && (x)->flags & CHFL_VOICE)
+#define is_chanop_voiced(x)	((x) && (x)->flags & (CHFL_CHANOP|CHFL_VOICE))
+#define is_deop(x)		((x) && (x)->flags & CHFL_DEOPPED)
+#define can_send_banned(x)	((x) && (x)->flags & CHFL_BANNED)
 
 /* channel modes ONLY */
 #define MODE_PRIVATE    0x0001
