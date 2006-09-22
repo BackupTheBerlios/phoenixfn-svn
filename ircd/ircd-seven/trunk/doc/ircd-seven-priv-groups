@@ -104,3 +104,5 @@ New privilege set:
 TODO:
     stats T (+4). Not sure where to put it.
     umode +v.
+    TRACE and friends. These reveal routing and some amount of user
+        information (real ip). I suspect the former is more important.
