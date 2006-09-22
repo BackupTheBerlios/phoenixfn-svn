@@ -142,7 +142,7 @@ extern void cluster_generic(struct Client *, const char *, int cltype,
 #define OPER_LOCKILL	0x00008
 #define OPER_GLOBKILL	0x00010
 #define OPER_REMOTE	0x00020
-#define OPER_GLINE	0x00040
+#define OPER_OVERRIDE	0x00040
 #define OPER_XLINE	0x00080
 #define OPER_RESV	0x00100
 #define OPER_NICKS	0x00200
@@ -169,7 +169,7 @@ extern void cluster_generic(struct Client *, const char *, int cltype,
 #define IsOperLocalKill(x)      ((x)->operflags & OPER_LOCKILL)
 #define IsOperRemote(x)         ((x)->operflags & OPER_REMOTE)
 #define IsOperUnkline(x)        ((x)->operflags & OPER_UNKLINE)
-#define IsOperGline(x)          ((x)->operflags & OPER_GLINE)
+#define IsOperOverride(x)       ((x)->operflags & OPER_OVERRIDE)
 #define IsOperN(x)              ((x)->operflags & OPER_NICKS)
 #define IsOperK(x)              ((x)->operflags & OPER_KLINE)
 #define IsOperXline(x)          ((x)->operflags & OPER_XLINE)

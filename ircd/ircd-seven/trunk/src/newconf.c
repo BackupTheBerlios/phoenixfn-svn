@@ -319,7 +319,7 @@ static struct mode_table flag_table[] = {
 	{"remote",		OPER_REMOTE		},
 	{"kline",		OPER_KLINE		},
 	{"unkline",		OPER_UNKLINE		},
-	{"gline",		OPER_GLINE		},
+	{"override",		OPER_OVERRIDE		},
 	{"nick_changes",	OPER_NICKS		},
 	{"rehash",		OPER_REHASH		},
 	{"die",			OPER_DIE		},

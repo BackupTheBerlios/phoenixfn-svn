@@ -327,7 +327,7 @@ struct oper_flags
 };
 static struct oper_flags oper_flagtable[] =
 {
-	{ OPER_GLINE,		'G', 'g' },
+	{ OPER_OVERRIDE,	'G', 'g' },
 	{ OPER_KLINE,		'K', 'k' },
 	{ OPER_XLINE,		'X', 'x' },
 	{ OPER_GLOBKILL,	'O', 'o' },
