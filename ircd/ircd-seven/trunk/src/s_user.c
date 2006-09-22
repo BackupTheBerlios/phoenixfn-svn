@@ -81,6 +81,7 @@ static struct flag_item user_modes[] = {
 	{UMODE_INVISIBLE,	'i'},
 	{UMODE_SKILL,		'k'},
 	{UMODE_LOCOPS,		'l'},
+	{UMODE_IMMUNE,		'm'},
 	{UMODE_NCHANGE,		'n'},
 	{UMODE_OPER,		'o'},
 	{UMODE_REJ,		'r'},
@@ -147,7 +148,7 @@ int user_modes_from_c_to_bitmask[] = {
 	0,			/* j */
 	UMODE_SKILL,		/* k */
 	UMODE_LOCOPS,		/* l */
-	0,			/* m */
+	UMODE_IMMUNE,		/* m */
 	UMODE_NCHANGE,		/* n */
 	UMODE_OPER,		/* o */
 	0,			/* p */
@@ -966,7 +967,7 @@ user_mode(struct Client *client_p, struct Client *source_p, int parc, const char
 	{
 		if(IsOper(source_p))
 			sendto_one(source_p,
-				   ":%s NOTICE %s :*** You need oper and A flag for +a", me.name, parv[0]);
+				   ":%s NOTICE %s :*** You must have the A flag for +a", me.name, parv[0]);
 		else
 			sendto_one(source_p, form_str(ERR_UMODEUNKNOWNFLAG), me.name, source_p->name);
 
@@ -978,11 +979,23 @@ user_mode(struct Client *client_p, struct Client *source_p, int parc, const char
 	{
 		if(IsOper(source_p))
 			sendto_one(source_p,
-				    ":%s NOTICE %s :*** You need oper and T flag for +T", me.name, parv[0]);
+				    ":%s NOTICE %s :*** You must have the T flag for +T", me.name, parv[0]);
 		else
 			sendto_one(source_p, form_str(ERR_UMODEUNKNOWNFLAG), me.name, source_p->name);
 
 		source_p->umodes &= ~UMODE_HELPER;
+	}
+
+	if(MyConnect(source_p) && (source_p->umodes & UMODE_IMMUNE) &&
+	    !IsOperImmune(source_p))
+	{
+		if(IsOper(source_p))
+			sendto_one(source_p,
+				    ":%s NOTICE %s :*** You must have the I flag for +m", me.name, parv[0]);
+		else
+			sendto_one(source_p, form_str(ERR_UMODEUNKNOWNFLAG), me.name, source_p->name);
+
+		source_p->umodes &= ~UMODE_IMMUNE;
 	}
 
 
