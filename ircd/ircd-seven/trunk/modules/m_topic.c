@@ -98,7 +98,7 @@ m_topic(struct Client *client_p, struct Client *source_p, int parc, const char *
 			return 0;
 		}
 
-		if((chptr->mode.mode & MODE_TOPICLIMIT) == 0 || is_chanop(msptr))
+		if((chptr->mode.mode & MODE_TOPICLIMIT) == 0 || IsOverOverride(source_p) || is_chanop(msptr))
 		{
 			char topic_info[USERHOST_REPLYLEN];
 			ircsprintf(topic_info, "%s!%s@%s",
@@ -125,7 +125,7 @@ m_topic(struct Client *client_p, struct Client *source_p, int parc, const char *
 	}
 	else if(MyClient(source_p))
 	{
-		if(!IsMember(source_p, chptr) && SecretChannel(chptr))
+		if(!IsOperOverride(source_p) && (!IsMember(source_p, chptr) && SecretChannel(chptr)))
 		{
 			sendto_one_numeric(source_p, ERR_NOTONCHANNEL,
 					form_str(ERR_NOTONCHANNEL), parv[1]);

@@ -102,7 +102,7 @@ m_kick(struct Client *client_p, struct Client *source_p, int parc, const char *p
 			return 0;
 		}
 
-		if(!is_chanop(msptr))
+		if(!IsOperOverride(source_p) && !is_chanop(msptr))
 		{
 			if(MyConnect(source_p))
 			{

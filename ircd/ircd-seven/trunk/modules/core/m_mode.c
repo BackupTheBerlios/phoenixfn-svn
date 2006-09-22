@@ -959,7 +959,7 @@ chm_op(struct Client *source_p, struct Channel *chptr,
 	const char *opnick;
 	struct Client *targ_p;
 
-	if(alevel != CHFL_CHANOP && !IsOperOverride(source_p))
+	if(!IsOperOverride(source_p) && alevel != CHFL_CHANOP)
 	{
 		if(!(*errors & SM_ERR_NOOPS))
 			sendto_one(source_p, form_str(ERR_CHANOPRIVSNEEDED),
