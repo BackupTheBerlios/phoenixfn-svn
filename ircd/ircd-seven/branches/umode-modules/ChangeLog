@@ -1,0 +1,27 @@
+ChangeLog for ircd-seven
+========================
+
+This file lists every change made except typo and formatting fixes, which are
+only listed in SVN log. For a summary of what has changed between releases,
+see the NEWS file.
+
+2006-09-20 Stephen Bennett <spb@gentoo.org>
+
+	* src/messages.tab: New RPL_YOUREOPER.
+
+2006-09-20 Stephen Bennett <spb@gentoo.org>
+
+	* extensions/Makefile.in, extensions/spy_whois_notice.c,
+	extensions/spy_whois_notice_global.c, extensions/m_olist.c,
+	extensions/m_okick.c, extensions/m_42.c, extensions/m_opme.c,
+	extensions/m_ojoin.c, old/extensions/spy_whois_notice.c,
+	old/extensions/spy_whois_notice_global.c, old/extensions/m_olist.c,
+	old/extensions/m_okick.c, old/extensions/m_42.c,
+	old/extensions/m_opme.c, old/extensions/m_ojoin.c: Move various
+	extensions we won't be using into old/.
+
+2006-09-20 Stephen Bennett <spb@gentoo.org>
+
+	* configure.ac: charybdis -> ircd-seven
+
+
