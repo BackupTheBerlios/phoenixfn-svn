@@ -869,7 +869,7 @@ channel_modes(struct Channel *chptr, struct Client *client_p)
 	*mbuf++ = '+';
 
 	if(chptr->mode.mode & MODE_EXLIMIT)
-		*mbuf++ - 'L';
+		*mbuf++ = 'L';
 	if(chptr->mode.mode & MODE_SECRET)
 		*mbuf++ = 's';
 	if(chptr->mode.mode & MODE_PRIVATE)
