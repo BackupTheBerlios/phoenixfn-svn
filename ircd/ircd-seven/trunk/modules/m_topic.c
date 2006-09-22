@@ -40,6 +40,7 @@
 #include "parse.h"
 #include "modules.h"
 #include "packet.h"
+#include "patricia.h"
 #include "s_newconf.h"
 
 static int m_topic(struct Client *, struct Client *, int, const char **);
@@ -99,7 +100,7 @@ m_topic(struct Client *client_p, struct Client *source_p, int parc, const char *
 			return 0;
 		}
 
-		if((chptr->mode.mode & MODE_TOPICLIMIT) == 0 || IsOverOverride(source_p) || is_chanop(msptr))
+		if((chptr->mode.mode & MODE_TOPICLIMIT) == 0 || IsOperOverride(source_p) || is_chanop(msptr))
 		{
 			char topic_info[USERHOST_REPLYLEN];
 			ircsprintf(topic_info, "%s!%s@%s",
