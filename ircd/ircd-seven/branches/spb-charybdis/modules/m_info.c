@@ -90,7 +90,7 @@ static struct InfoStruct info_table[] = {
 		"opers_see_all_users",
 		OUTPUT_BOOLEAN_YN,
 		&opers_see_all_users,
-		"Farconnect notices available or operspy accountability limited"
+		"Farconnect notices available"
 	},
 	{
 		"anti_nick_flood",
@@ -224,12 +224,6 @@ static struct InfoStruct info_table[] = {
 		OUTPUT_STRING,
 		&ConfigFileEntry.fname_glinelog,
 		"GLINE log file"
-	},
-	{
-		"fname_operspylog",
-		OUTPUT_STRING,
-		&ConfigFileEntry.fname_operspylog,
-		"Oper spy log file"
 	},
 	{
 		"fname_ioerrorlog",
@@ -380,18 +374,6 @@ static struct InfoStruct info_table[] = {
 		OUTPUT_BOOLEAN,
 		&ConfigFileEntry.non_redundant_klines,
 		"Check for and disallow redundant K-lines"
-	},
-	{
-		"operspy_admin_only",
-		OUTPUT_BOOLEAN,
-		&ConfigFileEntry.operspy_admin_only,
-		"Send +Z operspy notices to admins only"
-	},
-	{
-		"operspy_dont_care_user_info",
-		OUTPUT_BOOLEAN,
-		&ConfigFileEntry.operspy_dont_care_user_info,
-		"Remove accountability and some '!' requirement from non-channel operspy"
 	},
 	{
 		"pace_wait",

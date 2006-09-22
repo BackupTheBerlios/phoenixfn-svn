@@ -323,7 +323,7 @@ static struct mode_table flag_table[] = {
 	{"hidden_admin",	OPER_HADMIN		},
 	{"xline",		OPER_XLINE		},
 	{"operwall",		OPER_OPERWALL		},
-	{"oper_spy",		OPER_SPY		},
+	{"auspex",		OPER_AUSPEX		},
 	{"hidden_oper",		OPER_INVIS		},
 	{"remoteban",		OPER_REMOTEBAN		},
 	{"helper",		OPER_HELPER		},
@@ -1941,7 +1941,6 @@ static struct ConfEntry conf_log_table[] =
 	{ "fname_killlog", 	CF_QSTRING, NULL, MAXPATHLEN, &ConfigFileEntry.fname_killlog	},
 	{ "fname_glinelog", 	CF_QSTRING, NULL, MAXPATHLEN, &ConfigFileEntry.fname_glinelog	},
 	{ "fname_klinelog", 	CF_QSTRING, NULL, MAXPATHLEN, &ConfigFileEntry.fname_klinelog	},
-	{ "fname_operspylog", 	CF_QSTRING, NULL, MAXPATHLEN, &ConfigFileEntry.fname_operspylog	},
 	{ "fname_ioerrorlog", 	CF_QSTRING, NULL, MAXPATHLEN, &ConfigFileEntry.fname_ioerrorlog },
 	{ "\0",			0,	    NULL, 0,          NULL }
 };
@@ -2056,8 +2055,6 @@ static struct ConfEntry conf_general_table[] =
 	{ "min_nonwildcard",	CF_INT,   NULL, 0, &ConfigFileEntry.min_nonwildcard	},
 	{ "nick_delay",		CF_TIME,  NULL, 0, &ConfigFileEntry.nick_delay		},
 	{ "no_oper_flood",	CF_YESNO, NULL, 0, &ConfigFileEntry.no_oper_flood	},
-	{ "operspy_admin_only",	CF_YESNO, NULL, 0, &ConfigFileEntry.operspy_admin_only	},
-	{ "operspy_dont_care_user_info", CF_YESNO, NULL, 0, &ConfigFileEntry.operspy_dont_care_user_info },
 	{ "pace_wait",		CF_TIME,  NULL, 0, &ConfigFileEntry.pace_wait		},
 	{ "pace_wait_simple",	CF_TIME,  NULL, 0, &ConfigFileEntry.pace_wait_simple	},
 	{ "ping_cookie",	CF_YESNO, NULL, 0, &ConfigFileEntry.ping_cookie		},

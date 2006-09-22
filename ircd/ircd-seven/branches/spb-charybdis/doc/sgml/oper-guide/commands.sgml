@@ -601,8 +601,7 @@
         </cmdsynopsis>
         <para>
           Searches the local server or network for users that match the hostmask and gecos given.
-	  Network searches require the oper_spy privilege and an '!'
-	  before the hostmask.
+	  Network searches require the auspex privilege.
 	  The matching works the same way as TESTMASK.
         </para>
 	<para>
@@ -628,9 +627,8 @@
         </cmdsynopsis>
         <para>
 	  Displays information about users in a channel.
-	  Opers with the oper_spy privilege
-	  can get the information without being on the channel,
-	  by prefixing the channel name with an '!'.
+	  Opers with the auspex privilege
+	  can get the information without being on the channel.
         </para>
 	<para>
 	  The IP address field contains 255.255.255.255 if the IP address
@@ -664,10 +662,6 @@
 	  is unknown (remote client on a TS5 server) or 0 if the IP address
 	  is hidden (auth{} spoof).
 	</para>
-	<para>
-	  Network searches where a listing is given or the mask option is used
-	  are operspy commands.
-        </para>
       </sect2>
       <sect2>
 	<title>CHGHOST</title>

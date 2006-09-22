@@ -80,7 +80,6 @@ TSRCS =                          \
   m_motd.c \
   m_names.c \
   m_oper.c \
-  m_operspy.c \
   m_pass.c \
   m_ping.c \
   m_pong.c \

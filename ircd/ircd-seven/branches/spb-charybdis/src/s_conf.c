@@ -772,7 +772,6 @@ set_default_conf(void)
 	ConfigFileEntry.stats_y_oper_only = NO;
 	ConfigFileEntry.stats_h_oper_only = NO;
 	ConfigFileEntry.map_oper_only = YES;
-	ConfigFileEntry.operspy_admin_only = NO;
 	ConfigFileEntry.pace_wait = 10;
 	ConfigFileEntry.caller_id_wait = 60;
 	ConfigFileEntry.pace_wait_simple = 1;
@@ -785,7 +784,6 @@ set_default_conf(void)
 	ConfigFileEntry.fname_serverlog = NULL;
 	ConfigFileEntry.fname_glinelog = NULL;
 	ConfigFileEntry.fname_klinelog = NULL;
-	ConfigFileEntry.fname_operspylog = NULL;
 	ConfigFileEntry.fname_ioerrorlog = NULL;
 	ConfigFileEntry.glines = NO;
 	ConfigFileEntry.use_egd = NO;
@@ -803,7 +801,6 @@ set_default_conf(void)
 	ConfigFileEntry.burst_away = NO;
 	ConfigFileEntry.collision_fnc = YES;
 	ConfigFileEntry.global_snotices = YES;
-	ConfigFileEntry.operspy_dont_care_user_info = NO;
 
 #ifdef HAVE_LIBZ
 	ConfigFileEntry.compression_level = 4;
