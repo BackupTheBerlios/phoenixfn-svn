@@ -117,7 +117,7 @@ mo_testline(struct Client *client_p, struct Client *source_p, int parc, const ch
 		}
 	}
 
-	/* now look for a matching I/K/G */
+	/* now look for a matching I/K */
 	if((aconf = find_address_conf(host, NULL, username ? username : "dummy",
 				(type != HM_HOST) ? (struct sockaddr *)&ip : NULL,
 				(type != HM_HOST) ? (
@@ -137,16 +137,6 @@ mo_testline(struct Client *client_p, struct Client *source_p, int parc, const ch
 				(aconf->flags & CONF_FLAGS_TEMPORARY) ? 'k' : 'K',
 				(aconf->flags & CONF_FLAGS_TEMPORARY) ? 
 				 (long) ((aconf->hold - CurrentTime) / 60) : 0L,
-				buf, aconf->passwd);
-			return 0;
-		}
-		else if(aconf->status & CONF_GLINE)
-		{
-			ircsnprintf(buf, sizeof(buf), "%s@%s",
-					aconf->user, aconf->host);
-			sendto_one(source_p, form_str(RPL_TESTLINE),
-				me.name, source_p->name,
-				'G', (long) ((aconf->hold - CurrentTime) / 60),
 				buf, aconf->passwd);
 			return 0;
 		}

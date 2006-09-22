@@ -47,7 +47,6 @@ static FILE *log_oper;
 static FILE *log_foper;
 static FILE *log_server;
 static FILE *log_kill;
-static FILE *log_gline;
 static FILE *log_kline;
 static FILE *log_ioerror;
 
@@ -67,7 +66,6 @@ static struct log_struct log_table[LAST_LOGFILE] =
 	{ &ConfigFileEntry.fname_serverlog,	&log_server	},
 	{ &ConfigFileEntry.fname_killlog,	&log_kill	},
 	{ &ConfigFileEntry.fname_klinelog,	&log_kline	},
-	{ &ConfigFileEntry.fname_glinelog,	&log_gline	},
 	{ &ConfigFileEntry.fname_ioerrorlog,	&log_ioerror	}
 };
 

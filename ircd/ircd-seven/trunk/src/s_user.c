@@ -734,19 +734,8 @@ report_and_set_user_flags(struct Client *source_p, struct ConfItem *aconf)
 	{
 		SetExemptKline(source_p);
 		sendto_one(source_p,
-			   ":%s NOTICE %s :*** You are exempt from K/D/G/X lines. congrats.",
+			   ":%s NOTICE %s :*** You are exempt from K/D/X lines. congrats.",
 			   me.name, source_p->name);
-	}
-
-	if(IsConfExemptGline(aconf))
-	{
-		SetExemptGline(source_p);
-
-		/* dont send both a kline and gline exempt notice */
-		if(!IsConfExemptKline(aconf))
-			sendto_one(source_p,
-				   ":%s NOTICE %s :*** You are exempt from G lines.",
-				   me.name, source_p->name);
 	}
 
 	/* If this user is exempt from user limits set it F lined" */

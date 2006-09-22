@@ -84,7 +84,6 @@ BASE_SRCS =                     \
   s_auth.c                      \
   s_conf.c                      \
   s_newconf.c			\
-  s_gline.c                     \
   s_log.c                       \
   s_serv.c                      \
   s_stats.c                     \
@@ -152,4 +151,4 @@ lint:
 distclean: clean
 	${RM} -f Makefile version.c.last
 
-include .depend
+-include .depend

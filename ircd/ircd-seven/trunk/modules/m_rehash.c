@@ -36,7 +36,6 @@
 #include "common.h"
 #include "irc_string.h"
 #include "ircd.h"
-#include "s_gline.h"
 #include "numeric.h"
 #include "res.h"
 #include "s_conf.h"
@@ -59,8 +58,6 @@ static void rehash_bans_loc (struct Client *);
 static void rehash_dns (struct Client *);
 static void rehash_motd (struct Client *);
 static void rehash_omotd (struct Client *);
-static void rehash_glines (struct Client *);
-static void rehash_pglines (struct Client *);
 static void rehash_tklines (struct Client *);
 static void rehash_tdlines (struct Client *);
 static void rehash_txlines (struct Client *);
@@ -84,8 +81,6 @@ static struct hash_commands {
 	{"DNS", 	rehash_dns},
 	{"MOTD", 	rehash_motd},
 	{"OMOTD", 	rehash_omotd},
-	{"GLINES", 	rehash_glines},
-	{"PGLINES", 	rehash_pglines},
 	{"TKLINES", 	rehash_tklines},
 	{"TDLINES", 	rehash_tdlines},
 	{"TXLINES",	rehash_txlines},
@@ -134,45 +129,6 @@ rehash_omotd(struct Client *source_p)
 
 	free_cachefile(oper_motd);
 	oper_motd = cache_file(OPATH, "opers.motd", 0);
-}
-
-static void
-rehash_glines(struct Client *source_p)
-{
-	struct ConfItem *aconf;
-	dlink_node *ptr, *next_ptr;
-
-	sendto_realops_flags(UMODE_ALL, L_ALL, "%s is clearing G-lines",
-		get_oper_name(source_p));
-
-	DLINK_FOREACH_SAFE(ptr, next_ptr, glines.head)
-	{
-		aconf = ptr->data;
-
-		delete_one_address_conf(aconf->host, aconf);
-		dlinkDestroy(ptr, &glines);
-	}
-}
-
-static void
-rehash_pglines(struct Client *source_p)
-{
-	struct gline_pending *glp_ptr;
-	dlink_node *ptr;
-	dlink_node *next_ptr;
-
-	sendto_realops_flags(UMODE_ALL, L_ALL, "%s is clearing pending glines",
-				get_oper_name(source_p));
-
-	DLINK_FOREACH_SAFE(ptr, next_ptr, pending_glines.head)
-	{
-		glp_ptr = ptr->data;
-
-		MyFree(glp_ptr->reason1);
-		MyFree(glp_ptr->reason2);
-		MyFree(glp_ptr);
-		dlinkDestroy(ptr, &pending_glines);
-	}
 }
 
 static void

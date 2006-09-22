@@ -399,18 +399,17 @@ struct exit_client_hook
 
 /* overflow flags */
 /* EARLIER FLAGS ARE IN s_newconf.h */
-#define FLAGS2_EXEMPTRESV	0x0080000
-#define FLAGS2_EXEMPTGLINE      0x0100000
-#define FLAGS2_EXEMPTKLINE      0x0200000
-#define FLAGS2_EXEMPTFLOOD      0x0400000
-#define FLAGS2_NOLIMIT          0x0800000
-#define FLAGS2_CLICAP		0x2000000
-#define FLAGS2_PING_COOKIE      0x4000000
-#define FLAGS2_IP_SPOOFING      0x8000000
-#define FLAGS2_FLOODDONE        0x10000000
-#define FLAGS2_EXEMPTSPAMBOT	0x20000000
-#define FLAGS2_EXEMPTSHIDE	0x40000000
-#define FLAGS2_EXEMPTJUPE	0x80000000
+#define FLAGS2_EXEMPTRESV	0x00080000
+#define FLAGS2_EXEMPTKLINE      0x00100000
+#define FLAGS2_EXEMPTFLOOD      0x00200000
+#define FLAGS2_NOLIMIT          0x00400000
+#define FLAGS2_CLICAP		0x00800000
+#define FLAGS2_PING_COOKIE      0x01000000
+#define FLAGS2_IP_SPOOFING      0x02000000
+#define FLAGS2_FLOODDONE        0x04000000
+#define FLAGS2_EXEMPTSPAMBOT	0x08000000
+#define FLAGS2_EXEMPTSHIDE	0x10000000
+#define FLAGS2_EXEMPTJUPE	0x20000000
 
 #define SEND_UMODES  (UMODE_INVISIBLE | UMODE_OPER | UMODE_WALLOP | \
                       UMODE_ADMIN | UMODE_SERVICE | UMODE_DEAF)
@@ -503,8 +502,6 @@ struct exit_client_hook
 #define SetExemptKline(x)       ((x)->flags2 |= FLAGS2_EXEMPTKLINE)
 #define IsExemptLimits(x)       ((x)->flags2 & FLAGS2_NOLIMIT)
 #define SetExemptLimits(x)      ((x)->flags2 |= FLAGS2_NOLIMIT)
-#define IsExemptGline(x)        ((x)->flags2 & FLAGS2_EXEMPTGLINE)
-#define SetExemptGline(x)       ((x)->flags2 |= FLAGS2_EXEMPTGLINE)
 #define IsExemptFlood(x)        ((x)->flags2 & FLAGS2_EXEMPTFLOOD)
 #define SetExemptFlood(x)       ((x)->flags2 |= FLAGS2_EXEMPTFLOOD)
 #define IsExemptSpambot(x)	((x)->flags2 & FLAGS2_EXEMPTSPAMBOT)
@@ -531,7 +528,6 @@ struct exit_client_hook
 extern void check_banned_lines(void);
 extern void check_klines_event(void *unused);
 extern void check_klines(void);
-extern void check_glines(void);
 extern void check_dlines(void);
 extern void check_xlines(void);
 

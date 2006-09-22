@@ -1,2 +1,3 @@
 .*.swp
 _stdint.h
+setup.h

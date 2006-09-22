@@ -121,9 +121,6 @@ confopts(struct Client *source_p)
 
 	if(ConfigChannel.use_except)
 		*p++ = 'e';
-
-	if(ConfigFileEntry.glines)
-		*p++ = 'g';
 	*p++ = 'G';
 
 	/* might wanna hide this :P */
