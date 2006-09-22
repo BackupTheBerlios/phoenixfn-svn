@@ -368,12 +368,6 @@ auth {
 	    </listitem>
 	  </varlistentry>
 	  <varlistentry>
-	    <term>gline_exempt</term>
-	    <listitem>
-	      <para>Users in this auth{} block are exempted from g:lines.</para>
-	    </listitem>
-	  </varlistentry>
-	  <varlistentry>
 	    <term>spambot_exempt</term>
 	    <listitem>
 	      <para>Users in this auth{} block are exempted from spambot checks.</para>

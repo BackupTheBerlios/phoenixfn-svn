@@ -86,7 +86,6 @@ struct ConfItem
 #define CONF_LISTEN_PORT        0x1000
 #define CONF_EXEMPTKLINE        0x4000
 #define CONF_NOLIMIT            0x8000
-#define CONF_GLINE             0x10000
 #define CONF_DLINE             0x20000
 #define CONF_EXEMPTDLINE      0x100000
 
@@ -108,7 +107,6 @@ struct ConfItem
 #define CONF_FLAGS_SPOOF_IP             0x00000200
 #define CONF_FLAGS_SPOOF_NOTICE		0x00000400
 #define CONF_FLAGS_REDIR                0x00000800
-#define CONF_FLAGS_EXEMPTGLINE          0x00001000
 #define CONF_FLAGS_EXEMPTRESV		0x00002000	/* exempt from resvs */
 #define CONF_FLAGS_EXEMPTFLOOD          0x00004000
 #define CONF_FLAGS_EXEMPTSPAMBOT	0x00008000
@@ -134,7 +132,6 @@ struct ConfItem
 #define IsNoMatchIp(x)          ((x)->flags & CONF_FLAGS_NOMATCH_IP)
 #define IsConfExemptKline(x)    ((x)->flags & CONF_FLAGS_EXEMPTKLINE)
 #define IsConfExemptLimits(x)   ((x)->flags & CONF_FLAGS_NOLIMIT)
-#define IsConfExemptGline(x)    ((x)->flags & CONF_FLAGS_EXEMPTGLINE)
 #define IsConfExemptFlood(x)    ((x)->flags & CONF_FLAGS_EXEMPTFLOOD)
 #define IsConfExemptSpambot(x)	((x)->flags & CONF_FLAGS_EXEMPTSPAMBOT)
 #define IsConfExemptShide(x)	((x)->flags & CONF_FLAGS_EXEMPTSHIDE)
@@ -179,7 +176,6 @@ struct config_file_entry
 	char *fname_foperlog;
 	char *fname_serverlog;
 	char *fname_killlog;
-	char *fname_glinelog;
 	char *fname_klinelog;
 	char *fname_ioerrorlog;
 
@@ -215,10 +211,6 @@ struct config_file_entry
 	int pace_wait_simple;
 	int short_motd;
 	int no_oper_flood;
-	int glines;
-	int gline_time;
-	int gline_min_cidr;
-	int gline_min_cidr6;
 	int idletime;
 	int hide_server;
 	int hide_spoof_ips;
