@@ -327,6 +327,7 @@ static struct mode_table flag_table[] = {
 	{"hidden_oper",		OPER_INVIS		},
 	{"remoteban",		OPER_REMOTEBAN		},
 	{"helper",		OPER_HELPER		},
+	{"set_cmodes",		OPER_CMODES		},
 	{NULL, 0}
 };
 
