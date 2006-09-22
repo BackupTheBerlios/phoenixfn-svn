@@ -118,6 +118,12 @@ mo_kill(struct Client *client_p, struct Client *source_p, int parc, const char *
 			   me.name, parv[0], target_p->name);
 		return 0;
 	}
+	if(IsOperImmune(target_p))
+	{
+		sendto_one(source_p, ":%s NOTICE %s :Nick %s is immune to kills",
+			me.name, source_p->name, target_p->name);
+		return 0;
+	}
 
 	if(MyConnect(target_p))
 		sendto_one(target_p, ":%s!%s@%s KILL %s :%s",
@@ -152,7 +158,7 @@ mo_kill(struct Client *client_p, struct Client *source_p, int parc, const char *
 		target_p->flags |= FLAGS_KILLED;
 	}
 
-	ircsprintf(buf, "Killed (%s (%s))", source_p->name, reason);
+	ircsprintf(buf, "Killed by %s (%s)", source_p->name, reason);
 
 	exit_client(client_p, target_p, source_p, buf);
 
