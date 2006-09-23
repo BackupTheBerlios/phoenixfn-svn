@@ -778,7 +778,7 @@ remove_our_modes(struct Channel *chptr, struct Client *source_p)
 	{
 		msptr = ptr->data;
 
-		if(is_chanop(msptr))
+		if(is_real_chanop(msptr))
 		{
 			msptr->flags &= ~CHFL_CHANOP;
 			lpara[count++] = msptr->client_p->name;
