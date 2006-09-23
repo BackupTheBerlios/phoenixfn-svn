@@ -163,7 +163,7 @@ find_channel_status(struct membership *msptr, int combine)
 
 	p = buffer;
 
-	if(is_chanop(msptr))
+	if(is_real_chanop(msptr))
 	{
 		if(!combine)
 			return "@";
@@ -710,6 +710,9 @@ can_join(struct Client *source_p, struct Channel *chptr, char *key)
 
 	s_assert(source_p->localClient != NULL);
 
+	if(IsOperOverride(source_p))
+		return 0;
+
 	ircsprintf(src_host, "%s!%s@%s", source_p->name, source_p->username, source_p->host);
 	ircsprintf(src_iphost, "%s!%s@%s", source_p->name, source_p->username, source_p->sockhost);
 	if(source_p->localClient->mangledhost != NULL)
@@ -819,7 +822,7 @@ can_send(struct Channel *chptr, struct Client *source_p, struct membership *mspt
 		}
 	}
 
-	if(is_chanop_voiced(msptr))
+	if(is_chanop_voiced(msptr) || IsOperOverride(source_p) || !MyClient(source_p))
 		return CAN_SEND_OPV;
 
 	if(chptr->mode.mode & MODE_MODERATED)

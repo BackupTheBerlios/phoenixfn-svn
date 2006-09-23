@@ -334,12 +334,6 @@ mo_rehash(struct Client *client_p, struct Client *source_p, int parc, const char
 
 	if (target_server != NULL)
 	{
-		if(!IsOperRemoteBan(source_p))
-		{
-			sendto_one(source_p, form_str(ERR_NOPRIVS),
-				me.name, source_p->name, "remoteban");
-			return 0;
-		}
 		sendto_match_servs(source_p, target_server,
 				CAP_ENCAP, NOCAPS,
 				"ENCAP %s REHASH %s",

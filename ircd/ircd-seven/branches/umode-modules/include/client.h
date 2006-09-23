@@ -359,6 +359,7 @@ struct exit_client_hook
 #define IsOper(x)		((x)->umodes & UMODE_OPER)
 #define IsAdmin(x)		((x)->umodes & UMODE_ADMIN)
 #define IsHelper(x)		((x)->umodes & UMODE_HELPER)
+#define IsImmune(x)		((x)->umodes & UMODE_IMMUNE)
 
 #define SetReject(x)		{(x)->status = STAT_REJECT; \
 				 (x)->handler = UNREGISTERED_HANDLER; }
@@ -451,6 +452,7 @@ struct exit_client_hook
 #define UMODE_OPER         0x0100000	/* Operator */
 #define UMODE_ADMIN        0x0200000	/* Admin on server */
 #define UMODE_HELPER	   0x1000000	/* Helper, shows in /stats p */
+#define UMODE_IMMUNE	   0x2000000	/* Immune from kick */
 
 #define UMODE_ALL	   UMODE_SERVNOTICE
 
@@ -521,7 +523,7 @@ struct exit_client_hook
 #define SetOper(x)              {(x)->umodes |= UMODE_OPER; \
 				 if (MyClient((x))) (x)->handler = OPER_HANDLER;}
 
-#define ClearOper(x)            {(x)->umodes &= ~(UMODE_OPER|UMODE_ADMIN|UMODE_HELPER); \
+#define ClearOper(x)            {(x)->umodes &= ~(UMODE_OPER|UMODE_ADMIN|UMODE_HELPER|UMODE_IMMUNE); \
 				 if (MyClient((x)) && !IsOper((x)) && !IsServer((x))) \
 				  (x)->handler = CLIENT_HANDLER; }
 
