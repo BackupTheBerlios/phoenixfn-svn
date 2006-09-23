@@ -7,6 +7,12 @@ see the NEWS file.
 
 2006-09-23 Stephen Bennett <spb@gentoo.org>
 
+	* include/newconf.h, include/channel.h, include/s_newconf.h,
+	src/chmode.c, src/channel.c, modules/m_topic.c: Implement 'override'
+	oper flag.
+
+2006-09-23 Stephen Bennett <spb@gentoo.org>
+
 	* modules/m_stats.c, include/s_conf.h, include/client.h,
 	-include/s_gline.h, include/hostmask.h, include/s_log.h,
 	include/s_newconf.h, src/newconf.c, src/s_user.c, src/Makefile.in,

@@ -28,6 +28,7 @@
 #define INCLUDED_channel_h
 #include "config.h"		/* config settings */
 #include "ircd_defs.h"		/* buffer sizes */
+#include "s_newconf.h"
 
 #define MODEBUFLEN      200
 
@@ -150,7 +151,8 @@ typedef int (*ExtbanFunc)(const char *data, struct Client *client_p,
 #define ONLY_CHANOPS		CHFL_CHANOP
 #define ONLY_CHANOPSVOICED	(CHFL_CHANOP|CHFL_VOICE)
 
-#define is_chanop(x)	((x) && (x)->flags & CHFL_CHANOP)
+#define is_chanop(x) ((x) && (((x)->flags & CHFL_CHANOP) || IsOperOverride((x)->client_p)))
+#define is_real_chanop(x)	((x) && (x)->flags & CHFL_CHANOP)
 #define is_voiced(x)	((x) && (x)->flags & CHFL_VOICE)
 #define is_chanop_voiced(x) ((x) && (x)->flags & (CHFL_CHANOP|CHFL_VOICE))
 #define is_deop(x)	((x) && (x)->flags & CHFL_DEOPPED)

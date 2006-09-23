@@ -99,7 +99,7 @@ m_topic(struct Client *client_p, struct Client *source_p, int parc, const char *
 			return 0;
 		}
 
-		if((chptr->mode.mode & MODE_TOPICLIMIT) == 0 || is_chanop(msptr))
+		if((chptr->mode.mode & MODE_TOPICLIMIT) == 0 || is_chanop(msptr) || !MyClient(source_p))
 		{
 			char topic_info[USERHOST_REPLYLEN];
 			ircsprintf(topic_info, "%s!%s@%s",

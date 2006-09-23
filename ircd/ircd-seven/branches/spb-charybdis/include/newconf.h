@@ -12,6 +12,7 @@
 
 #include "tools.h"
 #include "client.h"
+#include "s_newconf.h"
 
 struct ConfEntry
 {

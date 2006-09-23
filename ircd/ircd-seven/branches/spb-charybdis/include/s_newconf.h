@@ -67,7 +67,7 @@ typedef struct
 {
 	char *ip;
 	time_t expiry;
-	patricia_node_t *pnode;
+	struct _patricia_node_t *pnode;
 	dlink_node node;
 } tgchange;
 

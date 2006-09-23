@@ -163,7 +163,7 @@ find_channel_status(struct membership *msptr, int combine)
 
 	p = buffer;
 
-	if(is_chanop(msptr))
+	if(is_real_chanop(msptr))
 	{
 		if(!combine)
 			return "@";
