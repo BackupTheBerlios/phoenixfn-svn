@@ -44,14 +44,6 @@
 	</para>
       </sect2>
       <sect2>
-	<title>gline (G), gline</title>
-	<para>
-	  This allows using GLINE (network wide temp bans if 3 opers agree).
-	  If unkline privilege is also possessed, allow UNGLINE (remove gline
-	  locally).
-	</para>
-      </sect2>
-      <sect2>
 	<title>rehash (H), rehash</title>
 	<para>
 	  Allows using the REHASH command, to rehash various configuration
@@ -103,32 +95,23 @@
 	</para>
       </sect2>
       <sect2>
-	<title>oper_spy (S), use operspy</title>
+	<title>auspex (S), see hidden information</title>
 	<para>
-	  This allows using /mode !#channel, /whois !nick, /who !#channel,
-	  /chantrace !#channel, /who !mask, /masktrace !user@host :gecos
+	  This allows /mode #channel, /whois nick, /who #channel,
+	  /chantrace #channel, /who mask, /masktrace user@host :gecos
 	  and /scan umodes +modes-modes global list to see through secret
 	  channels, invisible users, etc.
 	</para>
 	<para>
-	  All operspy usage is broadcasted to opers with snomask +Z set
-	  (on the entire network) and optionally logged.
 	  If you grant this to anyone, it is a good idea to establish 
 	  concrete policies describing what it is to be used for, and
 	  what not.
-	</para>
-	<para>
-	  If operspy_dont_care_user_info is enabled, /who mask is operspy
-	  also, and /who !mask, /who mask, /masktrace !user@host :gecos
-	  and /scan umodes +modes-modes global list do not generate +Z notices
-	  or logs.
 	</para>
       </sect2>
       <sect2>
 	<title>unkline (U), unkline</title>
 	<para>
-	  Allows using UNKLINE and UNDLINE, and if gline privilege is also
-	  possessed, UNGLINE.
+	  Allows using UNKLINE and UNDLINE.
 	</para>
       </sect2>
       <sect2>

@@ -32,7 +32,6 @@
 #include "irc_string.h"
 #include "ircd.h"		/* me */
 #include "listener.h"		/* show_ports */
-#include "s_gline.h"
 #include "msg.h"		/* Message */
 #include "hostmask.h"		/* report_mtrie_conf_links */
 #include "numeric.h"		/* ERR_xxx */
@@ -77,9 +76,6 @@ static void stats_l_list(struct Client *s, const char *, int, int, dlink_list *,
 static void stats_l_client(struct Client *source_p, struct Client *target_p,
 				char statchar);
 
-static void stats_spy(struct Client *, char, const char *);
-static void stats_p_spy(struct Client *);
-
 /* Heres our struct for the stats table */
 struct StatsStruct
 {
@@ -97,8 +93,6 @@ static void stats_tdeny(struct Client *);
 static void stats_deny(struct Client *);
 static void stats_exempt(struct Client *);
 static void stats_events(struct Client *);
-static void stats_glines(struct Client *);
-static void stats_pending_glines(struct Client *);
 static void stats_hubleaf(struct Client *);
 static void stats_auth(struct Client *);
 static void stats_tklines(struct Client *);
@@ -141,8 +135,6 @@ static struct StatsStruct stats_cmd_table[] = {
 	{'E', stats_events,		1, 1, },
 	{'f', comm_dump,		1, 1, },
 	{'F', comm_dump,		1, 1, },
-	{'g', stats_pending_glines,	1, 0, },
-	{'G', stats_glines,		1, 0, },
 	{'h', stats_hubleaf,		0, 0, },
 	{'H', stats_hubleaf,		0, 0, },
 	{'i', stats_auth,		0, 0, },
@@ -214,9 +206,6 @@ m_stats(struct Client *client_p, struct Client *source_p, int parc, const char *
 
 	if(hunt_server (client_p, source_p, ":%s STATS %s :%s", 2, parc, parv) != HUNTED_ISME)
 		return 0;
-
-	if((statchar != 'L') && (statchar != 'l'))
-		stats_spy(source_p, statchar, NULL);
 
 	for (i = 0; stats_cmd_table[i].handler; i++)
 	{
@@ -450,89 +439,6 @@ stats_events (struct Client *source_p)
 {
 	show_events (source_p);
 }
-
-/* stats_pending_glines()
- *
- * input	- client pointer
- * output	- none
- * side effects - client is shown list of pending glines
- */
-static void
-stats_pending_glines (struct Client *source_p)
-{
-	if(ConfigFileEntry.glines)
-	{
-		dlink_node *pending_node;
-		struct gline_pending *glp_ptr;
-		char timebuffer[MAX_DATE_STRING];
-		struct tm *tmptr;
-
-		DLINK_FOREACH (pending_node, pending_glines.head)
-		{
-			glp_ptr = pending_node->data;
-
-			tmptr = localtime (&glp_ptr->time_request1);
-			strftime (timebuffer, MAX_DATE_STRING, "%Y/%m/%d %H:%M:%S", tmptr);
-
-			sendto_one_notice(source_p,
-				    ":1) %s!%s@%s on %s requested gline at %s for %s@%s [%s]",
-				    glp_ptr->oper_nick1,
-				    glp_ptr->oper_user1, glp_ptr->oper_host1,
-				    glp_ptr->oper_server1, timebuffer,
-				    glp_ptr->user, glp_ptr->host, glp_ptr->reason1);
-
-			if(glp_ptr->oper_nick2[0])
-			{
-				tmptr = localtime (&glp_ptr->time_request2);
-				strftime (timebuffer, MAX_DATE_STRING, "%Y/%m/%d %H:%M:%S", tmptr);
-				sendto_one_notice(source_p,
-					    ":2) %s!%s@%s on %s requested gline at %s for %s@%s [%s]",
-					    glp_ptr->oper_nick2,
-					    glp_ptr->oper_user2, glp_ptr->oper_host2,
-					    glp_ptr->oper_server2, timebuffer,
-					    glp_ptr->user, glp_ptr->host, glp_ptr->reason2);
-			}
-		}
-
-		if(dlink_list_length (&pending_glines) > 0)
-			sendto_one_notice(source_p, ":End of Pending G-lines");
-	}
-	else
-		sendto_one_notice(source_p, ":This server does not support G-Lines");
-
-}
-
-/* stats_glines()
- *
- * input	- client pointer
- * output	- none
- * side effects - client is shown list of glines
- */
-static void
-stats_glines (struct Client *source_p)
-{
-	if(ConfigFileEntry.glines)
-	{
-		dlink_node *gline_node;
-		struct ConfItem *kill_ptr;
-
-		DLINK_FOREACH_PREV (gline_node, glines.tail)
-		{
-			kill_ptr = gline_node->data;
-
-			sendto_one_numeric(source_p, RPL_STATSKLINE, 
-					   form_str(RPL_STATSKLINE), 'G',
-					    kill_ptr->host ? kill_ptr->host : "*",
-					    kill_ptr->user ? kill_ptr->user : "*",
-					    kill_ptr->passwd ? kill_ptr->passwd : "No Reason",
-					    kill_ptr->spasswd ? "|" : "",
-					    kill_ptr->spasswd ? kill_ptr->spasswd : "");
-		}
-	}
-	else
-		sendto_one_notice(source_p, ":This server does not support G-Lines");
-}
-
 
 static void
 stats_hubleaf(struct Client *source_p)
@@ -781,7 +687,7 @@ stats_operedup (struct Client *source_p)
 	{
 		target_p = oper_ptr->data;
 
-		if(IsOperInvis(target_p) && !IsOper(source_p))
+		if(!IsHelper(target_p))
 			continue;
 
 		if(target_p->user->away)
@@ -797,8 +703,6 @@ stats_operedup (struct Client *source_p)
 
 	sendto_one_numeric(source_p, RPL_STATSDEBUG,
 				"p :%u staff members", count);
-
-	stats_p_spy (source_p);
 }
 
 static void
@@ -1258,7 +1162,6 @@ stats_ltrace(struct Client *source_p, int parc, const char *parv[])
 
 			if(target_p != NULL)
 			{
-				stats_spy(source_p, statchar, target_p->name);
 				stats_l_client(source_p, target_p, statchar);
 			}
 			else
@@ -1274,8 +1177,6 @@ stats_ltrace(struct Client *source_p, int parc, const char *parv[])
 		name = me.name;
 		doall = 1;
 	}
-
-	stats_spy(source_p, statchar, name);
 
 	if(doall)
 	{
@@ -1370,46 +1271,3 @@ stats_l_client(struct Client *source_p, struct Client *target_p,
 				    "-");
 	}
 }
-
-/*
- * stats_spy
- *
- * inputs	- pointer to client doing the /stats
- *		- char letter they are doing /stats on
- * output	- none
- * side effects -
- * This little helper function reports to opers if configured.
- * personally, I don't see why opers need to see stats requests
- * at all. They are just "noise" to an oper, and users can't do
- * any damage with stats requests now anyway. So, why show them?
- * -Dianora
- */
-static void
-stats_spy(struct Client *source_p, char statchar, const char *name)
-{
-	hook_data_int data;
-
-	data.client = source_p;
-	data.arg1 = name;
-	data.arg2 = (int) statchar;
-
-	call_hook(doing_stats_hook, &data);
-}
-
-/* stats_p_spy()
- *
- * input	- pointer to client doing stats
- * ouput	-
- * side effects - call hook doing_stats_p
- */
-static void
-stats_p_spy (struct Client *source_p)
-{
-	hook_data data;
-
-	data.client = source_p;
-	data.arg1 = data.arg2 = NULL;
-
-	call_hook(doing_stats_p_hook, &data);
-}
-

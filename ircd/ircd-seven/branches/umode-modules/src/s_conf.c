@@ -47,7 +47,6 @@
 #include "commio.h"
 #include "s_log.h"
 #include "send.h"
-#include "s_gline.h"
 #include "memory.h"
 #include "balloc.h"
 #include "patricia.h"
@@ -382,17 +381,6 @@ verify_access(struct Client *client_p, const char *username)
 					":%s NOTICE %s :*** Banned %s",
 					me.name, client_p->name, aconf->passwd);
 		}
-		return (BANNED_CLIENT);
-	}
-	else if(aconf->status & CONF_GLINE)
-	{
-		sendto_one(client_p, ":%s NOTICE %s :*** G-lined", me.name, client_p->name);
-
-		if(ConfigFileEntry.kline_with_reason)
-			sendto_one(client_p,
-					":%s NOTICE %s :*** Banned %s",
-					me.name, client_p->name, aconf->passwd);
-
 		return (BANNED_CLIENT);
 	}
 
@@ -772,7 +760,6 @@ set_default_conf(void)
 	ConfigFileEntry.stats_y_oper_only = NO;
 	ConfigFileEntry.stats_h_oper_only = NO;
 	ConfigFileEntry.map_oper_only = YES;
-	ConfigFileEntry.operspy_admin_only = NO;
 	ConfigFileEntry.pace_wait = 10;
 	ConfigFileEntry.caller_id_wait = 60;
 	ConfigFileEntry.pace_wait_simple = 1;
@@ -783,15 +770,9 @@ set_default_conf(void)
 	ConfigFileEntry.fname_operlog = NULL;
 	ConfigFileEntry.fname_foperlog = NULL;
 	ConfigFileEntry.fname_serverlog = NULL;
-	ConfigFileEntry.fname_glinelog = NULL;
 	ConfigFileEntry.fname_klinelog = NULL;
-	ConfigFileEntry.fname_operspylog = NULL;
 	ConfigFileEntry.fname_ioerrorlog = NULL;
-	ConfigFileEntry.glines = NO;
 	ConfigFileEntry.use_egd = NO;
-	ConfigFileEntry.gline_time = 12 * 3600;
-	ConfigFileEntry.gline_min_cidr = 16;
-	ConfigFileEntry.gline_min_cidr6 = 48;
 	ConfigFileEntry.hide_spoof_ips = YES;
 	ConfigFileEntry.hide_error_messages = 1;
 	ConfigFileEntry.idletime = 0;
@@ -803,7 +784,6 @@ set_default_conf(void)
 	ConfigFileEntry.burst_away = NO;
 	ConfigFileEntry.collision_fnc = YES;
 	ConfigFileEntry.global_snotices = YES;
-	ConfigFileEntry.operspy_dont_care_user_info = NO;
 
 #ifdef HAVE_LIBZ
 	ConfigFileEntry.compression_level = 4;

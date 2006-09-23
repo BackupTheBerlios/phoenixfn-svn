@@ -175,23 +175,10 @@ scan_umodes(struct Client *client_p, struct Client *source_p, int parc,
 	}
 	if (target_list == &global_client_list && (list_users || mask))
 	{
-		if (IsOperSpy(source_p))
-		{
-			if (!ConfigFileEntry.operspy_dont_care_user_info)
-			{
-				strlcpy(buf, "UMODES", sizeof buf);
-				for (i = 2; i < parc; i++)
-				{
-					strlcat(buf, " ", sizeof buf);
-					strlcat(buf, parv[i], sizeof buf);
-				}
-				report_operspy(source_p, "SCAN", buf);
-			}
-		}
-		else
+		if (!IsAuspex(source_p))
 		{
 			sendto_one(source_p, form_str(ERR_NOPRIVS),
-				   me.name, source_p->name, "oper_spy");
+				   me.name, source_p->name, "auspex");
 			return -1;
 		}
 	}

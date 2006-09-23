@@ -79,14 +79,13 @@ m_mode(struct Client *client_p, struct Client *source_p, int parc, const char *p
 	struct membership *msptr;
 	int n = 2;
 	const char *dest;
-	int operspy = 0;
+	int auspex = 0;
 
 	dest = parv[1];
 
-	if(IsOperSpy(source_p) && *dest == '!')
+	if(IsAuspex(source_p))
 	{
-		dest++;
-		operspy = 1;
+		auspex = 1;
 
 		if(EmptyString(dest))
 		{
@@ -122,12 +121,9 @@ m_mode(struct Client *client_p, struct Client *source_p, int parc, const char *p
 	/* Now know the channel exists */
 	if(parc < n + 1)
 	{
-		if(operspy)
-			report_operspy(source_p, "MODE", chptr->chname);
-
 		sendto_one(source_p, form_str(RPL_CHANNELMODEIS),
 			   me.name, source_p->name, parv[1],
-			   operspy ? channel_modes(chptr, &me) : channel_modes(chptr, source_p));
+			   auspex ? channel_modes(chptr, &me) : channel_modes(chptr, source_p));
 
 		sendto_one(source_p, form_str(RPL_CREATIONTIME),
 			   me.name, source_p->name, parv[1], chptr->channelts);

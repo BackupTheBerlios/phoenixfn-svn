@@ -16,4 +16,3 @@ Server notice masks:
        +u     - Unauthorised client connections
        +x     - New server introduction and split messages
        +y     - Juped channel join attempts, etc
-       +Z     - Operspy notices

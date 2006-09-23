@@ -46,8 +46,6 @@ typedef enum ilogfile
 	L_SERVER,
 	L_KILL,
 	L_KLINE,
-	L_GLINE,
-	L_OPERSPY,
 	L_IOERROR,
 	LAST_LOGFILE
 } ilogfile;
@@ -60,7 +58,6 @@ extern void ilog(ilogfile dest, const char *fmt, ...) AFP(2, 3);
 extern void inotice(const char *fmt, ...) AFP(1, 2);
 extern void iwarn(const char *fmt, ...) AFP(1, 2);
 extern void ierror(const char *fmt, ...) AFP(1, 2);
-extern void report_operspy(struct Client *, const char *, const char *);
 extern const char *smalldate(void);
 extern void report_error(const char *, const char *, const char *, int);
 

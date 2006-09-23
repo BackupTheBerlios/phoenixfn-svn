@@ -140,7 +140,7 @@ extern void cluster_generic(struct Client *, const char *, int cltype,
 #define OPER_LOCKILL	0x00008
 #define OPER_GLOBKILL	0x00010
 #define OPER_REMOTE	0x00020
-#define OPER_GLINE	0x00040
+#define OPER_OVERRIDE	0x00040
 #define OPER_XLINE	0x00080
 #define OPER_RESV	0x00100
 #define OPER_NICKS	0x00200
@@ -150,36 +150,38 @@ extern void cluster_generic(struct Client *, const char *, int cltype,
 #define OPER_HADMIN	0x02000
 #define OPER_OPERWALL	0x04000
 #define OPER_INVIS	0x08000
-#define OPER_SPY	0x10000
+#define OPER_AUSPEX	0x10000
 #define OPER_REMOTEBAN	0x20000
-/*			0x40000 	*/
-/* 0x80000 and above are in client.h */
+#define OPER_HELPER	0x40000
+#define OPER_CMODES	0x80000
 
 #define OPER_FLAGS	(OPER_KLINE|OPER_UNKLINE|OPER_LOCKILL|OPER_GLOBKILL|\
-			 OPER_REMOTE|OPER_GLINE|OPER_XLINE|OPER_RESV|\
+			 OPER_REMOTE|OPER_OVERRIDE|OPER_XLINE|OPER_RESV|\
 			 OPER_NICKS|OPER_REHASH|OPER_DIE|OPER_ADMIN|\
-			 OPER_HADMIN|OPER_OPERWALL|OPER_INVIS|OPER_SPY|\
-			 OPER_REMOTEBAN)
+			 OPER_HADMIN|OPER_OPERWALL|OPER_INVIS|OPER_AUSPEX|\
+			 OPER_REMOTEBAN|OPER_HELPER|OPER_CMODES)
 
 #define IsOperConfEncrypted(x)	((x)->flags & OPER_ENCRYPTED)
 
-#define IsOperGlobalKill(x)     ((x)->flags2 & OPER_GLOBKILL)
-#define IsOperLocalKill(x)      ((x)->flags2 & OPER_LOCKILL)
-#define IsOperRemote(x)         ((x)->flags2 & OPER_REMOTE)
-#define IsOperUnkline(x)        ((x)->flags2 & OPER_UNKLINE)
-#define IsOperGline(x)          ((x)->flags2 & OPER_GLINE)
-#define IsOperN(x)              ((x)->flags2 & OPER_NICKS)
-#define IsOperK(x)              ((x)->flags2 & OPER_KLINE)
-#define IsOperXline(x)          ((x)->flags2 & OPER_XLINE)
-#define IsOperDie(x)            ((x)->flags2 & OPER_DIE)
-#define IsOperRehash(x)         ((x)->flags2 & OPER_REHASH)
-#define IsOperHiddenAdmin(x)    ((x)->flags2 & OPER_HADMIN)
-#define IsOperAdmin(x)          (((x)->flags2 & OPER_ADMIN) || \
-					((x)->flags2 & OPER_HADMIN))
-#define IsOperOperwall(x)       ((x)->flags2 & OPER_OPERWALL)
-#define IsOperSpy(x)            ((x)->flags2 & OPER_SPY)
-#define IsOperInvis(x)          ((x)->flags2 & OPER_INVIS)
-#define IsOperRemoteBan(x)	((x)->flags2 & OPER_REMOTEBAN)
+#define IsOperGlobalKill(x)     ((x)->operflags & OPER_GLOBKILL)
+#define IsOperLocalKill(x)      ((x)->operflags & OPER_LOCKILL)
+#define IsOperRemote(x)         ((x)->operflags & OPER_REMOTE)
+#define IsOperUnkline(x)        ((x)->operflags & OPER_UNKLINE)
+#define IsOperOverride(x)       ((x)->operflags & OPER_OVERRIDE)
+#define IsOperN(x)              ((x)->operflags & OPER_NICKS)
+#define IsOperK(x)              ((x)->operflags & OPER_KLINE)
+#define IsOperXline(x)          ((x)->operflags & OPER_XLINE)
+#define IsOperDie(x)            ((x)->operflags & OPER_DIE)
+#define IsOperRehash(x)         ((x)->operflags & OPER_REHASH)
+#define IsOperHiddenAdmin(x)    ((x)->operflags & OPER_HADMIN)
+#define IsOperAdmin(x)          (((x)->operflags & OPER_ADMIN) || \
+				    ((x)->operflags & OPER_HADMIN))
+#define IsOperOperwall(x)       ((x)->operflags & OPER_OPERWALL)
+#define IsAuspex(x)             ((x)->operflags & OPER_AUSPEX)
+#define IsOperInvis(x)          ((x)->operflags & OPER_INVIS)
+#define IsOperRemoteBan(x)	((x)->operflags & OPER_REMOTEBAN)
+#define IsOperHelper(x)		((x)->operflags & OPER_HELPER)
+#define IsOperCModes(x)		((x)->operflags & OPER_CMODES)
 
 extern struct oper_conf *make_oper_conf(void);
 extern void free_oper_conf(struct oper_conf *);

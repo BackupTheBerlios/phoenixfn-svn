@@ -301,16 +301,6 @@
 	  are whoised.
 	</para>
       </sect2>
-      <sect2>
-	<title>+Z, operspy notices</title>
-	<para>
-	  Opers with +Z receive notices whenever an oper anywhere on the
-	  network uses operspy.
-	</para>
-	<para>
-	  This snomask can be configured to be only effective for admins.
-	</para>
-      </sect2>
     </sect1>
   </chapter>
 <!-- Keep this comment at the end of the file

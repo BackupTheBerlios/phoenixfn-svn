@@ -5,6 +5,47 @@ This file lists every change made except typo and formatting fixes, which are
 only listed in SVN log. For a summary of what has changed between releases,
 see the NEWS file.
 
+2006-09-23 Stephen Bennett <spb@gentoo.org>
+
+	* modules/m_stats.c, include/s_conf.h, include/client.h,
+	-include/s_gline.h, include/hostmask.h, include/s_log.h,
+	include/s_newconf.h, src/newconf.c, src/s_user.c, src/Makefile.in,
+	src/s_conf.c, src/client.c, -src/s_gline.c, src/ircd_state.c,
+	src/hostmask.c, src/.depend, src/s_log.c, src/ircd.c, src/s_newconf.c,
+	-help/opers/gline, help/opers/rehash, -help/opers/ungline, help/opers/index,
+	extensions/sno_globalkline.c, tools/convertilines.c, doc/example.conf,
+	doc/server-version-info, doc/reference.conf, doc/logfiles.txt,
+	doc/sgml/oper-guide/commands.sgml, doc/sgml/oper-guide/oprivs.sgml,
+	doc/sgml/oper-guide/config.sgml, modules/Makefile.in, modules/m_info.c,
+	-modules/m_gline.c, modules/.depend, modules/m_version.c, modules/m_testline.c,
+	modules/m_rehash.c, modules/m_stats.c: Rip out G:line support.
+
+2006-09-23 Stephen Bennett <spb@gentoo.org>
+
+	* include/s_conf.h, include/snomask.h, include/s_log.h,
+	include/s_newconf.h, src/newconf.c, src/s_conf.c, src/snomask.c,
+	src/s_log.c, src/s_newconf.c, help/opers/scan, -help/opers/operspy,
+	help/opers/index, help/opers/snomask, doc/example.conf,
+	doc/reference.conf, doc/sgml/oper-guide/commands.sgml,
+	doc/sgml/oper-guide/oprivs.sgml, doc/sgml/oper-guide/umodes.sgml,
+	modules/Makefile.in, modules/m_info.c, modules/m_scan.c,
+	modules/m_version.c, modules/m_etrace.c, modules/m_whois.c,
+	modules/core/m_mode.c, modules/m_who.c, -modules/m_operspy.c,
+	+old/modules/m_operspy.c: Replace oper_spy with hyperion-style auspex.
+
+2006-09-22 Stephen Bennett <spb@gentoo.org>
+
+	* include/s_newconf.h, src/newconf.c, src/chmode.c, src/s_newconf.c:
+	Restrict setting of oper-only channel modes to those with the
+	set_cmodes flag.
+
+2006-09-22 Stephen Bennett <spb@gentoo.org>
+
+	* include/client.h, include/s_newconf.h, src/newconf.c, src/s_user.c,
+	src/s_client.c, src/s_newconf.c, modules/m_stats.c: Implement umode +T
+	to show in stats p. Also move oper flags from the flags2 field to new
+	operflags, and remove some spy notices from stats.
+
 2006-09-20 Stephen Bennett <spb@gentoo.org>
 
 	* src/messages.tab: New RPL_YOUREOPER.

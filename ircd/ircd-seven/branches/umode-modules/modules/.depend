@@ -373,24 +373,6 @@ m_etrace.so: m_etrace.c ../include/stdinc.h ../include/config.h \
   ../include/send.h ../include/msg.h ../include/parse.h \
   ../include/modules.h ../include/parse.h ../include/msg.h \
   ../include/hook.h
-m_gline.so: m_gline.c ../include/stdinc.h ../include/config.h \
-  ../include/setup.h ../include/defaults.h ../libcharybdis/tools.h \
-  ../include/s_gline.h ../include/ircd_defs.h ../include/s_log.h \
-  ../include/send.h ../include/channel.h ../include/client.h \
-  ../libcharybdis/linebuf.h ../libcharybdis/tools.h ../include/channel.h \
-  ../include/res.h ../include/snomask.h ../include/client.h \
-  ../include/common.h ../include/config.h ../include/irc_string.h \
-  ../include/sprintf_irc.h ../include/ircd.h ../libcharybdis/tools.h \
-  ../libcharybdis/memory.h ../include/ircd_defs.h ../include/setup.h \
-  ../libcharybdis/balloc.h ../libcharybdis/memory.h ../include/hostmask.h \
-  ../include/numeric.h ../libcharybdis/commio.h ../include/config.h \
-  ../include/s_conf.h ../include/class.h ../include/common.h \
-  ../include/patricia.h ../include/irc_string.h ../include/ircd.h \
-  ../include/numeric.h ../include/s_newconf.h ../include/scache.h \
-  ../include/send.h ../include/msg.h ../include/s_serv.h \
-  ../include/hash.h ../include/parse.h ../include/modules.h \
-  ../include/parse.h ../include/msg.h ../include/hook.h \
-  ../include/s_log.h
 m_help.so: m_help.c ../include/stdinc.h ../include/config.h \
   ../include/setup.h ../include/defaults.h ../include/client.h \
   ../include/ircd_defs.h ../include/s_log.h ../include/send.h \
@@ -682,7 +664,7 @@ m_rehash.so: m_rehash.c ../include/stdinc.h ../include/config.h \
   ../include/channel.h ../include/common.h ../include/irc_string.h \
   ../include/ircd.h ../libcharybdis/tools.h ../libcharybdis/memory.h \
   ../include/ircd_defs.h ../include/setup.h ../libcharybdis/balloc.h \
-  ../libcharybdis/memory.h ../include/s_gline.h ../include/s_serv.h \
+  ../libcharybdis/memory.h ../include/s_serv.h \
   ../include/numeric.h ../include/res.h ../include/s_conf.h \
   ../include/class.h ../include/common.h ../include/patricia.h \
   ../include/irc_string.h ../include/ircd.h ../include/numeric.h \
@@ -835,7 +817,7 @@ m_stats.so: m_stats.c ../include/stdinc.h ../include/config.h \
   ../include/common.h ../include/irc_string.h ../include/ircd.h \
   ../libcharybdis/memory.h ../include/ircd_defs.h ../include/setup.h \
   ../libcharybdis/balloc.h ../libcharybdis/memory.h ../include/listener.h \
-  ../include/s_gline.h ../include/msg.h ../include/hostmask.h \
+  ../include/msg.h ../include/hostmask.h \
   ../include/numeric.h ../include/scache.h ../include/send.h \
   ../libcharybdis/commio.h ../include/config.h ../include/s_conf.h \
   ../include/class.h ../include/common.h ../include/patricia.h \

@@ -69,7 +69,7 @@ int snomask_modes[256] = {
         0,                      /* W */
         0,                      /* X */
         0,                      /* Y */
-        SNO_OPERSPY,	        /* Z */
+        0,      	        /* Z */
         /* 0x5B */ 0, 0, 0, 0, 0, 0, /* 0x60 */
         0,		        /* a */
         SNO_BOTS,	        /* b */

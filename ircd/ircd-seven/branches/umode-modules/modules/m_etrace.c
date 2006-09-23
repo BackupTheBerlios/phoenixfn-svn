@@ -222,14 +222,13 @@ mo_chantrace(struct Client *client_p, struct Client *source_p, int parc, const c
 	const char *sockhost;
 	const char *name;
 	dlink_node *ptr;
-	int operspy = 0;
+	int auspex = 0;
 
 	name = parv[1];
 
-	if(IsOperSpy(source_p) && parv[1][0] == '!')
+	if(IsAuspex(source_p))
 	{
-		name++;
-		operspy = 1;
+		auspex = 1;
 
 		if(EmptyString(name))
 		{
@@ -246,11 +245,7 @@ mo_chantrace(struct Client *client_p, struct Client *source_p, int parc, const c
 		return 0;
 	}
 
-	/* dont report operspys for nonexistant channels. */
-	if(operspy)
-		report_operspy(source_p, "CHANTRACE", chptr->chname);
-
-	if(!operspy && !IsMember(client_p, chptr))
+	if(!auspex && !IsMember(client_p, chptr))
 	{
 		sendto_one_numeric(source_p, ERR_NOTONCHANNEL, form_str(ERR_NOTONCHANNEL),
 				chptr->chname);
@@ -370,17 +365,15 @@ mo_masktrace(struct Client *client_p, struct Client *source_p, int parc,
 {
 	char *name, *username, *hostname, *gecos;
 	const char *mask;
-	int operspy = 0;
+	int auspex = 0;
 
 	mask = parv[1];	
 	name = LOCAL_COPY(parv[1]);	
 	collapse(name);
 
-	if(IsOperSpy(source_p) && parv[1][0] == '!')
+	if(IsAuspex(source_p))
 	{
-		name++;
-		mask++;
-		operspy = 1;
+		auspex = 1;
 	}		
 	
 	if(parc > 2 && !EmptyString(parv[2]))
@@ -412,18 +405,7 @@ mo_masktrace(struct Client *client_p, struct Client *source_p, int parc,
 		return 0;
 	}
 			
-	if(operspy) {
-		if (!ConfigFileEntry.operspy_dont_care_user_info)
-		{
-			char buf[512];
-			strlcpy(buf, mask, sizeof(buf));
-			if(!EmptyString(gecos)) {
-				strlcat(buf, " ", sizeof(buf));
-				strlcat(buf, gecos, sizeof(buf));
-			}		
-
-			report_operspy(source_p, "MASKTRACE", buf);	
-		}
+	if(auspex) {
 		match_masktrace(source_p, &global_client_list, username, hostname, name, gecos);		
 	} else
 		match_masktrace(source_p, &lclient_list, username, hostname, name, gecos);

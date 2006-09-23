@@ -89,7 +89,7 @@ int user_modes[256] = {
 	UMODE_NOFORWARD,	/* Q */
 	UMODE_REGONLYMSG,	/* R */
 	UMODE_SERVICE,		/* S */
-	0,			/* T */
+	UMODE_HELPER,		/* T */
 	0,			/* U */
 	0,			/* V */
 	0,			/* W */
@@ -812,17 +812,6 @@ report_and_set_user_flags(struct Client *source_p, struct ConfItem *aconf)
 			   me.name, source_p->name);
 	}
 
-	if(IsConfExemptGline(aconf))
-	{
-		SetExemptGline(source_p);
-
-		/* dont send both a kline and gline exempt notice */
-		if(!IsConfExemptKline(aconf))
-			sendto_one(source_p,
-				   ":%s NOTICE %s :*** You are exempt from G lines.",
-				   me.name, source_p->name);
-	}
-
 	if(IsConfExemptDNSBL(aconf))
 		/* kline exempt implies this, don't send both */
 		if(!IsConfExemptKline(aconf))
@@ -1010,7 +999,7 @@ user_mode(struct Client *client_p, struct Client *source_p, int parc, const char
 						source_p->snomask = 0;
 						showsnomask = YES;
 					}
-					source_p->flags2 &= ~OPER_FLAGS;
+					source_p->operflags = 0;
 
 					MyFree(source_p->localClient->opername);
 					source_p->localClient->opername = NULL;
@@ -1092,24 +1081,45 @@ user_mode(struct Client *client_p, struct Client *source_p, int parc, const char
 
 	if(MyClient(source_p) && (source_p->snomask & SNO_NCHANGE) && !IsOperN(source_p))
 	{
-		sendto_one(source_p,
-			   ":%s NOTICE %s :*** You need oper and N flag for +s +n", me.name, parv[0]);
+		if(IsOper(source_p))
+			sendto_one(source_p,
+				   ":%s NOTICE %s :*** You need the N flag for +s +n", me.name, parv[0]);
+		else
+			sendto_one(source_p, form_str(ERR_UMODEUNKNOWNFLAG), me.name, source_p->name);
+
 		source_p->snomask &= ~SNO_NCHANGE;	/* only tcm's really need this */
 	}
 
 	if(MyClient(source_p) && (source_p->umodes & UMODE_OPERWALL) && !IsOperOperwall(source_p))
 	{
-		sendto_one(source_p,
-			   ":%s NOTICE %s :*** You need oper and operwall flag for +z", me.name, parv[0]);
+		if(IsOper(source_p))
+			sendto_one(source_p,
+				   ":%s NOTICE %s :*** You need the operwall flag for +z", me.name, parv[0]);
+		else
+			sendto_one(source_p, form_str(ERR_UMODEUNKNOWNFLAG), me.name, source_p->name);
 		source_p->umodes &= ~UMODE_OPERWALL;
 	}
 
 	if(MyConnect(source_p) && (source_p->umodes & UMODE_ADMIN) &&
 	   (!IsOperAdmin(source_p) || IsOperHiddenAdmin(source_p)))
 	{
-		sendto_one(source_p,
-			   ":%s NOTICE %s :*** You need oper and A flag for +a", me.name, parv[0]);
+		if(IsOper(source_p))
+			sendto_one(source_p,
+				   ":%s NOTICE %s :*** You need the A flag for +a", me.name, parv[0]);
+		else
+			sendto_one(source_p, form_str(ERR_UMODEUNKNOWNFLAG), me.name, source_p->name);
 		source_p->umodes &= ~UMODE_ADMIN;
+	}
+
+	if(MyClient(source_p) && (source_p->umodes & UMODE_HELPER) && !IsOperHelper(source_p))
+	{
+		if(IsOper(source_p))
+			sendto_one(source_p,
+				    ":%s NOTICE %s :*** You need the helper flag for +T", me.name, parv[0]);
+		else
+			sendto_one(source_p, form_str(ERR_UMODEUNKNOWNFLAG), me.name, source_p->name);
+
+		source_p->umodes &= ~UMODE_HELPER;
 	}
 
 	/* let modules providing usermodes know that we've changed our usermode --nenolod */
@@ -1303,7 +1313,7 @@ oper_up(struct Client *source_p, struct oper_conf *oper_p)
 
 	SetExemptKline(source_p);
 
-	source_p->flags2 |= oper_p->flags;
+	source_p->operflags = oper_p->flags;
 	DupString(source_p->localClient->opername, oper_p->name);
 
 	dlinkAddAlloc(source_p, &local_oper_list);

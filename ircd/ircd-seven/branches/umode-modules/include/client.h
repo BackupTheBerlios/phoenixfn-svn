@@ -149,6 +149,7 @@ struct Client
 	unsigned int umodes;	/* opers, normal users subset */
 	unsigned int flags;	/* client flags */
 	unsigned int flags2;	/* ugh. overflow */
+	unsigned int operflags;	/* ugh. overflow. again. */
 
 	unsigned int snomask;	/* server notice mask */
 
@@ -357,6 +358,7 @@ struct exit_client_hook
 
 #define IsOper(x)		((x)->umodes & UMODE_OPER)
 #define IsAdmin(x)		((x)->umodes & UMODE_ADMIN)
+#define IsHelper(x)		((x)->umodes & UMODE_HELPER)
 
 #define SetReject(x)		{(x)->status = STAT_REJECT; \
 				 (x)->handler = UNREGISTERED_HANDLER; }
@@ -446,15 +448,15 @@ struct exit_client_hook
 #define UMODE_REGONLYMSG   0x800000	/* only allow logged in users to msg */
 
 /* user information flags, only settable by remote mode or local oper */
-#define UMODE_OPER         0x100000	/* Operator */
-#define UMODE_ADMIN        0x200000	/* Admin on server */
+#define UMODE_OPER         0x0100000	/* Operator */
+#define UMODE_ADMIN        0x0200000	/* Admin on server */
+#define UMODE_HELPER	   0x1000000	/* Helper, shows in /stats p */
 
 #define UMODE_ALL	   UMODE_SERVNOTICE
 
 /* overflow flags */
 /* EARLIER FLAGS ARE IN s_newconf.h */
 #define FLAGS2_EXEMPTRESV	0x0080000
-#define FLAGS2_EXEMPTGLINE      0x0100000
 #define FLAGS2_EXEMPTKLINE      0x0200000
 #define FLAGS2_EXEMPTFLOOD      0x0400000
 #define FLAGS2_NOLIMIT          0x0800000
@@ -519,7 +521,7 @@ struct exit_client_hook
 #define SetOper(x)              {(x)->umodes |= UMODE_OPER; \
 				 if (MyClient((x))) (x)->handler = OPER_HANDLER;}
 
-#define ClearOper(x)            {(x)->umodes &= ~(UMODE_OPER|UMODE_ADMIN); \
+#define ClearOper(x)            {(x)->umodes &= ~(UMODE_OPER|UMODE_ADMIN|UMODE_HELPER); \
 				 if (MyClient((x)) && !IsOper((x)) && !IsServer((x))) \
 				  (x)->handler = CLIENT_HANDLER; }
 
@@ -555,8 +557,6 @@ struct exit_client_hook
 #define SetExemptKline(x)       ((x)->flags2 |= FLAGS2_EXEMPTKLINE)
 #define IsExemptLimits(x)       ((x)->flags2 & FLAGS2_NOLIMIT)
 #define SetExemptLimits(x)      ((x)->flags2 |= FLAGS2_NOLIMIT)
-#define IsExemptGline(x)        ((x)->flags2 & FLAGS2_EXEMPTGLINE)
-#define SetExemptGline(x)       ((x)->flags2 |= FLAGS2_EXEMPTGLINE)
 #define IsExemptFlood(x)        ((x)->flags2 & FLAGS2_EXEMPTFLOOD)
 #define SetExemptFlood(x)       ((x)->flags2 |= FLAGS2_EXEMPTFLOOD)
 #define IsExemptSpambot(x)	((x)->flags2 & FLAGS2_EXEMPTSPAMBOT)
@@ -589,7 +589,6 @@ struct exit_client_hook
 extern void check_banned_lines(void);
 extern void check_klines_event(void *unused);
 extern void check_klines(void);
-extern void check_glines(void);
 extern void check_dlines(void);
 extern void check_xlines(void);
 

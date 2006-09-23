@@ -74,7 +74,7 @@ client.o: client.c ../include/stdinc.h ../include/config.h \
   ../libcharybdis/balloc.h ../libcharybdis/memory.h ../include/snomask.h \
   ../include/client.h ../include/class.h ../include/common.h \
   ../libcharybdis/event.h ../include/hash.h ../include/irc_string.h \
-  ../include/sprintf_irc.h ../include/ircd.h ../include/s_gline.h \
+  ../include/sprintf_irc.h ../include/ircd.h \
   ../include/numeric.h ../include/packet.h ../include/s_auth.h \
   ../libcharybdis/commio.h ../include/s_conf.h ../include/class.h \
   ../include/patricia.h ../include/numeric.h ../include/s_newconf.h \
@@ -143,7 +143,7 @@ ircd.o: ircd.c ../include/stdinc.h ../include/config.h ../include/setup.h \
   ../include/sprintf_irc.h ../include/ircd.h ../include/snomask.h \
   ../include/client.h ../include/common.h ../libcharybdis/event.h \
   ../include/hash.h ../include/irc_string.h ../include/ircd_signal.h \
-  ../include/sprintf_irc.h ../include/s_gline.h ../include/msg.h \
+  ../include/sprintf_irc.h ../include/msg.h \
   ../include/hostmask.h ../include/numeric.h ../include/parse.h \
   ../include/res.h ../include/restart.h ../include/s_auth.h \
   ../libcharybdis/commio.h ../include/s_conf.h ../include/class.h \
@@ -185,7 +185,7 @@ ircd_state.o: ircd_state.c ../include/stdinc.h ../include/config.h \
   ../include/client.h ../libcharybdis/tools.h ../include/ircd.h \
   ../include/channel.h ../include/class.h ../include/common.h \
   ../libcharybdis/event.h ../include/hash.h ../include/irc_string.h \
-  ../include/ircd_signal.h ../include/sprintf_irc.h ../include/s_gline.h \
+  ../include/ircd_signal.h ../include/sprintf_irc.h \
   ../include/msg.h ../include/hostmask.h ../include/numeric.h \
   ../include/parse.h ../include/res.h ../include/restart.h \
   ../include/s_auth.h ../libcharybdis/commio.h ../include/s_conf.h \
@@ -428,7 +428,7 @@ s_conf.o: s_conf.c ../include/stdinc.h ../include/config.h \
   ../include/ircd.h ../include/listener.h ../include/hostmask.h \
   ../include/modules.h ../include/parse.h ../include/msg.h \
   ../include/hook.h ../include/numeric.h ../libcharybdis/commio.h \
-  ../include/s_log.h ../include/send.h ../include/s_gline.h \
+  ../include/s_log.h ../include/send.h \
   ../libcharybdis/memory.h ../libcharybdis/balloc.h ../include/patricia.h \
   ../include/reject.h ../include/cache.h
 s_newconf.o: s_newconf.c ../include/stdinc.h ../include/config.h \
@@ -447,23 +447,6 @@ s_newconf.o: s_newconf.c ../include/stdinc.h ../include/config.h \
   ../include/send.h ../include/hostmask.h ../include/newconf.h \
   ../include/hash.h ../libcharybdis/balloc.h ../libcharybdis/event.h \
   ../include/sprintf_irc.h
-s_gline.o: s_gline.c ../include/stdinc.h ../include/config.h \
-  ../include/setup.h ../include/defaults.h ../libcharybdis/tools.h \
-  ../include/channel.h ../include/ircd_defs.h ../include/s_log.h \
-  ../include/send.h ../include/client.h ../libcharybdis/linebuf.h \
-  ../libcharybdis/tools.h ../include/channel.h ../include/res.h \
-  ../include/common.h ../libcharybdis/commio.h ../include/setup.h \
-  ../include/config.h ../include/ircd_defs.h ../include/reslib.h \
-  ../include/irc_string.h ../include/sprintf_irc.h ../include/ircd.h \
-  ../libcharybdis/tools.h ../libcharybdis/memory.h \
-  ../libcharybdis/balloc.h ../libcharybdis/memory.h ../include/snomask.h \
-  ../include/client.h ../include/common.h ../include/config.h \
-  ../include/irc_string.h ../include/ircd.h ../include/hostmask.h \
-  ../include/numeric.h ../libcharybdis/commio.h ../include/s_conf.h \
-  ../include/class.h ../include/patricia.h ../include/numeric.h \
-  ../include/scache.h ../include/send.h ../include/msg.h \
-  ../include/s_serv.h ../include/s_gline.h ../include/hash.h \
-  ../libcharybdis/event.h ../libcharybdis/memory.h
 s_log.o: s_log.c ../include/stdinc.h ../include/config.h \
   ../include/setup.h ../include/defaults.h ../include/ircd_defs.h \
   ../include/s_log.h ../include/ircd_defs.h ../include/send.h \
