@@ -344,6 +344,7 @@ static struct oper_flags oper_flagtable[] =
 	{ OPER_REMOTEBAN,	'B', 'b' },
 	{ OPER_HELPER,		'T', 't' },
 	{ OPER_CMODES,		'M', 'm' },
+	{ OPER_IMMUNE,		'I', 'i' },
 	{ 0,			'\0', '\0' }
 };
 

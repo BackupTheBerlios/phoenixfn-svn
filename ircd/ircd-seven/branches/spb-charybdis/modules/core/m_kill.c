@@ -149,7 +149,7 @@ mo_kill(struct Client *client_p, struct Client *source_p, int parc, const char *
 		target_p->flags |= FLAGS_KILLED;
 	}
 
-	ircsprintf(buf, "Killed (%s (%s))", source_p->name, reason);
+	ircsprintf(buf, "Killed by %s (%s)", source_p->name, reason);
 
 	exit_client(client_p, target_p, source_p, buf);
 

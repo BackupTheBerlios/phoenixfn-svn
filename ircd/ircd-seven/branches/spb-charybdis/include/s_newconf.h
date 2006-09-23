@@ -134,32 +134,33 @@ extern void propagate_generic(struct Client *source_p, const char *command,
 extern void cluster_generic(struct Client *, const char *, int cltype,
 			int cap, const char *format, ...);
 
-#define OPER_ENCRYPTED	0x00001
-#define OPER_KLINE	0x00002
-#define OPER_UNKLINE	0x00004
-#define OPER_LOCKILL	0x00008
-#define OPER_GLOBKILL	0x00010
-#define OPER_REMOTE	0x00020
-#define OPER_OVERRIDE	0x00040
-#define OPER_XLINE	0x00080
-#define OPER_RESV	0x00100
-#define OPER_NICKS	0x00200
-#define OPER_REHASH	0x00400
-#define OPER_DIE	0x00800
-#define OPER_ADMIN	0x01000
-#define OPER_HADMIN	0x02000
-#define OPER_OPERWALL	0x04000
-#define OPER_INVIS	0x08000
-#define OPER_AUSPEX	0x10000
-#define OPER_REMOTEBAN	0x20000
-#define OPER_HELPER	0x40000
-#define OPER_CMODES	0x80000
+#define OPER_ENCRYPTED	0x000001
+#define OPER_KLINE	0x000002
+#define OPER_UNKLINE	0x000004
+#define OPER_LOCKILL	0x000008
+#define OPER_GLOBKILL	0x000010
+#define OPER_REMOTE	0x000020
+#define OPER_OVERRIDE	0x000040
+#define OPER_XLINE	0x000080
+#define OPER_RESV	0x000100
+#define OPER_NICKS	0x000200
+#define OPER_REHASH	0x000400
+#define OPER_DIE	0x000800
+#define OPER_ADMIN	0x001000
+#define OPER_HADMIN	0x002000
+#define OPER_OPERWALL	0x004000
+#define OPER_INVIS	0x008000
+#define OPER_AUSPEX	0x010000
+#define OPER_REMOTEBAN	0x020000
+#define OPER_HELPER	0x040000
+#define OPER_CMODES	0x080000
+#define OPER_IMMUNE	0x100000
 
 #define OPER_FLAGS	(OPER_KLINE|OPER_UNKLINE|OPER_LOCKILL|OPER_GLOBKILL|\
 			 OPER_REMOTE|OPER_OVERRIDE|OPER_XLINE|OPER_RESV|\
 			 OPER_NICKS|OPER_REHASH|OPER_DIE|OPER_ADMIN|\
 			 OPER_HADMIN|OPER_OPERWALL|OPER_INVIS|OPER_AUSPEX|\
-			 OPER_REMOTEBAN|OPER_HELPER|OPER_CMODES)
+			 OPER_REMOTEBAN|OPER_HELPER|OPER_CMODES|OPER_IMMUNE)
 
 #define IsOperConfEncrypted(x)	((x)->flags & OPER_ENCRYPTED)
 
@@ -182,6 +183,7 @@ extern void cluster_generic(struct Client *, const char *, int cltype,
 #define IsOperRemoteBan(x)	((x)->operflags & OPER_REMOTEBAN)
 #define IsOperHelper(x)		((x)->operflags & OPER_HELPER)
 #define IsOperCModes(x)		((x)->operflags & OPER_CMODES)
+#define IsOperImmune(x)		((x)->operflags & OPER_IMMUNE)
 
 extern struct oper_conf *make_oper_conf(void);
 extern void free_oper_conf(struct oper_conf *);

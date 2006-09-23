@@ -163,6 +163,13 @@ m_kick(struct Client *client_p, struct Client *source_p, int parc, const char *p
 			return 0;
 		}
 
+                if(MyClient(source_p) && IsImmune(who))
+                {
+                        sendto_one_numeric(source_p, ERR_ISCHANSERVICE, 
+                                   "%s %s User is immune from kick", who->name, chptr->chname);
+                        return 0;
+                }
+
 		/* jdc
 		 * - In the case of a server kicking a user (i.e. CLEARCHAN),
 		 *   the kick should show up as coming from the server which did

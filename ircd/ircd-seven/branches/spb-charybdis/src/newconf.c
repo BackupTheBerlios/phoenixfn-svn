@@ -305,6 +305,8 @@ static struct mode_table umode_table[] = {
 	{"servnotice",	UMODE_SERVNOTICE},
 	{"wallop",	UMODE_WALLOP	},
 	{"operwall",	UMODE_OPERWALL	},
+	{"helper",	UMODE_HELPER	},
+	{"immune",	UMODE_IMMUNE	},
 	{NULL, 0}
 };
 
@@ -328,6 +330,7 @@ static struct mode_table flag_table[] = {
 	{"remoteban",		OPER_REMOTEBAN		},
 	{"helper",		OPER_HELPER		},
 	{"set_cmodes",		OPER_CMODES		},
+	{"immune",		OPER_IMMUNE		},
 	{NULL, 0}
 };
 

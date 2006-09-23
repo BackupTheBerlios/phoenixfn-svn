@@ -109,7 +109,7 @@ int user_modes[256] = {
 	0,			/* j */
 	0,			/* k */
 	UMODE_LOCOPS,		/* l */
-	0,			/* m */
+	UMODE_IMMUNE,		/* m */
 	0,			/* n */
 	UMODE_OPER,		/* o */
 	0,			/* p */
@@ -1120,6 +1120,17 @@ user_mode(struct Client *client_p, struct Client *source_p, int parc, const char
 			sendto_one(source_p, form_str(ERR_UMODEUNKNOWNFLAG), me.name, source_p->name);
 
 		source_p->umodes &= ~UMODE_HELPER;
+	}
+
+	if(MyClient(source_p) && (source_p->umodes & UMODE_IMMUNE) && !IsOperImmune(source_p))
+	{
+		if(IsOper(source_p))
+			sendto_one(source_p,
+				    ":%s NOTICE %s :*** You need the immune flag for +m", me.name, parv[0]);
+		else
+			sendto_one(source_p, form_str(ERR_UMODEUNKNOWNFLAG), me.name, source_p->name);
+
+		source_p->umodes &= ~UMODE_IMMUNE;
 	}
 
 	/* let modules providing usermodes know that we've changed our usermode --nenolod */
