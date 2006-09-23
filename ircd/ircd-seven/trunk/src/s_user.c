@@ -716,14 +716,14 @@ valid_hostname(const char *hostname)
 	if(hostname == NULL)
 		return NO;
 
-	if('.' == *p || ':' == *p)
+	if('.' == *p || ':' == *p || '/' == *p)
 		return NO;
 
 	while (*p)
 	{
 		if(!IsHostChar(*p))
 			return NO;
-                if(*p == '.' || *p == ':')
+                if(*p == '.' || *p == ':' || *p == '/')
   			found_sep++;
 		p++;
 	}
