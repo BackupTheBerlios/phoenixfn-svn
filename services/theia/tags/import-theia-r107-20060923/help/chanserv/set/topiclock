@@ -1,0 +1,7 @@
+Syntax: %bSET <channel> TOPICLOCK {ON|OFF}%b
+
+If TOPICLOCK is ON, %C will not allow anyone
+without an access level of TOPIC or higher to
+change the topic on <channel>.
+
+Alias: %bTLOCK%b

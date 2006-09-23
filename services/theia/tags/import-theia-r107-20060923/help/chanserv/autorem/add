@@ -1,0 +1,6 @@
+Syntax: %bAUTOREM <channel> ADD <hostmask> [reason]%b
+
+Adds <hostmask> to the autoremove list for <channel> with
+[reason].  You may not add an autoremove entry that
+matches an access level higher than your own on the
+channel.

@@ -1,0 +1,13 @@
+Index: src/client.c
+===================================================================
+--- src/client.c	(revision 38)
++++ src/client.c	(working copy)
+@@ -1582,7 +1582,7 @@
+ 
+   if(IsServer(sptr))
+     {        
+-#ifdef SERVERHIDE
++#if defined(SERVERHIDE) && !defined(GIMME_PROPER_NETSPLIT_QUITS_ANYWAY)
+       strncpy_irc(comment1, me.name, HOSTLEN + 1);
+       strcat(comment1, " ");
+       strcat(comment1, NETWORK_NAME);

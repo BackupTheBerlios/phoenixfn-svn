@@ -1,0 +1,54 @@
+# HybServ ./tools Makefile (C) Patrick Alken 1998
+# $Id: Makefile.in,v 1.5 2001/06/03 20:02:08 kreator Exp $
+
+CC = @CC@
+CFLAGS = -Wall -pipe @CFLAGS@
+LDFLAGS = @LDFLAGS@
+INCLUDE = -I../include
+# DEFS =
+LIBS = @LIBS@
+
+RM = @RM@ -f
+
+COMMON = \
+ doencrypt.o \
+ ../source/md5.o \
+ ../source/md5crypt.o
+
+OBJECTS = \
+ doencrypt.o\
+ encryptconf.o\
+ encryptdb.o
+# mkpasswd.o
+
+PROGS = \
+ ../bin/encryptconf\
+ ../bin/encryptdb
+# ../bin/mkpasswd
+
+all: $(PROGS)
+
+../bin/encryptconf: encryptconf.o $(COMMON)
+	$(CC) -o ../bin/encryptconf encryptconf.o $(COMMON) $(LIBS)
+
+../bin/encryptdb: encryptdb.o $(COMMON)
+	$(CC) -o ../bin/encryptdb encryptdb.o $(COMMON) $(LIBS)
+
+#../bin/mkpasswd: mkpasswd.o $(COMMON)
+#	$(CC) -o ../bin/mkpasswd mkpasswd.o $(COMMON) $(LIBS)
+
+clean:
+	$(RM) $(PROGS) $(OBJECTS)
+
+distclean: clean
+	$(RM) Makefile
+
+.SUFFIXES: .c .o
+
+.c.o:
+	$(CC) $(CFLAGS) $(INCLUDE) -c $<
+
+## Dependencies
+
+mkpasswd.o: mkpasswd.c
+doencrypt.o: doencrypt.c

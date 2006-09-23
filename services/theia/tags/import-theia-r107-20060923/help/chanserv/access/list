@@ -1,0 +1,7 @@
+Syntax: %bACCESS <channel> LIST [FULL|mask]%b
+
+The %bACCESS LIST%b command displays the channel's
+access list.  If a mask is specified, only the
+entries matching the mask are displayed. Users
+with level 1 or higher can use the %bFULL%b
+parameter to see when each entry was added.

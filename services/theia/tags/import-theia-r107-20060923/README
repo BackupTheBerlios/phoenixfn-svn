@@ -1,0 +1,16 @@
+NOTE: I do not develop this code anymore, please do not bother me about
+bugs/features/whatever.
+
+-- jilles, 19 Dec 2005
+
+This is dancer-services (dancer-hybserv), a somewhat patched version
+of hybserv which is intended to be used with dancer-ircd. It won't
+work with any other ircd.
+
+It is essentially the same as hybserv, only it uses the dancer
+protocol and understands some of dancer's extended features.
+
+See README.hybserv for more information (this is the mostly unchanged
+hybserv README file).
+
+-- jilles, 29 Sep 2005

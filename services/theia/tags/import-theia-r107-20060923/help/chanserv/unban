@@ -1,0 +1,13 @@
+Syntax: %bUNBAN <channel> [ALL]%b
+
+Unbans every ban matching your user@host or user@ip and
+every gecos ban matching your ircname on <channel>. If
+you specify ALL, every ban and gecos ban on <channel>
+will be cleared. You must have CMDCLEAR access to
+<channel> to use the ALL option.
+Examples:
+         %b/msg %C UNBAN #channel%b
+            Clears every ban on #channel matching you
+
+         %b/msg %C UNBAN #channel ALL%b
+            Clears every ban on #channel.

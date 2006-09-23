@@ -1,0 +1,11 @@
+Syntax: %bBLOCKREG [ON|OFF]%b
+
+Blocks new nick registrations.
+When no parameter is given, display current status.
+
+Examples:
+         %bBLOCKREG ON%b
+           Disable nick registration.
+
+         %bBLOCKREG OFF%b
+           Enable nick registration.

@@ -1,0 +1,5 @@
+Syntax: %bAUTOREM <channel> LIST [mask]%b
+
+The %bAUTOREM LIST%b command displays the channel's
+autoremove list.  If a mask is specified, only the
+entries matching the mask are displayed.

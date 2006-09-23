@@ -1,0 +1,117 @@
+Index: include/m_commands.h
+===================================================================
+--- include/m_commands.h	(revision 165)
++++ include/m_commands.h	(working copy)
+@@ -137,5 +137,6 @@
+ extern int m_ljoin(struct Client*, struct Client*, int, char**);
+ extern int m_lpart(struct Client*, struct Client*, int, char**);
+ extern int m_dump(struct Client*, struct Client*, int, char**);
++extern int m_svsnick(struct Client*, struct Client*, int, char**);
+ 
+ #endif /* INCLUDED_m_commands_h */
+Index: include/msg.h
+===================================================================
+--- include/msg.h	(revision 165)
++++ include/msg.h	(working copy)
+@@ -176,6 +176,7 @@
+ #define MSG_TESTLINE "TESTLINE"
+ 
+ #define MSG_SIGNON   "SIGNON"
++#define MSG_SVSNICK  "SVSNICK"
+ 
+ #ifdef MSGTAB
+ #ifndef INCLUDED_m_commands_h
+@@ -291,6 +292,7 @@
+   { MSG_SNICK,    m_snick,    0,MAXPARA, 1, 0, 0, 0, 0L },
+   { MSG_IDLE,     m_idle,     0,MAXPARA, 1, 0, 1, 0, 0L },
+   { MSG_SIGNON,   m_signon,   0,MAXPARA, 1, 0, 0, 0, 0L },
++  { MSG_SVSNICK,  m_svsnick,  0,MAXPARA, 1, 0, 0, 0, 0L },
+ 
+   { (char *) 0, (int (*)(struct Client *,struct Client *,int,char **)) 0 , 0, 0,    0, 0, 0, 0, 0L }
+ };
+Index: src/s_user.c
+===================================================================
+--- src/s_user.c	(revision 165)
++++ src/s_user.c	(working copy)
+@@ -2600,3 +2600,81 @@
+ 
+     return 0;
+ }
++
++/*
++ * This allows services to change a user's nick.
++ * parv[0] = source
++ * parv[1] = target nick
++ * parv[2] = new nick
++ */
++int m_svsnick(struct Client *client_p, struct Client *source_p,
++		int parc, char *parv[])
++{
++	struct Client *target_p, *override_p;
++	char *nick_parv[2];
++	char nick[NICKLEN + 2];
++
++	if (!IsServer(source_p))
++	{
++		sendto_one(source_p, form_str(ERR_UNKNOWNCOMMAND),
++				me.name, parv[0], "SVSNICK");
++		return 0;
++	}
++
++	if (parc < 3)
++	{
++		sendto_ops_flag(UMODE_DEBUG, "%s sent SVSNICK with too few parameters", source_p->name);
++		return 0;
++	}
++
++	target_p = find_client(parv[1], NULL);
++	if (target_p == NULL || !IsPerson(target_p))
++		return 0;
++
++	strncpy_irc(nick, parv[2], NICKLEN + 1);
++	if (clean_nick_name(nick) == 0)
++	{
++		/* perhaps check this at MyClient only and send target
++		 * a notice too -- jilles */
++		sendto_ops_flag(UMODE_SERVNOTICE, "Invalid SVSNICK ignored: from %s for %s to %s",
++				source_p->name, target_p->name, parv[2]);
++		return 0;
++	}
++
++	if (MyClient(target_p))
++	{
++		override_p = find_client(nick, NULL);
++		if (override_p)
++		{
++			if (IsServer(override_p))
++			{
++				sendto_ops_flag(UMODE_DEBUG, "%s tried to SVSNICK server %s", source_p->name, override_p->name);
++				return 0;
++			}
++
++			if (IsPerson(override_p))
++			{
++				sendto_local_ops_flag(UMODE_SKILL, "SVSNICK overridden: %s by %s for %s", override_p->name, source_p->name, target_p->name);
++				sendto_serv_butone(NULL, ":%s KILL %s :%s Nick regained by services",
++					   me.name, override_p->name, me.name);
++			}
++			if(MyClient(override_p))
++				sendto_one(override_p, ":%s KILL %s :%s Nick regained by services",
++					   me.name, override_p->name, me.name);
++			override_p->flags |= FLAGS_KILLED;
++			exit_client(NULL, override_p, &me, "Nick regained by services");
++		}
++
++		nick_parv[0] = target_p->name;
++		nick_parv[1] = NULL;
++		/* use a TS somewhat in the past to give them more
++		 * chance to win a nick collision */
++		nickkilldone(target_p, target_p, 1, nick_parv,
++				CurrentTime - 60, nick);
++	}else{
++		sendto_prefix_one(target_p, source_p, ":%s SVSNICK %s %s",
++				   parv[0], target_p->name, nick);
++	}
++
++	return 0;
++}

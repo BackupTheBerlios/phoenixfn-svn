@@ -1,0 +1,26 @@
+Syntax: %bSET <channel> <option> [parameters]%b
+
+Allows the channel contact or level 25 to set various
+channel options and other information. All options may
+be abbreviated, such as:
+/msg %C set #channel CONT newcontact
+to set the CONTACT nickname to "newcontact".  For more
+specific information on each option, type:
+%b/msg %C HELP SET <option>%b
+
+Available options:
+
+    CONTACT     Set the contact of a channel (contact)
+    ALTERNATE   Set the alternate contact for the channel
+    PASSWORD    Set the contact password (contact)
+    MLOCK       Lock channel modes on or off
+    TOPICLOCK   Restrict topic changes
+    PRIVATE     Hide channel from ChanServ lists
+    SECUREOPS   Stricter control of chanop status
+    SECURE      Activate ChanServ security features
+    ENTRYMSG    Send a message to users upon entry
+    EMAIL       Set the channel email address
+    URL         Set the channel url
+    GUARD       Have %C join your channel
+    SPLITOPS    Let anyone keep ops from a netsplit
+    VERBOSE     Notify chanops on access changes

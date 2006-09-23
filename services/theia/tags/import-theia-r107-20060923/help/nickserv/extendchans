@@ -1,0 +1,7 @@
+Syntax: %bEXTENDCHANS <nickname> {ON|OFF}%b
+
+Turns extended channel ability on or off
+for %b<nickname>%b. If enabled, umode +u
+will be set on the user whenever they
+identify, granting them the ability to
+join more channels than normal.

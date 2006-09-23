@@ -1,0 +1,4 @@
+Syntax: %bGETKEY <channel>%b
+
+Returns the key to <channel>.  Useful if the channel
+is set +k.

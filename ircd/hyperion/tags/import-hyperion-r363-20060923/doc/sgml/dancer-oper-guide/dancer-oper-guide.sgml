@@ -1,0 +1,54 @@
+<!DOCTYPE Book PUBLIC "-//OASIS//DTD DocBook V4.1//EN" [
+<!ENTITY intro SYSTEM "intro.sgml">
+<!ENTITY umodes SYSTEM "umodes.sgml">
+<!ENTITY cmodes SYSTEM "cmodes.sgml">
+<!ENTITY commands SYSTEM "commands.sgml">
+<!ENTITY config SYSTEM "config.sgml">
+]>
+<book id="dancer-oper-guide">
+  <bookinfo>
+    <date>10 June 2001</date>
+    <title>Operators guide for the dancer IRC server</title>
+    <author>
+      <firstname>Andrew</firstname>
+      <surname>Suffield</surname>
+    </author>
+    <address><email>asuffield@freenode.net</email></address>
+    <copyright>
+      <year>2001</year>
+      <year>2003</year>
+      <holder>Andrew Suffield</holder>
+    </copyright>
+    <legalnotice>
+      <para>
+	Permission is granted to copy, distribute and/or modify this document under the terms of the GNU
+	General Public License, Version 2 or any later version published by the Free Software Foundation
+      </para>
+    </legalnotice>
+  </bookinfo>
+  <toc>
+  </toc>
+  &intro;
+  &umodes;
+  &cmodes;
+  &commands;
+  &config;
+</book>
+<!-- Keep this comment at the end of the file
+Local variables:
+mode: sgml
+sgml-omittag:t
+sgml-shorttag:t
+sgml-namecase-general:t
+sgml-general-insert-case:lower
+sgml-minimize-attributes:nil
+sgml-always-quote-attributes:t
+sgml-indent-step:2
+sgml-indent-data:t
+sgml-parent-document:nil
+sgml-exposed-tags:nil
+sgml-local-catalogs:("/usr/lib/sgml/catalog")
+sgml-local-ecat-files:nil
+fill-column: 105
+End:
+-->

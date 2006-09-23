@@ -1,0 +1,183 @@
+# dancer-services Makefile (C) Patrick Alken 1998
+# Modified asuffield 2001-10-28
+
+# This is installation prefix. It can be overrided by passing PREFIX
+# argument to make, as in making a fake tree for binary package.
+PREFIX = @prefix@
+
+# Set this to the directory to install the hybserv binary
+BINDIR = $(PREFIX)/dancer-services
+
+# Set this to the directory to install hybserv.conf, motd.dcc, etc
+CONFDIR = $(PREFIX)/dancer-services
+
+# Set this to the directory to install help files 
+# (should match HelpPath in settings.conf)
+HELPDIR = $(PREFIX)/dancer-services/help
+
+# Set this to the user who will own BINDIR
+WHOAMI = @WHOAMI@
+
+# Version control system directory to skip copying
+VCSDIR = .svn
+
+############ Don't change anything below here ############
+
+VERSION_MAJOR = 1.1pre
+VERSION = @VERSION@
+
+CC = @CC@
+CFLAGS = @CFLAGS@ -Wall -pipe
+
+# Debugging CFLAGS
+#CFLAGS = @CFLAGS@ -Wall -g -D_REENTRANT -pipe
+
+LDFLAGS = @LDFLAGS@
+LIBS = @LIBS@
+LIBP = @LIBP@
+PAX = @PAX@
+RM = @RM@ -f
+RMR = @RM@ -rf
+CP = @CP@
+LN = @LN@ -sf
+CHMOD = @CHMOD@
+CHOWN = @CHOWN@ -R
+LS = @LS@ -l
+
+INSTALL = @INSTALL@
+INSTALL_DATA = @INSTALL_DATA@
+INSTALL_BIN = ${INSTALL} -m 755
+INSTALL_SECURE = ${INSTALL} -m 600
+
+# Executable programs
+BINPROGS = cleandb encryptconf encryptdb servchk fixlevel
+
+# Secure configuration files (mode 600)
+SECUREFILES = services.conf settings.conf
+
+# General configuration files
+CONFFILES = motd.dcc motd.global
+
+# File containing HPath variable
+HPATHFIX = settings.conf
+
+# Subdirs for make
+SUBDIRS = source tools
+
+all: source tools
+	@echo "*** Begin building theia version $(VERSION) ***"
+	@echo
+	@for i in $(SUBDIRS); do \
+		echo "*** Building $$i ***"; \
+		cd $$i; \
+		${MAKE} "VERSION=$(VERSION)"; \
+		cd ..; \
+		echo; \
+	done
+	@echo "*** Done building theia version $(VERSION) ***"
+
+build: all
+
+clean:
+	@echo '** Removing objects **'
+	@echo
+	@for i in $(SUBDIRS); do \
+		echo "*** Cleaning $$i ***"; \
+		cd $$i; \
+		${MAKE} clean; \
+		cd ..; \
+		echo; \
+	done
+
+distclean: clean
+	$(RM) `find . -type f -name Makefile -print` include/defs.h \
+		include/config.h bin/settings.conf bin/cleandb \
+		config.status config.cache config.log ~* core \
+		hybserv.core `find . -type f -size 0 -print`
+	$(RM) `find . -type f \( -name '*.orig' -o -name '*.rej' -o -name '*~' \
+		-o -name '*.bak' -o -name '.#*' -o -name '#*#' -o -name '.*.orig' \
+		-o -name '.*.rej' -o -name '.SUMS' -o -size 0 \) -print`
+
+mrproper: distclean
+
+depend:
+	@if [ ! -f source/.depend ]; then \
+		touch source/.depend; \
+	fi
+	@cd source ; $(MAKE) depend
+
+install: all install-binary install-help
+	@echo "*** Done installing theia $(VERSION) ***"
+
+install-binary:
+	@if test ! -d $(BINDIR); then \
+		echo Creating $(BINDIR); \
+		mkdir $(BINDIR) 2>/dev/null; \
+	fi
+	@if test ! -d $(CONFDIR); then \
+		echo Creating $(CONFDIR); \
+		mkdir $(CONFDIR) 2>/dev/null; \
+	fi
+	@echo '** Installing dancer-services in $(BINDIR) **'
+	@$(INSTALL_BIN) "bin/dancer-services" "$(BINDIR)/dancer-services"
+	@for file in $(BINPROGS); do \
+		echo "** Installing $$file in $(BINDIR) **"; \
+		$(INSTALL_BIN) "bin/$$file" "$(BINDIR)/$$file"; \
+	done
+	@for file in $(SECUREFILES); do \
+		if test ! -f "$(CONFDIR)/$$file"; then \
+			echo "** Installing $$file in $(CONFDIR) **"; \
+			$(INSTALL_SECURE) "bin/$$file" "$(CONFDIR)/$$file"; \
+		fi \
+	done
+	@for file in $(CONFFILES); do \
+		if test ! -f "$(CONFDIR)/$$file"; then \
+			echo "** Installing $$file in $(CONFDIR) **"; \
+			$(INSTALL_DATA) "bin/$$file" "$(CONFDIR)/$$file"; \
+		fi \
+	done
+	@$(RM) $(BINDIR)/shownicks $(BINDIR)/showchans
+	@echo '** Creating $(BINDIR)/shownicks **'
+	@$(LN) dancer-services $(BINDIR)/shownicks
+	@echo '** Creating $(BINDIR)/showchans **'
+	@$(LN) dancer-services $(BINDIR)/showchans
+	@echo
+	@echo '** Changing ownership of $(BINDIR) to $(WHOAMI) **'
+	@$(CHOWN) $(WHOAMI) $(BINDIR)
+	@if test $(BINDIR) != $(CONFDIR); then \
+		echo '** Changing ownership of $(CONFDIR) to $(WHOAMI) **'; \
+		$(CHOWN) $(WHOAMI) $(CONFDIR); \
+	fi
+	@echo
+
+install-help:
+	@if test ! -d $(HELPDIR); then \
+		echo Creating $(HELPDIR); \
+		mkdir $(HELPDIR) 2>/dev/null; \
+	else \
+		echo Removing old $(HELPDIR); \
+		$(RMR) $(HELPDIR); \
+		mkdir $(HELPDIR) 2>/dev/null; \
+	fi
+	(cd help; find . -name $(VCSDIR) -prune -o -type f -print | $(PAX) -rw $(HELPDIR))
+	$(CHOWN) $(WHOAMI) $(HELPDIR)
+	@echo
+
+autoconf:
+	autoconf autoconf/configure.in > configure
+	autoheader -l autoconf
+
+# Tarball creation stuff -- jilles
+DISTNAME = theia-$(VERSION)
+
+dist:
+	(cd source && $(MAKE) svn_version.c)
+	$(RM) $(DISTNAME)
+	$(LN) . $(DISTNAME)
+	svn stat -v|awk '/^ / { print "$(DISTNAME)/"$$4; } /^M/ { print "$(DISTNAME)/"$$5; } END { print "$(DISTNAME)/source/svn_version.c" }'| tar -chnzf $(DISTNAME).tar.gz -T /dev/stdin
+	$(RM) $(DISTNAME)
+
+distrev:
+	$(MAKE) dist DISTNAME=$(DISTNAME)-`svnversion .|sed -e 's/.*://'`
+
+# End of Makefile

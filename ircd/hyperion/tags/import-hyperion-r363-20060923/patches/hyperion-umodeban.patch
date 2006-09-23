@@ -1,0 +1,193 @@
+Index: include/config.h.dist
+===================================================================
+--- include/config.h.dist	(revision 359)
++++ include/config.h.dist	(working copy)
+@@ -1130,4 +1130,7 @@
+ 
+ #define CONFIG_H_LEVEL_6_1
+ 
++/* DEAFULT_UMODEBAN_REASON - Default reason for /UMODE triggered K:lines */
++#define DEFAULT_UMODEBAN_REASON "Potential spambot detected due to early UMODE command."
++
+ #endif /* INCLUDED_config_h */
+Index: include/ircd.h
+===================================================================
+--- include/ircd.h	(revision 359)
++++ include/ircd.h	(working copy)
+@@ -80,6 +80,11 @@
+   char noidprivmsg_notice[512];
+ 
+   char default_umode[40];
++
++  int umodeban_length;
++  int umodeban_connected;
++  int umodeban_channel;
++  char umodeban_reason[128];
+ };
+ 
+ struct Counter {
+Index: include/m_commands.h
+===================================================================
+--- include/m_commands.h	(revision 359)
++++ include/m_commands.h	(working copy)
+@@ -139,5 +139,6 @@
+ extern int m_ljoin(struct Client*, struct Client*, int, char**);
+ extern int m_lpart(struct Client*, struct Client*, int, char**);
+ extern int m_dump(struct Client*, struct Client*, int, char**);
++extern int m_umode(struct Client*, struct Client*, int, char**);
+ 
+ #endif /* INCLUDED_m_commands_h */
+Index: include/msg.h
+===================================================================
+--- include/msg.h	(revision 359)
++++ include/msg.h	(working copy)
+@@ -179,6 +179,8 @@
+ #define MSG_SIGNON   "SIGNON"
+ #define MSG_SVSLOGIN "SVSLOGIN"
+ 
++#define MSG_UMODE	"UMODE"
++
+ #ifdef MSGTAB
+ #ifndef INCLUDED_m_commands_h
+ #include "m_commands.h"       /* m_xxx */
+@@ -295,6 +297,7 @@
+   { MSG_IDLE,     m_idle,     0,MAXPARA, 1, 0, 1, 0, 0L },
+   { MSG_SIGNON,   m_signon,   0,MAXPARA, 1, 0, 0, 0, 0L },
+   { MSG_SVSLOGIN, m_svslogin, 0,MAXPARA, 1, 0, 0, 0, 0L },
++  { MSG_UMODE,    m_umode,    0,MAXPARA, 1, 0, 0, 1, 0L },
+ 
+   { (char *) 0, (int (*)(struct Client *,struct Client *,int,char **)) 0 , 0, 0,    0, 0, 0, 0, 0L }
+ };
+Index: include/config.h.fn-include
+===================================================================
+--- include/config.h.fn-include	(revision 359)
++++ include/config.h.fn-include	(working copy)
+@@ -1101,3 +1101,6 @@
+ #endif
+ 
+ #define CONFIG_H_LEVEL_6_1
++
++/* DEAFULT_UMODEBAN_REASON - Default reason for /UMODE triggered K:lines */
++#define DEFAULT_UMODEBAN_REASON "Potential spambot detected due to early UMODE command."
+Index: src/m_kline.c
+===================================================================
+--- src/m_kline.c	(revision 359)
++++ src/m_kline.c	(working copy)
+@@ -429,7 +429,7 @@
+         return 0;
+       sendto_slaves(sptr, "KLINE", slave_oper, parc, parv);
+     }
+-  else
++  else if(!IsMe(sptr))
+     {
+       if (!MyClient(sptr) || !HasUmode(sptr,UMODE_KILL))
+         {
+@@ -1399,3 +1399,43 @@
+ 
+   return 0;
+ }
++
++/* UMODE command spamtrap
++ * Apparently some bots send an actual umode command to try to set modes
++ * on themselves without knowing their nicks. If they meet certain conditions,
++ * k-line them.
++ */
++int m_umode(struct Client *cptr, struct Client *sptr, int parc, char *parv[])
++{
++  char *param[5];
++  char tbuf[256], host[HOSTLEN + 3];
++
++  /* Are they local and a client? */
++  if (cptr != sptr || !IsPerson(sptr))
++    return 0;
++
++  /* Is /UMODE banning turned on? */
++  if (!GlobalSetOptions.umodeban_length)
++    return 0;
++
++  /* Have they been connected too long to qualify? */
++  if (GlobalSetOptions.umodeban_connected && CurrentTime - sptr->firsttime >= GlobalSetOptions.umodeban_connected)
++    return 0;
++
++  /* Do they meet the not-joined-a-channel requirement? */
++  if (GlobalSetOptions.umodeban_channel && sptr->user->joined)
++    return 0;
++
++  /* Smoke that bitch. */
++  param[0] = me.name;
++  ircsnprintf(tbuf, 256, "%d", GlobalSetOptions.umodeban_length);
++  param[1] = tbuf;
++  ircsnprintf(host, HOSTLEN + 3, "*@%s", sptr->dnshost);
++  param[2] = host;
++  param[3] = GlobalSetOptions.umodeban_reason;
++  param[4] = NULL;
++  m_kline(&me, &me, 4, param);
++
++  return 0;
++}
++
+Index: src/ircd.c
+===================================================================
+--- src/ircd.c	(revision 359)
++++ src/ircd.c	(working copy)
+@@ -600,6 +600,9 @@
+ 
+  GlobalSetOptions.dopingout = 1;
+ 
++ strncpy(GlobalSetOptions.umodeban_reason, DEFAULT_UMODEBAN_REASON, 128);
++ GlobalSetOptions.umodeban_reason[127] = '\0';
++
+  /* End of global set options */
+ 
+ }
+Index: src/feature.c
+===================================================================
+--- src/feature.c	(revision 359)
++++ src/feature.c	(working copy)
+@@ -38,6 +38,7 @@
+ static char *identifycommand_p = GlobalSetOptions.identifycommand;
+ static char *noidprivmsg_notice_p = GlobalSetOptions.noidprivmsg_notice;
+ static char *default_umode_p = GlobalSetOptions.default_umode;
++static char *umodeban_reason_p = GlobalSetOptions.umodeban_reason;
+ 
+ #define FEATURE_NICKPREFIX 0
+ #define FEATURE_IDENTD_PREFIX 1
+@@ -48,7 +49,11 @@
+ #define FEATURE_NOIDPRIVMSG 6
+ #define FEATURE_NOIDPRIVMSG_NOTICE 7
+ #define FEATURE_DEFAULT_UMODE 8
+-#define FEATURE_LAST 9
++#define FEATURE_UMODEBAN_LENGTH 9
++#define FEATURE_UMODEBAN_CONNECTED 10
++#define FEATURE_UMODEBAN_CHANNELS 11
++#define FEATURE_UMODEBAN_REASON 12
++#define FEATURE_LAST 13
+ 
+ /* In contrast to the config.h values in /info, these are lower case */
+ struct
+@@ -68,6 +73,10 @@
+ 	{ "noidprivmsg", "Do not allow unidentified clients to use PRIVMSG", &GlobalSetOptions.noidprivmsg, NULL },
+ 	{ "noidprivmsg_notice", "Notice to tell people who are affected by F:noidprivmsg", NULL, &noidprivmsg_notice_p },
+ 	{ "default_umode", "Umodes to set on new clients", NULL, &default_umode_p },
++	{ "umodeban_length", "Length of expiry of /UMODE triggered K:lines in minutes, or 0 to disable", &GlobalSetOptions.umodeban_length, NULL },
++	{ "umodeban_connected", "Maximum duration which a client can be connected for before /UMODE triggered K:lines no longer take effect", &GlobalSetOptions.umodeban_connected, NULL },
++	{ "umodeban_channels", "For /UMODE triggered K:lines, whether or not to require zero channels joined before banning", &GlobalSetOptions.umodeban_channel, NULL },
++	{ "umodeban_reason", "Reason on /UMODE triggered K:lines", NULL, &umodeban_reason_p },
+ 	{ NULL, NULL, NULL, NULL }
+ };
+ 
+@@ -143,6 +152,14 @@
+ 		case FEATURE_DEFAULT_UMODE:
+ 			strncpy_irc(GlobalSetOptions.default_umode, value, sizeof(GlobalSetOptions.default_umode));
+ 			break;
++		case FEATURE_UMODEBAN_LENGTH:
++		case FEATURE_UMODEBAN_CONNECTED:
++		case FEATURE_UMODEBAN_CHANNELS:
++			*intp = atoi(value);
++			break;
++		case FEATURE_UMODEBAN_REASON:
++			strncpy_irc(GlobalSetOptions.umodeban_reason, value, sizeof(GlobalSetOptions.umodeban_reason));
++			break;
+ 		default:
+ 			logprintf(L_ERROR, "Unknown F:line feature %s", name);
+ 	}
