@@ -330,6 +330,7 @@ static struct mode_table flag_table[] = {
 	{"helper",		OPER_HELPER		},
 	{"set_cmodes",		OPER_CMODES		},
 	{"immune",		OPER_IMMUNE		},
+	{"resv",		OPER_RESV		},
 	{NULL, 0}
 };
 

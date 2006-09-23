@@ -7,6 +7,24 @@ see the NEWS file.
 
 2006-09-23 Stephen Bennett <spb@gentoo.org>
 
+	* include/s_newconf.h, src/newconf.c, src/s_newconf.c,
+	modules/m_resv.c: Resurrect the 'resv' operflag, to allow use of RESV.
+
+2006-09-23 Stephen Bennett <spb@gentoo.org>
+
+	* include/s_newconf.h, src/newconf.c, src/s_newconf.c,
+	modules/m_kline.c, modules/m_rehash.c, modules/m_resv.c,
+	modules/m_xline.c: Remove remoteban priv. It's now implicit in being
+	able to ban.
+
+2006-09-23 Stephen Bennett <spb@gentoo.org>
+
+	* include/client.h, include/s_newconf.h, src/newconf.c, src/s_user.c,
+	src/s_newconf.c, doc/reference.conf, modules/core/m_kick.c: Add umode
+	+m for immunity from kick, controlled by 'immune' operflag.
+
+2006-09-23 Stephen Bennett <spb@gentoo.org>
+
 	* include/newconf.h, include/channel.h, include/s_newconf.h,
 	src/chmode.c, src/channel.c, modules/m_topic.c: Implement 'override'
 	oper flag.
