@@ -151,7 +151,7 @@ extern void cluster_generic(struct Client *, const char *, int cltype,
 #define OPER_OPERWALL	0x004000
 #define OPER_INVIS	0x008000
 #define OPER_AUSPEX	0x010000
-#define OPER_REMOTEBAN	0x020000
+//#define OPER_REMOTEBAN	0x020000
 #define OPER_HELPER	0x040000
 #define OPER_CMODES	0x080000
 #define OPER_IMMUNE	0x100000
@@ -160,7 +160,7 @@ extern void cluster_generic(struct Client *, const char *, int cltype,
 			 OPER_REMOTE|OPER_OVERRIDE|OPER_XLINE|OPER_RESV|\
 			 OPER_NICKS|OPER_REHASH|OPER_DIE|OPER_ADMIN|\
 			 OPER_HADMIN|OPER_OPERWALL|OPER_INVIS|OPER_AUSPEX|\
-			 OPER_REMOTEBAN|OPER_HELPER|OPER_CMODES|OPER_IMMUNE)
+			 OPER_HELPER|OPER_CMODES|OPER_IMMUNE)
 
 #define IsOperConfEncrypted(x)	((x)->flags & OPER_ENCRYPTED)
 
@@ -180,7 +180,6 @@ extern void cluster_generic(struct Client *, const char *, int cltype,
 #define IsOperOperwall(x)       ((x)->operflags & OPER_OPERWALL)
 #define IsAuspex(x)             ((x)->operflags & OPER_AUSPEX)
 #define IsOperInvis(x)          ((x)->operflags & OPER_INVIS)
-#define IsOperRemoteBan(x)	((x)->operflags & OPER_REMOTEBAN)
 #define IsOperHelper(x)		((x)->operflags & OPER_HELPER)
 #define IsOperCModes(x)		((x)->operflags & OPER_CMODES)
 #define IsOperImmune(x)		((x)->operflags & OPER_IMMUNE)

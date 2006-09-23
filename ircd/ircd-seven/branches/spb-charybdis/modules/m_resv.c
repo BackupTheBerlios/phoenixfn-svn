@@ -97,13 +97,6 @@ mo_resv(struct Client *client_p, struct Client *source_p, int parc, const char *
 
 	if((parc >= loc+2) && (irccmp(parv[loc], "ON") == 0))
 	{
-		if(!IsOperRemoteBan(source_p))
-		{
-			sendto_one(source_p, form_str(ERR_NOPRIVS),
-				me.name, source_p->name, "remoteban");
-			return 0;
-		}
-
 		target_server = parv[loc+1];
 		loc += 2;
 	}
@@ -372,13 +365,6 @@ mo_unresv(struct Client *client_p, struct Client *source_p, int parc, const char
 {
 	if((parc == 4) && (irccmp(parv[2], "ON") == 0))
 	{
-		if(!IsOperRemoteBan(source_p))
-		{
-			sendto_one(source_p, form_str(ERR_NOPRIVS),
-				me.name, source_p->name, "remoteban");
-			return 0;
-		}
-
 		propagate_generic(source_p, "UNRESV", parv[3], CAP_CLUSTER,
 				"%s", parv[1]);
 
