@@ -1,0 +1,24 @@
+Added debugnet.pl and proxytee.pl, which between them replace
+the old debug-build target from the debian/ build systen. Run
+tools/debugnet.pl from the top level directory to build an ircd and
+create the debugging tree (debugnet.pl -h for parameter docs). When
+this finishes, cd debug-tree && ./start to start all the ircds and
+proxytee - a perl proxy which the ircds connect through, and which
+dumps all through traffic to stdout. This has proven invaluable in
+debugging in the past (I recommend starting with "./start | tee
+proxy.log").
+
+If the ircds are already running, just run ./proxy to start the proxy
+alone without loading more copies of the ircds. Kill them off with
+"killall ircd". Since the process names don't tell you which is which,
+from debug-tree, use commands like "kill -HUP `cat
+leaf2.dancer-debug`" or "gdb ircd `cat hub1.dancer-debug`" to work on
+specific ones.
+
+proxytee.pl has, just below the declaration of skip, a line like:
+foreach my $command (qw/PING PONG SPINGTIME/)
+The IRC protocol keywords quoted here identify messages which will
+never be displayed, as a rudimentary filter.
+
+Note: proxytee cannot handle zipped links at present. debugnet servers
+must run uncompressed.

@@ -1,0 +1,232 @@
+  <chapter id="cmodes">
+    <title>Cmodes</title>
+    <sect1>
+      <title>Meanings of cmodes</title>
+      <sect2>
+	<title>+b, channel ban</title>
+	<para>
+	  Bans take one parameter, either in the form +b nick!user@host, or +b
+	  nick!user@host!#channel. The wildcards * and ? are allowed, matching zero-or-more, and
+	  exactly-one characters respectively. The masks will be trimmed to fit the maximum allowable
+	  length for the relevant element, with wildcards added as appropriate to ensure that they still
+	  match.
+	</para>
+	<para>
+	  In the simple case, without a !#channel, the mask causes any matching user to be prohibited
+	  from sending to the channel, knocking, or joining. Having +v set on them on the channel
+	  overrides the prohibition on sending.
+	</para>
+	<para>
+	  If the mask has a channel name specified, then in all situations where the user would
+	  previously have been told they could not join the channel, they will instead join the channel
+	  named in the ban mask, and be sent a 470 numeric describing that.
+	</para>
+	<para>
+	  If the mask is prefixed with a percent sign, affected users may
+	  still join; the net effect is that they cannot send to the channel.
+	  This is also accepted as +q mask instead of +b %mask.
+	</para>
+      </sect2>
+      <sect2>
+	<title>+c, colour filter</title>
+	<para>
+	  This cmode activates the colour filter for the channel. This filters out bold, underline,
+	  reverse video, beeps, mIRC colour codes, and ANSI escapes. Note that escape sequences will
+	  usually leave cruft sent to the channel, just without the escape characters themselves.
+	</para>
+      </sect2>
+      <sect2>
+	<title>+d, gecos ban</title>
+	<para>
+	  This mode takes on parameter, a mask which is matched against the "Real name" field
+	  each client supplies, and prevents any matching clients from sending to the channel or joining
+	  it. It accepts the standard * and ? wildcards.
+	</para>
+      </sect2>
+      <sect2>
+        <title>+D, automatic D:line</title>
+        <para>
+          This mode takes one parameter of the form "x,y", where x and y are positive integers. These two
+          integers monitor the rate at which users may join the channel. The limit is roughly y users
+          every x*y seconds, but the algorithm allows for bursts. If this limit is exceeded, a D:line is
+          placed on the IP-address of every user in the channel at the time.
+        </para>
+        <para>
+          More precisely, a counter is maintained which is incremented by one for every user that
+          successfully joins the channel, and decremented by one every x seconds. When a user joins and
+          the counter is greater than limit (after incrementing), the channel is cleared out.
+        </para>
+      </sect2>
+      <sect2>
+	<title>+e, ban exemption</title>
+	<para>
+	  This mode takes on parameter of the form nick!user@host, with the usual wildcards, which
+	  overrides +b and +d bans for all clients it matches.
+	</para>
+      </sect2>
+      <sect2>
+	<title>+f, channel forwarding</title>
+	<para>
+	  This mode takes one parameter, the name of a channel (+f #channel). If the channel also has the
+	  +i cmode set, and somebody attempts to join without either being expliticly invited, or having
+	  an invex (+I), then they will instead join the channel named in the mode parameter. The client
+	  will also be sent a 470 numeric giving the original and target channels.
+	</para>
+        <para>
+          Users are similarly forwarded if the +J cmode is set and their attempt to join is throttled, or
+          if +r is set and they are not identified.
+        </para>
+      </sect2>
+      <sect2>
+	<title>+g, allow anybody to invite</title>
+	<para>
+	  When this mode is set, anybody may use the INVITE command on the channel in question. When it
+	  is unset, only channel operators may use the INVITE command.
+	</para>
+      </sect2>
+      <sect2>
+	<title>+i, invite only</title>
+	<para>
+	  When this cmode is set, no client can join the channel unless they have an invex (+I) or are
+	  invited with the INVITE command.
+	</para>
+      </sect2>
+      <sect2>
+	<title>+I, invite exception (invex)</title>
+	<para>
+	  This mode takes a parameter of the form nick!user@host with the usual wildcards. Matching
+	  clients do not need to be invited to join the channel when it is invite-only (+i).
+	  They may also join the channel if it is +r even though they are not
+	  identified, or if it is +J and too many users have joined recently.
+	</para>
+      </sect2>
+      <sect2>
+	<title>+j, jupe channel</title>
+	<para>
+	  This cmode can only be set by network operators (+p). It basically prohibits the channel from being
+	  used for any purpose, anywhere on the network. Joining such channels is not possible and causes
+	  a warning to be sent to all users with umode +y.
+	</para>
+      </sect2>
+      <sect2>
+        <title>+J, join throttling</title>
+        <para>
+          This mode takes one parameter of the form "x,y", where x and y are positive integers. These two
+          integers control the rate at which users may join the channel. The limit is roughly y users
+          every x*y seconds, but the algorithm allows for bursts.
+        </para>
+        <para>
+          More precisely, a counter is maintained which is incremented by one for every user that
+          successfully joins the channel, and decremented by one every x seconds. When the counter is
+          equal to limit, no more users may join.
+        </para>
+      </sect2>
+      <sect2>
+	<title>+k, key (channel password)</title>
+	<para>
+	  Taking one parameter, when set, this mode requires a user to supply the key in order to join
+	  the channel: /JOIN #channel key.
+	</para>
+      </sect2>
+      <sect2>
+	<title>+l, channel member limit</title>
+	<para>
+	  Takes one numeric parameter, the number of users which are allowed to be in the channel before
+	  further joins are blocked.
+	</para>
+      </sect2>
+      <sect2>
+	<title>+L, large ban list</title>
+	<para>
+	  Channels with this mode will be allowed larger banlists (by default,
+          500 instead of 50 entries for +b, +q, +d, +e and +I together).
+	  Only operators with umode +X may set this.
+	</para>
+      </sect2>
+      <sect2>
+	<title>+m, moderated</title>
+	<para>
+	  When a channel is set +m, only users with +o or +v on the channel can send to it.
+	</para>
+      </sect2>
+      <sect2>
+	<title>+n, prevent external send to channel</title>
+	<para>
+	  When set, this mode prevents users from sending to the channel without being in it themselves.
+	</para>
+      </sect2>
+      <sect2>
+	<title>+P, permanent channel</title>
+	<para>
+	  Channels with this mode (which is accessible only to network operators with umode +p) set will not be destroyed
+	  when the last user leaves.
+	</para>
+      </sect2>
+      <sect2>
+	<title>+q, quiet</title>
+	<para>
+	  This mode behaves exactly like the simple form of +b (ban), except that the user may still join
+	  the channel. The net effect is that they cannot send to the channel.
+	  This mode is sent as +b %mask to clients.
+	</para>
+      </sect2>
+      <sect2>
+        <title>+Q, block forwarded users</title>
+        <para>
+          Channels with this mode set are not valid targets for forwarding. Any attempt to forward to
+          this channel will be ignored, and the user will be handled as if the attempt was ever made (by
+          sending them the relevant error message).
+        </para>
+      </sect2>
+      <sect2>
+        <title>+r, block unidentified</title>
+        <para>
+          When set, this mode prevents unidentified users from joining.
+        </para>
+      </sect2>
+      <sect2>
+        <title>+R, quiet unidentified</title>
+        <para>
+          When set, this mode prevents unidentified users from sending to the channel, although they can
+          still join.
+        </para>
+      </sect2>
+      <sect2>
+	<title>+s, secret channel</title>
+	<para>
+	  When set, this mode prevents the channel from appearing in the
+	  output of the LIST, WHO and WHOIS command by users who are not on
+	  it. Also, the server will refuse to answer WHO, NAMES, TOPIC and
+	  LIST queries from users not on the channel.
+	</para>
+      </sect2>
+      <sect2>
+        <title>+z, reduced moderation</title>
+        <para>
+          When +z is set, the effects of +b, +q, and +m are relaxed. For each message, if that message
+          would normally be blocked by one of these modes, it is instead sent to all the users who are
+          currently set +o. This is intended for use in moderated debates.
+        </para>
+        <para>
+          Note that +n is unaffected by this. To silence a given user completely, remove them from the
+          channel.
+        </para>
+      </sect2>
+    </sect1>
+  </chapter>
+<!-- Keep this comment at the end of the file
+Local variables:
+mode: sgml
+sgml-omittag:t
+sgml-shorttag:t
+sgml-namecase-general:t
+sgml-general-insert-case:lower
+sgml-minimize-attributes:nil
+sgml-always-quote-attributes:t
+sgml-indent-step:2
+sgml-indent-data:t
+sgml-parent-document:("dancer-oper-guide.sgml" "book")
+sgml-exposed-tags:nil
+fill-column:105
+End:
+-->

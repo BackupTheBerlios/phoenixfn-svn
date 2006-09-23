@@ -1,0 +1,7 @@
+Syntax: %bDROP <nickname> <password>%b
+
+%bDROP%b allows you to cancel the registration of your
+nickname, thus allowing others to re-register it.
+%+a%b* * * *%b
+%+aAdministrators need not specify the password
+%+aand can drop any nick.

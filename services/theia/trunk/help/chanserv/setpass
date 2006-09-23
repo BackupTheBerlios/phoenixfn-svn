@@ -1,0 +1,4 @@
+Syntax: %bSETPASS <channel> <password>%b
+
+Changes the channel contact password for <channel> to
+<password>.

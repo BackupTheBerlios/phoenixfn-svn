@@ -1,0 +1,14 @@
+Syntax: %bSET <channel> ALTERNATE <nickname|->%b
+
+Sets the alternate channel contact to <nickname>.  If the
+contact's nickname ever expires, services will make the
+alternate contact the new contact.  If both the contact and
+the alternate contact nicknames expire, the channel will be
+dropped.
+
+The alternate contact needs to be on the access list as
+well.
+
+To clear the alternate contact, use a "-" for the nickname.
+
+Alias: %bSUCCESSOR%b

@@ -1,0 +1,36 @@
+  <chapter id="intro">
+    <title>Introduction</title>
+    <para>
+      This document describes how normal users can interact via the dancer IRC server. It is
+      intended as a guide and reference for users and channel operators, specifically on the
+      <ulink url="http://www.freenode.net/">Freenode</ulink> network (FN).
+    </para>
+    <para>
+      This is not a beginners guide to IRC. For help with general IRC commands, visit 
+      <ulink url="http://www.irchelp.org/">www.irchelp.org</ulink>. This document only
+      extends to the things which are different in dancer, and channel management on FN.
+    </para>
+    <para>
+      FN exists primarily to provide IRC hosting for opensource projects and things associated with
+      them, along with all kinds of other community-oriented groups. Note that it is not primarily a
+      chat network, and it is most definately not for pr0n/music/warez trading or cracker
+      activities. It's IRC server has been designed to promote calm, reasoned discourse, in
+      accordance with <ulink url="http://www.freenode.net/philosophy.shtml">FN philosophy</ulink>.
+    </para>
+  </chapter>
+<!-- Keep this comment at the end of the file
+Local variables:
+mode: sgml
+sgml-omittag:t
+sgml-shorttag:t
+sgml-namecase-general:t
+sgml-general-insert-case:lower
+sgml-minimize-attributes:nil
+sgml-always-quote-attributes:t
+sgml-indent-step:2
+sgml-indent-data:t
+sgml-parent-document:("dancer-user-guide.sgml" "book")
+sgml-exposed-tags:nil
+fill-column:105
+End:
+-->

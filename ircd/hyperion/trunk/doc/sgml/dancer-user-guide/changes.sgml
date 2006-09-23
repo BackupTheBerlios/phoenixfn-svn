@@ -1,0 +1,125 @@
+  <chapter id="changes">
+    <title>Changes</title>
+    <para>
+      Dancer is an ircd derived from hybrid, as used on efnet, but with a large number of things
+      changed to make it better suit the freenode centrally-maintained network. Additionally,
+      FN runs a full services implementation, which protects channels and nicks. Please work with
+      services rather than using bots where possible. If you have a situation which services
+      genuinly cannot handle, please <emphasis>tell us</emphasis>. If something is genuinely
+      lacking, it might be added/changed (assuming it is in line with FN philosophy).
+    </para>
+    <para>
+      Regardless of it's hybrid origins, a rather large number of things have been added to
+      dancer. Here is a (long) list of the things which are different:
+    </para>
+    <itemizedlist>
+      <listitem>
+	<para>
+	  Server side flood control. Various kinds of floods can be detected and throttled by the
+	  server. Sufficiently large floods will cause a client to be dropped from the network.
+	</para>
+      </listitem>
+      <listitem>
+	<para>
+	  & and + channels are disabled. Only # channels are now supported. & channels are
+	  inappropriate for FN, and + channels are largely ineffective. If you want to use a
+	  channel without ops, in the short term you can simply create it and deop yourself. If you
+	  want to run a long term channel without ops, you can ask the network administrators in
+	  #freenode to mark it as a permanent channel. It will then be impossible to gain ops on
+	  the channel, effectively emulating a + channel.
+	</para>
+      </listitem>
+      <listitem>
+	<para>
+	  QUIT and PART reasons from users will be quoted with "s. This prevents a person from
+	  spoofing a server notice in their quit/part reason. These messages, as well as AWAY
+	  messages, will be stripped of all colour codes.
+	</para>
+      </listitem>
+      <listitem>
+	<para>
+	  Various desync issues are no longer present. In particular, a channel topic will no longer
+	  be lost to netsplits.
+	</para>
+      </listitem>
+      <listitem>
+	<para>
+	  If a user is set invisible (umode +i), then issuing a WHOIS on them will not show any
+	  channels they are on, except for ones which you are also on (effectively only showing
+	  places you can already see them). If you want to know what channels they are on, ask them!
+	</para>
+      </listitem>
+      <listitem>
+	<para>
+	  If a user has identified with nickserv, this will be noted in their WHOIS.
+	</para>
+      </listitem>
+      <listitem>
+	<para>
+	  Server routing is no longer generally known. MAP is disabled, and LINKS will only return a
+	  list of servers, not how they are connected up.
+	</para>
+      </listitem>
+      <listitem>
+	<para>
+	  IRC operators are no longer visible. If you need assistance from network admin, go to
+	  #freenode.
+	</para>
+      </listitem>
+      <listitem>
+	<para>
+	  [, \, ], and ^ will no longer be treated as the same characters as {, |, }, and ~ by the
+	  server. This affects channel names and nicks.
+	</para>
+      </listitem>
+      <listitem>
+	<para>
+	  Channel names may not contain colour codes or other control character junk.
+	</para>
+      </listitem>
+      <listitem>
+	<para>
+	  Channel mode (cmode) +c has been added. When set, colours, bold, underline, reverse video,
+	  ANSI escape sequences, flashing text, and beeps will all be filtered from channel traffic.
+	</para>
+      </listitem>
+      <listitem>
+	<para>
+	  cmode +q is a new form of ban. These "quiets" are used like bans, but they don't prevent a
+	  person from joining the channel, they merely prevent them from speaking on it. Quiets will
+	  show up in the banlist as normal, but the ban mask will be prefixed by a %.
+	</para>
+      </listitem>
+      <listitem>
+	<para>
+	  Channel forwarding, which can shift users between channels and set up antechamber models,
+	  and channels which never lose their ban lists, modes, or topics (even when empty) are
+	  available in special cases. If you have a really good reason to want this in your channel,
+	  contact FN administration in #freenode. For now, these features are restricted until
+	  it is fully understood what their consequences are.
+	</para>
+      </listitem>
+      <listitem>
+	<para>
+	  Various new user modes (umodes) are available, see the <link linkend="users">users</link>
+	  section for full details.
+	</para>
+      </listitem>
+    </itemizedlist>
+  </chapter>
+<!-- Keep this comment at the end of the file
+Local variables:
+mode: sgml
+sgml-omittag:t
+sgml-shorttag:t
+sgml-namecase-general:t
+sgml-general-insert-case:lower
+sgml-minimize-attributes:nil
+sgml-always-quote-attributes:t
+sgml-indent-step:2
+sgml-indent-data:t
+sgml-parent-document:("dancer-user-guide.sgml" "book")
+sgml-exposed-tags:nil
+fill-column:105
+End:
+-->

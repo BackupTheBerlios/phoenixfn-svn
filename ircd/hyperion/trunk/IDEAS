@@ -1,0 +1,51 @@
+Ideas written down by jilles
+Not everything of this is possible
+- apply patch for +fJD desync (DONE)
+- fix or remove ban channel forwarding (trouble if destination
+  disappears) (DONE)
+- forwarding requires too much trust in the op, fix?
+- generally clean up +bdeIq (DONE)
+- make +q more independent of +b (DONE)
+- prevent splitriding to join -P+ikb channels?
+- reinstate difference local vs remote /whois? (DONE)
+- rate limit remote /whois in a sane way (i.e. on the requester's server) (DONE)
+- remove Channel.keep_their_modes and clear_bans_exceptions_denies() on SJOIN
+  when we lose the TS; they are too simplistic to work in general and
+  NO_OPS_ON_SPLIT performs the same function. Just keep the bans from both
+  sides as TS5 was intended. If we really want this functionality, burst the
+  bans with a TS such as in TS6's BMASK. (DONE)
+- send a better RPL_ISUPPORT (005) numeric (DONE)
+- change some numerics to values used by other ircds
+  - RPL_FORWARD should be 4xx? (DONE)
+  - probably not much gain to be obtained here otherwise
+- clarify error messages (remove "demigods", "hand of diety", etc..) (DONE)
+- implement global version of /stats p (decouples #freenode from support a
+  bit more) (DONE)
+- hide who is opped but not who performs mode changes/kicks/removes/etc?
+  (longer term)
+- fix remote idle times (IDLE command is broken)
+- implement hybrid-style server side ignore ("callerid", umode +g, /accept)?
+- change DRONE_FLOOD (single user receives rather a lot of privmsgs) to
+  block quicker?
+- reorganize dlines: not stored in file, broadcast when set, expiry, UNDLINE
+  command
+- fix unresolved-IPv6 K-lines (appears to work although perhaps inefficiently)
+- do something about syn floods because of K-lined clients attempting
+  to connect continuously, e.g. with a better honeypot mechanism or
+  a reject cache
+- sometimes k-lined clients quit with "Client Quit", fix this (DONE)
+- change dancer-ircd to hyperion in several places (mostly done but not
+  in dir names)
+- rewrite (in src/s_user.c) user_mode() and send_umode_out(); setting modes
+  on other users does not work properly (DONE)
+- don't match() all the bans on every channel privmsg; see ircd-ratbox's
+  can_send() for how to do this (20050812: broken with nick changes)
+- use kqueue (FreeBSD), /dev/poll (Solaris) or epoll (Linux) to replace
+  the inefficient poll() every time through the main loop; possibly use
+  libevent to make the implementation easier
+- add an event queue (execute function X after Y seconds or every Y seconds)
+  (perhaps related to previous item)
+- do something to help with +J and server restarts/crashes?
+- expand iphash to count remote clients in a separate field and have a
+  localmaxclientsperip.globalmaxclientsperip in Y:line
+- replace the old resolver code with adns?

@@ -1,0 +1,724 @@
+  <chapter id="commands">
+    <title>Operator Commands</title>
+    <sect1>
+      <title>Network management commands</title>
+      <note>
+	<para>
+	  All commands and names are case insensitive.
+	</para>
+      </note>
+      <sect2>
+	<title>CONNECT</title>
+	<cmdsynopsis><command>CONNECT</command> 
+	  <arg choice=plain><replaceable>target</replaceable></arg> 
+	  <arg><replaceable>port</replaceable></arg> 
+	  <arg><replaceable>source</replaceable></arg>
+	</cmdsynopsis>
+	<para>
+	  Initiate a connection attempt to server <replaceable class=parameter>target</replaceable>. If a port is
+	  given, connect to that port on the target, otherwise use the one given in ircd.conf. If 
+	  <replaceable class=parameter>source</replaceable> is given, tell that server to initiate the connection
+	  attempt, otherwise it will be made from the server you are attached to.
+	</para>
+      </sect2>
+      <sect2>
+	<title>SQUIT</title>
+	<cmdsynopsis>
+	  <command>SQUIT</command>
+	  <arg choice=plain><replaceable>server</replaceable></arg>
+	  <arg><replaceable>reason</replaceable></arg>
+	</cmdsynopsis>
+	<para>
+	  Closes down the link to <replaceable>server</replaceable> from the current server. If a reason is
+	  given, it will be sent out in the server notices on both sides of the link.
+	</para>
+      </sect2>
+      <sect2>
+	<title>REHASH</title>
+	<cmdsynopsis>
+	  <command>REHASH</command>
+	  <group>
+	    <arg>DNS</arg>
+	    <arg>IP</arg>
+	    <arg>TKLINES</arg>
+	    <arg>GC</arg>
+	    <arg>MOTD</arg>
+	    <arg>OMOTD</arg>
+	    <arg>HELP</arg>
+	    <arg>DLINES</arg>
+	  </group>
+	  <arg><replaceable>server</replaceable></arg>
+	</cmdsynopsis>
+	<para>
+	  With no parameter given, ircd.conf will be re-read and parsed. If any arguments are given, both
+	  must be given. The server argument may be '*' for "all servers".
+	</para>
+	<variablelist>
+	  <title>Parameters</title>
+	  <varlistentry>
+	    <term>DNS</term>
+	    <listitem>
+	      <para>Re-read /etc/resolv.conf</para>
+	    </listitem>
+	  </varlistentry>
+	  <varlistentry>
+	    <term>IP</term>
+	    <listitem>
+	      <para>Reload the internal IP hash. Don't use it unless you know what that means.</para>
+	    </listitem>
+	  </varlistentry>
+	  <varlistentry>
+	    <term>TKLINES</term>
+	    <listitem>
+	      <para>Clear all temporary K:lines</para>
+	    </listitem>
+	  </varlistentry>
+	  <varlistentry>
+	    <term>GC</term>
+	    <listitem>
+	      <para>Force immediate garbage collection</para>
+	    </listitem>
+	  </varlistentry>
+	  <varlistentry>
+	    <term>MOTD</term>
+	    <listitem>
+	      <para>Reload the MOTD file</para>
+	    </listitem>
+	  </varlistentry>
+	  <varlistentry>
+	    <term>OMOTD</term>
+	    <listitem>
+	      <para>Reload the operator MOTD file</para>
+	    </listitem>
+	  </varlistentry>
+	  <varlistentry>
+	    <term>HELP</term>
+	    <listitem>
+	      <para>Reload the help file</para>
+	    </listitem>
+	  </varlistentry>
+	  <varlistentry>
+	    <term>DLINES</term>
+	    <listitem>
+	      <para>Rehash D:lines</para>
+	    </listitem>
+	  </varlistentry>
+	</variablelist>
+      </sect2>
+      <sect2>
+	<title>RESTART</title>
+	<para>
+	  Cause an immediate total shutdown of the IRC server, and restart from scratch as if it had just been executed.
+	</para>
+      </sect2>
+      <sect2>
+	<title>DIE</title>
+	<cmdsynopsis>
+	  <command>DIE</command>
+	  <arg choice=plain><replaceable>server</replaceable></arg>
+	  <arg><replaceable>reason</replaceable></arg>
+	</cmdsynopsis>
+	<para>Immediately terminate the IRC server, after sending notices to all connected clients and servers, optionally with the given reason</para>
+	<note>
+	  <para>This command cannot be used remotely. The server name is used only as a safety measure.</para>
+	</note>
+      </sect2>
+      <sect2>
+	<title>HTM</title>
+	<cmdsynopsis>
+	  <command>HTM</command>
+	  <group>
+	    <arg>ON</arg>
+	    <arg>OFF</arg>
+	    <arg>TO <replaceable>rate</replaceable></arg>
+	    <arg>QUIET</arg>
+	    <arg>NOISY</arg>
+	  </group>
+	</cmdsynopsis>
+	<para>With no parameters, the server will return the current HTM rate and status</para>
+	<para>
+	  High Traffic Mode controls how the server polls it's connections. When HTM is on, the
+	  server will poll server and <link linkend="highprioritymode">high-priority</link> connections
+	  more often, making it more efficient on those connections. This will make it notably
+	  less efficient at handling normal local client traffic.
+	</para>
+	<variablelist>
+	  <varlistentry>
+	    <term>ON</term>
+	    <listitem>
+	      <para>Forces HTM on</para>
+	    </listitem>
+	  </varlistentry>
+	  <varlistentry>
+	    <term>OFF</term>
+	    <listitem>
+	      <para>Forces HTM off</para>
+	    </listitem>
+	  </varlistentry>
+	  <varlistentry>
+	    <term>TO <replaceable>rate</replaceable></term>
+	    <listitem>
+	      <para>Sets the traffic level at which the server will automatically switch HTM on until things calm down</para>
+	    </listitem>
+	  </varlistentry>
+	  <varlistentry>
+	    <term>QUIET</term>
+	    <listitem>
+	      <para>Prevents the server from notifying the operators when HTM is activated/deactivated</para>
+	    </listitem>
+	  </varlistentry>
+	  <varlistentry>
+	    <term>NOISY</term>
+	    <listitem>
+	      <para>Makes the server notify operators when HTM is activated/deactivated</para>
+	    </listitem>
+	  </varlistentry>
+	</variablelist>
+      </sect2>
+      <sect2>
+	<title>SET</title>
+	<cmdsynopsis>
+	  <command>SET</command>
+	  <group>
+	    <arg>LOG</arg>
+	    <arg>MAX</arg>
+	    <arg>FLUDNUM</arg>
+	    <arg>FLUDTIME</arg>
+	    <arg>FLUDBLOCK</arg>
+	    <arg>SPLITDELAY</arg>
+	    <arg>SMALLNET</arg>
+	    <arg>SPAMNUM</arg>
+	    <arg>SPAMTIME</arg>
+	  </group>
+	  <arg choice=plain><replaceable>value</replaceable></arg>
+	</cmdsynopsis>
+	<para>The SET command sets a runtime-configurable value</para>
+	<variablelist>
+	  <varlistentry>
+	    <term>LOG</term>
+	    <listitem>
+	      <para>Logging level for ircd.log and syslog</para>
+	    </listitem>
+	  </varlistentry>
+	</variablelist>
+	<variablelist>
+	  <varlistentry>
+	    <term>MAX</term>
+	    <listitem>
+	      <para>Set the maximum connections allowed (may not exceed the compiled-in value HARD_FDLIMIT)</para>
+	    </listitem>
+	  </varlistentry>
+	  <varlistentry>
+	    <term>FLUDNUM</term>
+	    <listitem>
+	      <para>The number of messages needed to trip the flud alarm</para>
+	    </listitem>
+	  </varlistentry>
+	  <varlistentry>
+	    <term>FLUDTIME</term>
+	    <listitem>
+	      <para>Number of seconds in which FLUDNUM messages must occur to trip the flud alarm</para>
+	    </listitem>
+	  </varlistentry>
+	  <varlistentry>
+	    <term>FLUDBLOCK</term>
+	    <listitem>
+	      <para>Number of seconds to block fluds for. 0 disables flud checking.</para>
+	    </listitem>
+	  </varlistentry>
+	  <varlistentry>
+	    <term>DRONETIME</term>
+	    <listitem>
+	      <para>Number of seconds in which DRONECOUNT messages must occur to trip the drone alarm</para>
+	    </listitem>
+	  </varlistentry>
+	  <varlistentry>
+	    <term>DRONECOUNT</term>
+	    <listitem>
+	      <para>Number of messages which constitutes a drone flood. 0 disables drone flood checking.</para>
+	    </listitem>
+	  </varlistentry>
+	  <varlistentry>
+	    <term>SPLITDELAY</term>
+	    <listitem>
+	      <para>Number of minutes after a connect burst begins until joining an empty channel will give you ops</para>
+	    </listitem>
+	  </varlistentry>
+	  <varlistentry>
+	    <term>SMALLNET</term>
+	    <listitem>
+	      <para>Sets the number of servers which are needed to constitute "attached to the network", as opposed to "split"</para>
+	    </listitem>
+	  </varlistentry>
+	  <varlistentry>
+	    <term>SPAMNUM</term>
+	    <listitem>
+	      <para>Sets the number of JOINs/PARTs which constitutes a possible spambot</para>
+	    </listitem>
+	  </varlistentry>
+	  <varlistentry>
+	    <term>SPAMTIME</term>
+	    <listitem>
+	      <para>Staying on a channel for less than this length of time adds to the SPAMNUM count</para>
+	    </listitem>
+	  </varlistentry>
+	</variablelist>
+      </sect2>
+      <sect2>
+	<title>HASH</title>
+	<para>Shows some internal hashing statistics. If you don't know what it means, don't use it.</para>
+      </sect2>
+      <sect2>
+	<title>DNS</title>
+	<para>Shows some statistics about the internal asynchronous resolver. If you don't know what it means, don't use it.</para>
+      </sect2>
+    </sect1>
+    <sect1 id="usercommands">
+      <title>User management commands</title>
+      <sect2>
+	<title>KILL</title>
+	<cmdsynopsis>
+	  <command>KILL</command>
+	  <arg choice=plain><replaceable>nick</replaceable></arg>
+	  <arg><replaceable>reason</replaceable></arg>
+	</cmdsynopsis>
+	<para>
+	  Disconnects the user with the given nick from the server they are connected to,
+	  with the reason given, if present, and broadcast a server notice announcing this.
+	</para>
+      </sect2>
+      <sect2>
+	<title>CLOSE</title>
+	<para>
+	  Closes all connections from clients who have not completed registering.
+	</para>
+      </sect2>
+      <sect2>
+	<title>KLINE</title>
+	<cmdsynopsis>
+	  <command>KLINE</command>
+	  <arg><replaceable>length</replaceable></arg>
+	  <group>
+	    <arg><replaceable>nick</replaceable></arg>
+	    <arg><replaceable>user</replaceable>@<replaceable>host</replaceable></arg>
+	    <arg><replaceable>user</replaceable>@<replaceable>a</replaceable>.<replaceable>b</replaceable>.<replaceable>c</replaceable>.<replaceable>d</replaceable></arg>
+	  </group>
+	  <arg>:<replaceable>reason</replaceable></arg>
+	</cmdsynopsis>
+	<para>
+	  Add a K:line to the local server config file to ban the given user from using that
+	  server. If a nick is given, the user@host they currently have will be banned, otherwise
+	  the ban will be directly added.
+	</para>
+	<para>
+	  If the optional parameter <replaceable>length</replaceable> is given, the K:line will
+	  be temporary and last that long in minutes.
+	</para>
+	<para>
+	  If an IP address is given, the ban will be against all hosts matching that IP regardless
+	  of DNS. The IP address can be given as a full address (192.168.0.1), as a CIDR mask
+	  (192.168.0.0/24), or as a glob (192.168.0.*).
+	</para>
+	<para>
+	  All clients matching the K:line will be disconnected from the server immediately.
+	</para>
+	<para>
+	  If a reason is specified, it will be sent to the client when they are disconnected, and
+	  whenever a connection is attempted which is banned.
+	</para>
+      </sect2>
+      <sect2>
+	<title>UNKLINE</title>
+	<cmdsynopsis>
+	  <command>UNKLINE</command>
+	  <arg choice=plain><replaceable>user</replaceable>@<replaceable>host</replaceable></arg>
+	</cmdsynopsis>
+	<para>
+	  Will attempt to remove a K:line matching user@host from the config files, and will flush
+	  a temporary K:line.
+	</para>
+      </sect2>
+      <sect2>
+	<title>DLINE</title>
+	<cmdsynopsis>
+	  <command>DLINE</command>
+	  <group>
+	    <arg><replaceable>nick</replaceable></arg>
+	    <arg><replaceable>a</replaceable>.<replaceable>b</replaceable>.<replaceable>c</replaceable>.<replaceable>d</replaceable></arg>
+	  </group>
+	  <arg>:<replaceable>reason</replaceable></arg>
+	</cmdsynopsis>
+	<para>
+	  Add a D:line to the config files, which will deny any connections from the IP
+	  address of the banned client (either the address given, or the address of the
+	  user specified).
+	</para>
+	<para>
+	  If a reason is specified, it will be sent to the client when they are disconnected, and
+	  whenever a connection is attempted which is banned.
+	</para>
+	<para>
+	  D:lines are less load on a server, and may be more appropriate if somebody is flooding
+	  connections.
+	</para>
+      </sect2>
+      <sect2>
+	<title>TESTLINE</title>
+	<cmdsynopsis>
+	  <group>
+	    <arg><replaceable>user</replaceable>@<replaceable>host</replaceable></arg>
+	    <arg><replaceable>a</replaceable>.<replaceable>b</replaceable>.<replaceable>c</replaceable>.<replaceable>d</replaceable></arg>
+	  </group>
+	</cmdsynopsis>
+	<para>
+	  Looks up the given hostmask or IP address and reports back on any I:, D:, G:, or K: lines found.
+	</para>
+      </sect2>
+      <sect2>
+	<title>SETNAME, SETIDENT, SETHOST</title>
+	<cmdsynopsis>
+	  <command>SETNAME</command>
+	  <arg><replaceable>nick</replaceable></arg>
+	  <arg choice=plain><replaceable>value</replaceable></arg>
+	</cmdsynopsis>
+	<cmdsynopsis>
+	  <command>SETIDENT</command>
+	  <arg><replaceable>nick</replaceable></arg>
+	  <arg choice=plain><replaceable>value</replaceable></arg>
+	</cmdsynopsis>
+	<cmdsynopsis>
+	  <command>SETHOST</command>
+	  <arg><replaceable>nick</replaceable></arg>
+	  <arg><replaceable>value</replaceable></arg>
+	</cmdsynopsis>
+	<para>
+	  Set the fullname, ident (username), or hostname associated with a particular nick
+	  for the duration of this session.
+	</para>
+	<para>
+	  If SETHOST is used without parameters, then it will change the hostname of the user who used
+	  the command. If their hostname is currently the real hostname that was looked up when they
+	  connected, then their hostname will be changed to the spoof name from their I:line (or
+	  SPOOF_LIMIT_HOST if their I:line did not specify a spoof host). Otherwise their current
+	  hostname will be set to their real hostname. This behaviour is specific to SETHOST and not
+	  shared by SETIDENT or SETNAME.
+	</para>
+	<para>
+	  If SETHOST, SETNAME, or SETIDENT is used with a single parameter then it will change the
+	  hostname of the user who used the command to the given value.
+	</para>
+      </sect2>
+    </sect1>
+    <sect1 id="misccommands">
+      <title>Miscellaneous commands</title>
+      <sect2>
+	<title>STATS</title>
+	<cmdsynopsis>
+	  <command>STATS</command>
+	  <arg><replaceable>type</replaceable></arg>
+	  <group>
+	    <arg><replaceable>nick</replaceable></arg>
+	    <arg><replaceable>server</replaceable></arg>
+	  </group>
+	</cmdsynopsis>
+	<para>
+	  Display various statistics.
+	</para>
+	<variablelist>
+	  <title>Values for <replaceable>type</replaceable></title>
+	  <varlistentry>
+	    <term>c</term>
+	    <listitem>
+	      <para>Show C/N:lines</para>
+	    </listitem>
+	  </varlistentry>
+	  <varlistentry>
+	    <term>d</term>
+	    <listitem>
+	      <para>Show D:lines</para>
+	    </listitem>
+	  </varlistentry>
+	  <varlistentry>
+	    <term>h</term>
+	    <listitem>
+	      <para>Show H/L:lines</para>
+	    </listitem>
+	  </varlistentry>
+	  <varlistentry>
+	    <term>i</term>
+	    <listitem>
+	      <para>Show I:lines</para>
+	    </listitem>
+	  </varlistentry>
+	  <varlistentry>
+	    <term>k</term>
+	    <listitem>
+	      <para>Show K:lines, or matched K:lines</para>
+	    </listitem>
+	  </varlistentry>
+	  <varlistentry>
+	    <term>L</term>
+	    <listitem>
+	      <para>Show IP and generic information about the given nick</para>
+	    </listitem>
+	  </varlistentry>
+	  <varlistentry>
+	    <term>l</term>
+	    <listitem>
+	      <para>Show hostname and generic information about the given nick</para>
+	    </listitem>
+	  </varlistentry>
+	  <varlistentry>
+	    <term>m</term>
+	    <listitem>
+	      <para>Show commands and their usage statistics</para>
+	    </listitem>
+	  </varlistentry>
+	  <varlistentry>
+	    <term>o</term>
+	    <listitem>
+	      <para>Show O/o:lines</para>
+	    </listitem>
+	  </varlistentry>
+	  <varlistentry>
+	    <term>P</term>
+	    <listitem>
+	      <para>Show configured ports</para>
+	    </listitem>
+	  </varlistentry>
+	  <varlistentry>
+	    <term>p</term>
+	    <listitem>
+	      <para>Show +T users on the network</para>
+	    </listitem>
+	  </varlistentry>
+	  <varlistentry>
+	    <term>q</term>
+	    <listitem>
+	      <para>Show Q:lines</para>
+	    </listitem>
+	  </varlistentry>
+	  <varlistentry>
+	    <term>r</term>
+	    <listitem>
+	      <para>Show resource usage by the ircd</para>
+	    </listitem>
+	  </varlistentry>
+	  <varlistentry>
+	    <term>s</term>
+	    <listitem>
+	      <para>Show the server name cache</para>
+	    </listitem>
+	  </varlistentry>
+	  <varlistentry>
+	    <term>t</term>
+	    <listitem>
+	      <para>Show generic server stats</para>
+	    </listitem>
+	  </varlistentry>
+	  <varlistentry>
+	    <term>u</term>
+	    <listitem>
+	      <para>Show server uptime</para>
+	    </listitem>
+	  </varlistentry>
+	  <varlistentry>
+	    <term>v</term>
+	    <listitem>
+	      <para>Show connected servers and their idle times</para>
+	    </listitem>
+	  </varlistentry>
+	  <varlistentry>
+	    <term>x</term>
+	    <listitem>
+	      <para>Show X:lines</para>
+	    </listitem>
+	  </varlistentry>
+	  <varlistentry>
+	    <term>y</term>
+	    <listitem>
+	      <para>Show Y:lines</para>
+	    </listitem>
+	  </varlistentry>
+	  <varlistentry>
+	    <term>z</term>
+	    <listitem>
+	      <para>Show memory usage stats</para>
+	    </listitem>
+	  </varlistentry>
+	  <varlistentry>
+	    <term>?</term>
+	    <listitem>
+	      <para>Show connected servers and sendq information about them</para>
+	    </listitem>
+	  </varlistentry>
+	</variablelist>
+      </sect2>
+      <sect2>
+	<title>SCAN</title>
+	<cmdsynopsis>
+	  <command>SCAN</command>
+	  <group choice=plain>
+	    <arg choice=req>
+	      <arg choice=plain>UMODES</arg>
+	      <arg choice=req><replaceable>mode string</replaceable></arg>
+	      <group choice=opt rep=repeat>
+		<arg choice=opt>list</arg>
+		<arg choice=opt>no-list</arg>
+		<arg choice=opt>
+		  <arg choice=plain>list-max</arg>
+		  <arg choice=plain><replaceable>max</replaceable></arg>
+		</arg>
+		<arg choice=opt>allowed</arg>
+		<arg choice=opt>current</arg>
+		<arg choice=opt>
+		  <arg choice=plain>mask</arg>
+		  <arg choice=plain><replaceable>mask</replaceable></arg>
+		</arg>
+	      </group>
+	    </arg>
+	  </group>
+	</cmdsynopsis>
+	<variablelist>
+	  <varlistentry>
+	    <term>UMODES</term>
+	    <listitem>
+	      <para>
+		Scan all connected clients based on their current umode. The mode string is of the form
+		+abc-xyz, and selects clients who have all the + modes set, and who have none of the -
+		modes set. It is not necessary to specify both a + and a - set.
+	      </para>
+	      <para>
+		If list is set then the clients and their modes will be listed; if no-list is set then
+		only the summary count will be. (Default is to list everything)
+	      </para>
+	      <para>
+		If list-max is non-zero then the list will be limited to the given number of
+		users. Default is 100. The summary count is not affected.
+	      </para>
+	      <para>
+		If allowed is set then the mode string will be compared to the umodes which a user is
+		permitted to set; if current is set then it will be compared to the umodes a user
+		currently has set. Default is allowed.
+	      </para>
+	      <para>
+		If mask is set then only users matching the given nick!user@host mask will be displayed
+		and counted in the summary.
+	      </para>
+	    </listitem>
+	  </varlistentry>
+	</variablelist>
+      </sect2>
+      <sect2>
+	<title>SCAN</title>
+	<cmdsynopsis>
+	  <command>SCAN</command>
+	  <group choice=plain>
+	    <arg choice=req>
+	      <arg choice=plain>UMODES</arg>
+	      <arg choice=req><replaceable>mode string</replaceable></arg>
+	      <group choice=opt rep=repeat>
+		<arg choice=opt>list</arg>
+		<arg choice=opt>no-list</arg>
+		<arg choice=opt>
+		  <arg choice=plain>list-max</arg>
+		  <arg choice=plain><replaceable>max</replaceable></arg>
+		</arg>
+		<arg choice=opt>allowed</arg>
+		<arg choice=opt>current</arg>
+		<arg choice=opt>
+		  <arg choice=plain>mask</arg>
+		  <arg choice=plain><replaceable>mask</replaceable></arg>
+		</arg>
+	      </group>
+	    </arg>
+	  </group>
+	</cmdsynopsis>
+	<variablelist>
+	  <varlistentry>
+	    <term>UMODES</term>
+	    <listitem>
+	      <para>
+		Scan all connected clients based on their current umode. The mode string is of the form
+		+abc-xyz, and selects clients who have all the + modes set, and who have none of the -
+		modes set. It is not necessary to specify both a + and a - set.
+	      </para>
+	      <para>
+		If list is set then the clients and their modes will be listed; if no-list is set then
+		only the summary count will be. (Default is to list everything)
+	      </para>
+	      <para>
+		If list-max is non-zero then the list will be limited to the given number of
+		users. Default is 100. The summary count is not affected.
+	      </para>
+	      <para>
+		If allowed is set then the mode string will be compared to the umodes which a user is
+		permitted to set; if current is set then it will be compared to the umodes a user
+		currently has set. Default is allowed.
+	      </para>
+	      <para>
+		If mask is set then only users matching the given nick!user@host mask will be displayed
+		and counted in the summary.
+	      </para>
+	    </listitem>
+	  </varlistentry>
+	</variablelist>
+      </sect2>
+      <sect2>
+	<title>TRACE</title>
+	<cmdsynopsis>
+	  <command>TRACE</command>
+	  <group>
+	    <arg><replaceable>server</replaceable></arg>
+	    <arg><replaceable>nick</replaceable></arg>
+	  </group>
+	</cmdsynopsis>
+	<para>
+	  Shows client information about the given target, or about the current server if
+	  no targets are specified.
+	</para>
+	<para>
+	  The path to the target will also be given, and all servers and opers connected.
+	</para>
+      </sect2>
+      <sect2>
+	<title>WALLOPS</title>
+	<cmdsynopsis>
+	  <command>WALLOPS</command>
+	  <arg choice=plain>:<replaceable>message</replaceable></arg>
+	</cmdsynopsis>
+	<para>
+	  Sends a WALLOPS message to all users who have the +w umode set. This is for
+	  things you don't mind the whole network knowing about.
+	</para>
+      </sect2>
+      <sect2>
+	<title>OPERWALL</title>
+	<cmdsynopsis>
+	  <command>OPERWALL</command>
+	  <arg choice=plain>:<replaceable>message</replaceable></arg>
+	</cmdsynopsis>
+	<para>
+	  Sends an OPERWALL message to all users who have the +z umode set. +z is restricted,
+	  OPERWALL should be considered private communications.
+	</para>
+      </sect2>
+    </sect1>
+  </chapter>
+<!-- Keep this comment at the end of the file
+Local variables:
+mode: sgml
+sgml-omittag:t
+sgml-shorttag:t
+sgml-namecase-general:t
+sgml-general-insert-case:lower
+sgml-minimize-attributes:nil
+sgml-always-quote-attributes:t
+sgml-indent-step:2
+sgml-indent-data:t
+sgml-parent-document: ("dancer-oper-guide.sgml" "book")
+sgml-exposed-tags:nil
+sgml-local-ecat-files:nil
+fill-column:105
+End:
+-->

@@ -1,0 +1,12 @@
+Syntax: %bAUTOREM <channel> ADD <mask> [reason]%b
+        %bAUTOREM <channel> DEL <mask | index>%b
+        %bAUTOREM <channel> LIST [mask]
+
+Maintains the channel autoremove list for %b<channel>%b.
+If a user on the autoremove list attempts to join the
+channel, %C will ban/remove the user.
+%b/msg %C HELP AUTOREM {ADD|DEL|LIST}%b for more
+specific information on each command.
+%+a%b* * * *%b
+%+aAdministrators can modify the autoremove list for
+%+aany registered channel.

@@ -1,0 +1,3 @@
+Syntax: %bSET <channel> CONTACT <nickname>%b
+
+Resets the contact nickname for <channel> to <nickname>.

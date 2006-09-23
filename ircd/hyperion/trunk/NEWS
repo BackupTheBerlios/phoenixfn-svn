@@ -1,0 +1,154 @@
+User-visible changes between hyperion 1.0.1 and hyperion 1.0.2:
+- fix some bugs in noidprivmsg and +E (including a crash bug)
+- change [:] handling in ircd.conf to terminate at ]: if possible (see
+  Q: in example.conf)
+
+User-visible changes between hyperion 1.0 and hyperion 1.0.1:
+- possibility to forbid unidentified users from sending private messages
+  via F:noidprivmsg; users with the new umode +6 are unaffected, both on
+  send and receive; affected users receive a customizable error message
+
+User-visible changes between dancer-ircd 1.0.35+pre2 and hyperion 1.0:
+
+Client:
+- clarify a few error messages
+- change numerics for channel forwarding (379->470) and failed +r
+  join (515->477) so clients have a better chance to interpret them
+  as a failed join
+- don't hide server-set bans anymore
+- make sure users macthing both a +q and a +d cannot join
+- reinstate /stats p, this now shows all users with the new umode +T on
+  the whole net; away users are shown as away or hidden depending on the
+  config.h option NO_AWAYS_IN_STATS_P
+- change initial mode for new channels from +n to +ns
+- many commands don't reset idle time anymore: notice, join, part,
+  invite, kick, remove, away, close, kline, unkline, dline, htm
+- improved 005 (RPL_ISUPPORT) numeric enabling clients to treat
+  dancer-specific modes like +J and +f properly
+- stop accepting cmode +p as an alias for cmode +s
+- stop sending messages to +#channel and @#channel (including /knock) to
+  all +p opers on the channel
+- +q mask will always appear to clients as +b %mask, ensuring that client
+  ban lists stay in sync
+- ban channel forwarding will show the channel forwarded to in ban lists
+  and ban removal
+- fix CAPAB IDENTIFY-MSG in messages sent to ops via cmode +z and
+  make them more efficient
+- allow MODE #channel f to request the forward channel, even if
+  not on channel.
+- single-argument WHOIS is local and never shows idle time (unless done
+  on yourself); two-argument WHOIS (aka /wii) is remote and shows idle
+  time
+- allow '/' in spoofs (they don't have to contain '.' or ':' then,
+  but the last '/' must not be followed by a digit)
+- handle limits (+l) greater than 999 properly
+- trying to join a juped channel now gives ERR_BADCHANNAME instead of
+  ERR_UNAVAILRESOURCE, discouraging more attempts
+- matching a +I allows joining through +J always (/invite does not)
+- strip commas from channel keys on MODE as that's the separator in JOIN
+- allow user names starting with an underscore.
+- mirc appears to send LIST <10000 to list all channels, even though we
+  do not support ELIST=U; work around this
+- when rejecting a command because of too recent usage, give the command
+  name in RPL_LOAD2HI and send the "end of" numeric if appropriate
+- deopping yourself doesn't halt the processing of the current MODE
+  command anymore
+- NOIDPREFIX: if enabled, nicks have to match an allowed nick set by
+  services or they are prefixed with a special character; changing from
+  an allowed nick to a prefixed one is not allowed
+- allow prefixes for idented and unidented usernames to be changed in
+  ircd.conf, suggested alternative values: i= and n=.
+- send the server password to services if the I:line had no password, if
+  configured with F:identifyservice and F:identifycommand
+- only increment join throttle if a single peon joined, decreasing the
+  effect of netsplits on +J.
+- add F:line dopingout to disable ping timeout exits for clients; pings will
+  still be sent as normal
+
+Config file:
+- allow colons in ircd.conf and kline.conf fields, by placing brackets
+  around the affected value.
+- servers should have an N:line for themselves; this N:line should have an
+  IP 127.0.0.1 and a crypted password x; this is needed for set
+  visible/hidden to work
+- add F:lines (feature) to ircd.conf, global name/value pairs; these appear
+  in +d /info
+
+Oper:
+- split the "more channels" ability from +p into a new umode +u, and
+  change the limit from three times the normal limit to a separate
+  configurable value.
+- fix permanent klines
+- umode +y no longer gives notices for all kicks and removes
+- flag and reject klines with '!' in them.
+- send a server notice (to +s) if we reject a SETHOST from a remote
+  client because of an invalid hostname, as this means the target's
+  hostname will be desynced.
+- remove wildcard whois totally
+- accept remote users if they are klined here, just propagate the kline
+  instead of creating ghosts; move the notice from +k to +d
+- flag and reject unknown/unsupported cmodes/umodes in /scan
+- support all parameterless modes and +fD in /scan cmodes
+- don't accept klines with reasons with semicolons from clients; older
+  servers will still accept them though.
+- send "Expiring K:line on %s@%s" notice to local opers only
+- don't autodline (cmode +D) clients with a ^ in their I:line.
+- misc fixes on changing other users' modes
+- /quote set can be used remotely now, by placing one of the following
+  after SET: ON <server>, GLOBAL, HIDDEN, VISIBLE; HIDDEN/VISIBLE uses
+  presence of the sixth field in N:line, like /links
+- /quote set listen disables/enables all listening ports; SIGHUP also
+  reenables; reenabling performs a rehash
+- new scan keyword idle to find clients idle less than the given number
+  of seconds
+
+Server <-> server protocol:
+- allow server-generated mode +ov again
+- +bedI modes will be combined from both sides of a split, even if the
+  TS was different. This is standard TS5; NO_OPS_ON_SPLIT prevents people
+  adding bans illegally. The implementation was broken and could never
+  work in the general case.
+- store IP addresses of IPv6 clients on all servers
+- pass dnshost (original hostname) around
+- make sure to propagate empty SJOINs as well
+- ignore OPER/SNICK from wrong direction to prevent them from being applied
+  to the wrong user in case of a nick collision
+- make sure spoofhost is not the empty string, using "x." if necessary,
+  to avoid sending a malformed SNICK
+- only fake the source server for numerics to local clients; do not fake
+  across server-server links.
+- allow services to set a login id on a client which is passed around,
+  like a more sophisticated form of umode +e
+- new SVSLOGIN command to change login id, nick, ident and hostname of
+  a client all at once and optionally set allowed nicks; these changes
+  are broadcast from the target's server with the SIGNON command
+
+Misc:
+- only suppress quit message ("Client Quit") for clients that are in
+  a channel they cannot send to for local clients, not for remote
+  clients. In particular, this ensures the K-lined message is always
+  visible.
+- create some necessary directories and files in 'make install'
+- version shows actual revision instead of ./configure time
+- IPv6 support in main tree, #define IPV6 to enable
+- misc improvements to IPv6 support such as working per-ip limiting
+- close listening socket immediately after it's removed from the configuration
+  and rehashed
+- clean up the code a little
+- fix some smaller desyncs and bugs
+
+User-visible changes between dancer-ircd 1.0.35 and dancer-ircd 1.0.35+pre2:
+
+Oper:
+- Allow +m-p users to deop themselves
+- Remove temp kline support (all klines, including temporary ones are
+  saved to kline.conf now)
+
+Server <-> server protocol:
+- Don't send unklines for expired klines
+
+Misc:
+- Always insert spaces between channel mode arguments (generated bad
+  SJOINs, RPL_CHANNELMODEIS, etc on things like high limits)
+- Rewrite kline.conf just once for all expired klines
+- Remove IDLE_CHECK support

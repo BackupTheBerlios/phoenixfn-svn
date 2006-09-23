@@ -1,0 +1,271 @@
+Index: include/m_commands.h
+===================================================================
+--- include/m_commands.h	(revision 49)
++++ include/m_commands.h	(working copy)
+@@ -132,6 +132,7 @@
+ extern int m_burst(struct Client*, struct Client*, int, char**);
+ extern int m_snick(struct Client*, struct Client*, int, char**);
+ extern int m_idle(struct Client*, struct Client*, int, char**);
++extern int m_encap(struct Client*, struct Client*, int, char**);
+ extern int m_collide(struct Client*, struct Client*, int, char**);
+ extern int m_ljoin(struct Client*, struct Client*, int, char**);
+ extern int m_lpart(struct Client*, struct Client*, int, char**);
+Index: include/msg.h
+===================================================================
+--- include/msg.h	(revision 54)
++++ include/msg.h	(working copy)
+@@ -71,6 +71,7 @@
+ #define MSG_SNICK    "SNICK"
+ #define MSG_IDLE     "IDLE"
+ #define MSG_COLLIDE  "COLLIDE"
++#define MSG_ENCAP    "ENCAP"
+ 
+ #ifdef CHALLENGERESPONSE
+ #define MSG_CHALL    "CHALL"    /* CHALL */
+@@ -288,6 +289,7 @@
+   { MSG_BURST,    m_burst,    0,MAXPARA, 1, 0, 0, 0, 0L },
+   { MSG_SNICK,    m_snick,    0,MAXPARA, 1, 0, 0, 0, 0L },
+   { MSG_IDLE,     m_idle,     0,MAXPARA, 1, 0, 1, 0, 0L },
++  { MSG_ENCAP,    m_encap,    0,MAXPARA, 1, 0, 0, 0, 0L },
+ 
+   { (char *) 0, (int (*)(struct Client *,struct Client *,int,char **)) 0 , 0, 0,    0, 0, 0, 0, 0L }
+ };
+Index: src/Makefile.in
+===================================================================
+--- src/Makefile.in	(revision 61)
++++ src/Makefile.in	(working copy)
+@@ -64,31 +64,31 @@
+ 	m_away.$(OBJEXT) m_burst.$(OBJEXT) m_capab.$(OBJEXT) \
+ 	m_chall.$(OBJEXT) m_close.$(OBJEXT) m_collide.$(OBJEXT) \
+ 	m_connect.$(OBJEXT) md5.$(OBJEXT) md5crypt.$(OBJEXT) \
+-	m_die.$(OBJEXT) m_error.$(OBJEXT) m_htm.$(OBJEXT) \
+-	m_info.$(OBJEXT) m_ison.$(OBJEXT) m_help.$(OBJEXT) \
+-	m_kill.$(OBJEXT) m_kline.$(OBJEXT) m_links.$(OBJEXT) \
+-	m_list.$(OBJEXT) m_ltrace.$(OBJEXT) m_lusers.$(OBJEXT) \
+-	m_makepass.$(OBJEXT) m_map.$(OBJEXT) m_message.$(OBJEXT) \
+-	m_mode.$(OBJEXT) m_operwall.$(OBJEXT) m_oper.$(OBJEXT) \
+-	m_pass.$(OBJEXT) m_ping.$(OBJEXT) m_pong.$(OBJEXT) \
+-	m_quit.$(OBJEXT) m_rehash.$(OBJEXT) m_resp.$(OBJEXT) \
+-	m_restart.$(OBJEXT) m_scan.$(OBJEXT) m_services.$(OBJEXT) \
+-	m_server.$(OBJEXT) m_set.$(OBJEXT) m_setname.$(OBJEXT) \
+-	m_snick.$(OBJEXT) m_spingtime.$(OBJEXT) m_squit.$(OBJEXT) \
+-	m_stats.$(OBJEXT) m_stopic.$(OBJEXT) m_svinfo.$(OBJEXT) \
+-	m_time.$(OBJEXT) m_trace.$(OBJEXT) m_unkline.$(OBJEXT) \
+-	m_userhost.$(OBJEXT) m_users.$(OBJEXT) m_version.$(OBJEXT) \
+-	m_wallops.$(OBJEXT) m_who.$(OBJEXT) m_whois.$(OBJEXT) \
+-	match.$(OBJEXT) motd.$(OBJEXT) mtrie_conf.$(OBJEXT) \
+-	numeric.$(OBJEXT) packet.$(OBJEXT) paths.$(OBJEXT) \
+-	parse.$(OBJEXT) res.$(OBJEXT) restart.$(OBJEXT) \
+-	s_auth.$(OBJEXT) s_bsd.$(OBJEXT) s_cr.$(OBJEXT) \
+-	s_conf.$(OBJEXT) s_debug.$(OBJEXT) s_log.$(OBJEXT) \
+-	s_misc.$(OBJEXT) s_serv.$(OBJEXT) s_stats.$(OBJEXT) \
+-	s_user.$(OBJEXT) s_zip.$(OBJEXT) scache.$(OBJEXT) \
+-	send.$(OBJEXT) sprintf_irc.$(OBJEXT) tsdelta.$(OBJEXT) \
+-	whowas.$(OBJEXT) umodes.$(OBJEXT) varparse.$(OBJEXT) \
+-	version.$(OBJEXT)
++	m_die.$(OBJEXT) m_encap.$(OBJEXT) m_error.$(OBJEXT) \
++	m_htm.$(OBJEXT) m_info.$(OBJEXT) m_ison.$(OBJEXT) \
++	m_help.$(OBJEXT) m_kill.$(OBJEXT) m_kline.$(OBJEXT) \
++	m_links.$(OBJEXT) m_list.$(OBJEXT) m_ltrace.$(OBJEXT) \
++	m_lusers.$(OBJEXT) m_makepass.$(OBJEXT) m_map.$(OBJEXT) \
++	m_message.$(OBJEXT) m_mode.$(OBJEXT) m_operwall.$(OBJEXT) \
++	m_oper.$(OBJEXT) m_pass.$(OBJEXT) m_ping.$(OBJEXT) \
++	m_pong.$(OBJEXT) m_quit.$(OBJEXT) m_rehash.$(OBJEXT) \
++	m_resp.$(OBJEXT) m_restart.$(OBJEXT) m_scan.$(OBJEXT) \
++	m_services.$(OBJEXT) m_server.$(OBJEXT) m_set.$(OBJEXT) \
++	m_setname.$(OBJEXT) m_snick.$(OBJEXT) m_spingtime.$(OBJEXT) \
++	m_squit.$(OBJEXT) m_stats.$(OBJEXT) m_stopic.$(OBJEXT) \
++	m_svinfo.$(OBJEXT) m_time.$(OBJEXT) m_trace.$(OBJEXT) \
++	m_unkline.$(OBJEXT) m_userhost.$(OBJEXT) m_users.$(OBJEXT) \
++	m_version.$(OBJEXT) m_wallops.$(OBJEXT) m_who.$(OBJEXT) \
++	m_whois.$(OBJEXT) match.$(OBJEXT) motd.$(OBJEXT) \
++	mtrie_conf.$(OBJEXT) numeric.$(OBJEXT) packet.$(OBJEXT) \
++	paths.$(OBJEXT) parse.$(OBJEXT) res.$(OBJEXT) \
++	restart.$(OBJEXT) s_auth.$(OBJEXT) s_bsd.$(OBJEXT) \
++	s_cr.$(OBJEXT) s_conf.$(OBJEXT) s_debug.$(OBJEXT) \
++	s_log.$(OBJEXT) s_misc.$(OBJEXT) s_serv.$(OBJEXT) \
++	s_stats.$(OBJEXT) s_user.$(OBJEXT) s_zip.$(OBJEXT) \
++	scache.$(OBJEXT) send.$(OBJEXT) sprintf_irc.$(OBJEXT) \
++	tsdelta.$(OBJEXT) whowas.$(OBJEXT) umodes.$(OBJEXT) \
++	varparse.$(OBJEXT) version.$(OBJEXT)
+ hyperion_ircd_OBJECTS = $(am_hyperion_ircd_OBJECTS)
+ hyperion_ircd_LDADD = $(LDADD)
+ DEFAULT_INCLUDES = -I. -I$(srcdir) -I$(top_builddir)/include
+@@ -218,6 +218,7 @@
+ 	md5.c \
+ 	md5crypt.c \
+ 	m_die.c \
++	m_encap.c \
+ 	m_error.c \
+ 	m_htm.c \
+ 	m_info.c \
+@@ -382,6 +383,7 @@
+ @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/m_connect.Po@am__quote@
+ @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/m_die.Po@am__quote@
+ @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/m_dump.Po@am__quote@
++@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/m_encap.Po@am__quote@
+ @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/m_error.Po@am__quote@
+ @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/m_help.Po@am__quote@
+ @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/m_htm.Po@am__quote@
+Index: src/m_encap.c
+===================================================================
+--- src/m_encap.c	(revision 0)
++++ src/m_encap.c	(revision 0)
+@@ -0,0 +1,133 @@
++/************************************************************************
++ *   IRC - Internet Relay Chat, src/m_encap.c
++ *   This file is copyright (C) 2005 Jilles Tjoelker
++ *                                    <jilles@stack.nl>
++ *
++ *   This program is free software; you can redistribute it and/or modify
++ *   it under the terms of the GNU General Public License as published by
++ *   the Free Software Foundation; either version 2 of the License, or
++ *   (at your option) any later version.
++ *
++ *   This program is distributed in the hope that it will be useful,
++ *   but WITHOUT ANY WARRANTY; without even the implied warranty of
++ *   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
++ *   GNU General Public License for more details.
++ *
++ *   You should have received a copy of the GNU General Public License
++ *   along with this program; if not, write to the Free Software
++ *   Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA
++ */
++
++#include "client.h"
++#include "ircd.h"
++#include "common.h"
++#include "numeric.h"
++#include "irc_string.h"
++#include "send.h"
++#include "s_serv.h"
++#include "caps.h"
++#include "m_commands.h"
++
++#include <stdlib.h>
++#include <string.h>
++
++typedef int (*encapfunc)(struct Client *, struct Client *, int, char **);
++
++static int me_test(struct Client *client_p, struct Client *source_p,
++		int parc, char **parv);
++
++static struct
++{
++	char *name;
++	int (*func)(struct Client *,struct Client *,int,char **);
++} encaplist[] =
++{
++	{ "TEST", me_test },
++	{ NULL, NULL }
++};
++
++int me_test(struct Client *client_p, struct Client *source_p,
++		int parc, char **parv)
++{
++	sendto_local_ops_flag(UMODE_SERVNOTICE, "ENCAP TEST from %s: %s",
++			source_p->name, parc >= 2 ? parv[1] : "<empty>");
++}
++
++/*
++ * parv[0] = source
++ * parv[1] = server name mask
++ * parv[2] = subcommand
++ * parv[3+] = args to subcommand
++ */
++int m_encap(struct Client *client_p, struct Client *source_p,
++		int parc, char *parv[])
++{
++	struct Client *dest_p;
++	char buf[513], *p;
++	int i;
++	unsigned int len, l;
++
++#if 0 /* test! */
++	if (!IsServer(client_p))
++	{
++		sendto_one(source_p, form_str(ERR_UNKNOWNCOMMAND),
++				me.name, parv[0], "ENCAP");
++		return 0;
++	}
++#endif
++
++	if (parc < 3)
++	{
++		sendto_ops_flag(UMODE_DEBUG, "%s sent ENCAP without command", source_p->name);
++		return 0;
++	}
++
++	/* Reconstruct parameter string */
++	p = buf;
++	len = 0;
++	for (i = 3; i < parc; i++)
++	{
++		l = strlen(parv[i]);
++		if (len + l + 3 >= sizeof(buf))
++			break;
++		len++, *p++ = ' ';
++		if (i == parc - 1)
++			len++, *p++ = ':';
++		strcpy(p, parv[i]);
++		p += l;
++		len += l;
++	}
++	*p = '\0';
++
++	/* If the mask contains wildcards, just send it everywhere */
++	if (strchr(parv[1], '*') != NULL || strchr(parv[1], '?') != NULL)
++		sendto_match_cap_servs(NULL, client_p, CAP_ENCAP,
++				":%s ENCAP %s %s%s",
++				parv[0], parv[1], parv[2], buf);
++	/* Or it is a single server */
++	else if ((dest_p = find_server(parv[1])) != NULL && !IsMe(dest_p)
++			&& IsCapable(dest_p->from, CAP_ENCAP))
++		sendto_one(dest_p, ":%s ENCAP %s %s%s", parv[0],
++				parv[1], parv[2], buf);
++	/* No action on invalid names */
++	/* Message is also silently dropped if something on the path does
++	 * not understand ENCAP.
++	 */
++
++	if (match(parv[1], me.name))
++	{
++		p = parv[2];
++		parv[2] = parv[0];
++		for (i = 0; encaplist[i].name != NULL; i++)
++		{
++			if (!irccmp(encaplist[i].name, p))
++			{
++				encaplist[i].func(client_p, source_p, parc - 2, parv + 2);
++				break;
++			}
++		}
++		/* Ignore unknown ENCAP types */
++	}
++
++	return 0;
++}
+Index: src/s_serv.c
+===================================================================
+--- src/s_serv.c	(revision 66)
++++ src/s_serv.c	(working copy)
+@@ -81,6 +81,7 @@
+   { "IE",       CAP_IE }, 
+   { "QU",       CAP_QU },
+   { "RW",       CAP_RW }, /* Remote WHOIS, because services can't do it */
++  { "ENCAP",    CAP_ENCAP },
+   { 0,   0 }
+ };
+ 
+Index: src/Makefile.am
+===================================================================
+--- src/Makefile.am	(revision 56)
++++ src/Makefile.am	(working copy)
+@@ -33,6 +33,7 @@
+ 	md5.c \
+ 	md5crypt.c \
+ 	m_die.c \
++	m_encap.c \
+ 	m_error.c \
+ 	m_htm.c \
+ 	m_info.c \

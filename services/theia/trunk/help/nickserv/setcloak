@@ -1,0 +1,6 @@
+Syntax: %bSETCLOAK <nickname> {ON|OFF} [hostname]%b
+
+Turns cloaking on or off for %b<nickname>%b. If turning
+cloaking on, the new hostname must be given.
+
+Services does not check the validity of the hostname.

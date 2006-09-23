@@ -1,0 +1,27 @@
+Syntax: %bREGISTER <channel> [password]%b
+
+Registers <channel> in %C's database.  %b[password]%b is
+used via %C %bIDENTIFY%b to identify the channel contact
+for some functions. If no password is specified, only
+the channel contact nick can use %C %bIDENTIFY%b.
+
+Guidelines for running a freenode channel are found here:
+http://freenode.net/channel_guidelines.shtml Pick someone
+to register your project channel who is around frequently. 
+If your channel contact's nick expires,
+%C will drop their channel when %N drops
+their nick. Consider setting an %bALTERNATE%b (%b/msg%b
+%b%C HELP SET ALTERNATE%b) to avoid
+this situation.
+
+Give channel staffers the ability to maintain
+your channel via the %bACCESS%b command (%b/msg %C%b
+%bHELP ACCESS%b).  Level '10' lets them gain ops,
+voice and devoice users, etc. Try to ensure your
+channel has 24-hour coverage.  Staffers should
+%bIDENTIFY%b to %N so that their nicks don't expire,
+and so that %C will recognize them.
+
+If no one on a channel's %bACCESS%b list enters the
+channel within 120 days, the channel will be
+considered expired and may be dropped.

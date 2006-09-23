@@ -1,0 +1,87 @@
+  <chapter id="users">
+    <title>Users and umodes</title>
+    <para>
+      User modes (umodes) are set with the MODE command, in most clients either "/umode +i" or
+      "/mode mynick +i". Here is a list of the ones which are available for general use:
+    </para>
+    <variablelist>
+      <varlistentry>
+	<term>+i, invisible</term>
+	<listitem>
+	  <para>
+	    This prevents you from appearing in global WHO/WHOIS by normal users, and hides which
+	    channels you are on. It is strongly recommended that you set this umode.
+	  </para>
+	</listitem>
+      </varlistentry>
+      <varlistentry>
+	<term>+w, see wallops</term>
+	<listitem>
+	  <para>
+	    This umode lets you see the wallops announcement system. Important network messages will
+	    be sent out via global notices; this is only for individual channel announcements and
+	    anything else the network staff feel like saying to the world in general (<quote>moo!</quote>).
+	  </para>
+	</listitem>
+      </varlistentry>
+      <varlistentry>
+	<term>+I, block invite</term>
+	<listitem>
+	  <para>
+	    This umode prevents anybody from inviting you to a channel. It effectively
+	    limits you to public channels or to those you are on the invex lists for. (It can
+	    safely be used to block somebody who is invite flooding)
+	  </para>
+	</listitem>
+      </varlistentry>
+      <varlistentry>
+	<term>+E, block unidentified</term>
+	<listitem>
+	  <para>
+	    This umode prevents people who have not identified with nickserv from sending you
+	    private messages (they will be told their messages are bouncing).
+	  </para>
+	</listitem>
+      </varlistentry>
+      <varlistentry>
+        <term>+Q, block forwarding</term>
+        <listitem>
+          <para>
+            This umode prevents you from being affected by any of the channel forwarding mechanisms. In
+            any event where you would normally be forwarded, instead you will get the usual error message
+            as if no forwarding was in effect.
+          </para>
+        </listitem>
+      </varlistentry>
+      <varlistentry>
+	<term>+C, block CTCP</term>
+	<listitem>
+	  <para>
+	    This umode prevents you from receiving CTCP messages or sending CTCP
+	    replies. This will stop anybody from CTCP flooding you. Note that this only
+	    affects CTCP messages/replies to/from *you*; it won't stop you receiving channel
+	    CTCP, although it will block your response to them.
+	  </para>
+          <para>
+            CTCP ACTION messages are explicitly excluded; they are unaffected by the +C mode.
+          </para>
+	</listitem>
+      </varlistentry>
+    </variablelist>
+  </chapter>
+<!-- Keep this comment at the end of the file
+Local variables:
+mode: sgml
+sgml-omittag:t
+sgml-shorttag:t
+sgml-namecase-general:t
+sgml-general-insert-case:lower
+sgml-minimize-attributes:nil
+sgml-always-quote-attributes:t
+sgml-indent-step:2
+sgml-indent-data:t
+sgml-parent-document:("dancer-user-guide.sgml" "book")
+sgml-exposed-tags:nil
+fill-column:105
+End:
+-->

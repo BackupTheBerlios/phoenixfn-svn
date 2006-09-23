@@ -1,0 +1,8 @@
+Syntax: %bAUTOREM <channel> DEL <mask | index>%b
+
+The %bAUTOREM DEL%b command deletes all hostmasks
+matching %b<mask>%b from the autoremove list.  If an
+index number is given instead of a hostmask, the
+corresponding hostmask is deleted.  You can get a
+list of indices from the %bAUTOREM LIST%b command.
+(%b/msg %C HELP AUTOREM LIST%b)

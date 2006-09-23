@@ -1,0 +1,3 @@
+/* IPv6 enabled config */
+#include "config.h.fn-small"
+#define IPV6

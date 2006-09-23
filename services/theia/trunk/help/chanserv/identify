@@ -1,0 +1,10 @@
+Syntax: %bIDENTIFY <channel> [password]%b
+
+Identifies you as the channel contact for %b<channel>%b. 
+Some %C commands require that you %bIDENTIFY%b before
+using them.
+
+If you are the contact (your master nick is equal to
+the stored contact nick), you need not use the channel
+password, otherwise you have to. If there is no channel
+password, only the contact nick can use this command.
