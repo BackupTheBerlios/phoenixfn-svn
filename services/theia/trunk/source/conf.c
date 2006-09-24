@@ -1058,6 +1058,12 @@ AddUser(char *host, char *pass, char *nick, char *flags)
         ptr->flags |= PRIV_USERADMIN;
         break;
       }
+      case 'h':
+      case 'H':
+      {
+        ptr->flags |= PRIV_HELPER;
+	break;
+      }
       default:
         break;
     } /* switch (flags[ii]) */

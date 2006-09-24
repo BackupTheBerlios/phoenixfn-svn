@@ -23,16 +23,17 @@ struct Server;
 
 /* userlist privileges/flags */
 
-#define PRIV_ADMIN      0x0001  /* can use administrator commands */
-#define  PRIV_OPER        0x0002  /* can use operator commands */
-#define PRIV_JUPE        0x0004  /* can use jupe/unjupe commands */
-#define  PRIV_GLINE      0x0008  /* can use gline/ungline commands */
-#define PRIV_CHAT        0x0010  /* can use dcc chat service */
-#define PRIV_FRIEND      0x0020  /* has "friend" privileges */
-#define PRIV_EXCEPTION  0x0040  /* protected user */
-#define PRIV_SADMIN     0x0080  /* services administrator */
-#define PRIV_EXPERIMENTAL 0x0100 /* experimental features */
-#define PRIV_USERADMIN  0x0200   /* user administration features */
+#define PRIV_ADMIN		0x0001 /* can use administrator commands */
+#define PRIV_OPER		0x0002 /* can use operator commands */
+#define PRIV_JUPE		0x0004 /* can use jupe/unjupe commands */
+#define PRIV_GLINE		0x0008 /* can use gline/ungline commands */
+#define PRIV_CHAT		0x0010 /* can use dcc chat service */
+#define PRIV_FRIEND		0x0020 /* has "friend" privileges */
+#define PRIV_EXCEPTION		0x0040 /* protected user */
+#define PRIV_SADMIN		0x0080 /* services administrator */
+#define PRIV_EXPERIMENTAL	0x0100 /* experimental features */
+#define PRIV_USERADMIN		0x0200 /* user administration features */
+#define PRIV_HELPER		0x0400 /* can user a small subset of nickserv commands */
 
 /* monitored channel flags */
 #define CHAN_DELETE      0x001  /* to delete channels after a rehash */
@@ -220,3 +221,7 @@ extern struct cHost               *cHostList;
 extern int                        HubCount;
 
 #endif /* INCLUDED_conf_h */
+
+/*
+ * vim: ts=8 sw=8 noet fdm=marker tw=80
+ */

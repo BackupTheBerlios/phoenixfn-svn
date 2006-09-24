@@ -2129,7 +2129,7 @@ n_drop(struct Luser *lptr, int ac, char **av)
   else
     utmp = GetUser(0, lptr->nick, lptr->username, lptr->hostname);
 
-  if (IsAdmin(utmp) && ac == 2)
+  if ((IsAdmin(utmp) || IsHelper(utmp)) && ac == 2)
   {
 #ifdef EMPOWERADMINS
       if (!IsValidAdmin(lptr))

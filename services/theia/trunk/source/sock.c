@@ -372,7 +372,7 @@ CompleteHubConnection(struct Servlist *hubptr)
 
 	errval = 0;
 	errlen = sizeof(errval);
-	if (getsockopt(dccptr->socket, SOL_SOCKET, SO_ERROR, &errval, &errlen) < 0) {
+	if (getsockopt(HubSock, SOL_SOCKET, SO_ERROR, &errval, &errlen) < 0) {
 		const char *err = strerror(errno);
 		debug_printf("getsockopt(SO_ERROR) failed: %s", err);
 		putlog(LOG1, "getsockopt(SO_ERROR) failed: %s", err);
@@ -384,7 +384,7 @@ CompleteHubConnection(struct Servlist *hubptr)
 		debug_printf("Failed to connect to %s:%d: %s", hubptr->hostname,
 			hubptr->port, err);
 		putlog(LOG1, "Failed to connect to %s:%d: %s", hubptr->hostname,
-				hubptr->port, err);
+			hubptr->port, err);
 		return 0;
 	}
 
