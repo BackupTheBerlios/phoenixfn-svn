@@ -2132,7 +2132,7 @@ n_drop(struct Luser *lptr, int ac, char **av)
   if ((IsAdmin(utmp) || IsHelper(utmp)) && ac == 2)
   {
 #ifdef EMPOWERADMINS
-      if (!IsValidAdmin(lptr))
+      if (!IsValidAdmin(lptr) && !IsHelper(lptr))
       {
         notice(n_NickServ, lptr->nick,
           ERR_BAD_PASS);

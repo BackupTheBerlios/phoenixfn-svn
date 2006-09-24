@@ -395,7 +395,7 @@ DccConnectHost (char *hostname, unsigned int port)
 			debug_printf("Cannot connect to port %d of %s: Unknown host",
 				port, hostname);
 			putlog(LOG1, "Unable to connect to %s.%d: Unknown hostname",
-				port, hostname);
+				hostname, port);
 			return -1;
 		}
 
