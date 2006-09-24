@@ -35,8 +35,6 @@ SRCS =                          \
   extb_server.c			\
   extb_realname.c		\
   extb_extgecos.c		\
-  hurt.c			\
-  ip_cloaking.c			\
   sno_farconnect.c		\
   sno_globalkline.c		\
   sno_globaloper.c		\
@@ -45,7 +43,6 @@ SRCS =                          \
   m_mkpasswd.c                  \
   m_omode.c			\
   m_webirc.c			\
-  no_oper_invis.c		\
   spy_admin_notice.c		\
   spy_info_notice.c		\
   spy_links_notice.c		\

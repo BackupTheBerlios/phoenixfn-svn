@@ -5,6 +5,12 @@ This file lists every change made except typo and formatting fixes, which are
 only listed in SVN log. For a summary of what has changed between releases,
 see the NEWS file.
 
+2006-09-24 Elfyn McBratney <beu@freenode.net>
+
+	* extensions/ip_cloaking.c, extensions/hurt.c,
+	extensions/no_oper_invis.c: Move to unsupported/ until their fate is
+	decided; adjust example.conf and reference.conf accordingly.
+
 2006-09-24 Stephen Bennett <spb@gentoo.org>
 
 	* include/s_newconf.h, src/newconf.c, src/s_newconf.c,
