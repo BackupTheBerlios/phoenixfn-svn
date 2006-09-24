@@ -314,7 +314,7 @@ static struct mode_table flag_table[] = {
 	{"encrypted",		OPER_ENCRYPTED		},
 	{"local_kill",		OPER_LOCKILL		},
 	{"global_kill",		OPER_GLOBKILL|OPER_LOCKILL	},
-	{"remote",		OPER_REMOTE		},
+	{"routing",		OPER_ROUTING		},
 	{"kline",		OPER_KLINE		},
 	{"unkline",		OPER_UNKLINE		},
 	{"override",		OPER_OVERRIDE		},

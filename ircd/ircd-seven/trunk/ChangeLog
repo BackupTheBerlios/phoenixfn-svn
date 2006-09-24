@@ -7,6 +7,13 @@ see the NEWS file.
 
 2006-09-24 Stephen Bennett <spb@gentoo.org>
 
+	* include/s_newconf.h, src/newconf.c, src/s_newconf.c,
+	doc/example.conf, doc/reference.conf, modules/m_connect.c
+	modules/core/m_squit.c: Replace 'remote' operflag with 'routing',
+	which allows local and remote CONNECT/SQUIT.
+
+2006-09-24 Stephen Bennett <spb@gentoo.org>
+
 	* include/s_newconf.h, src/newconf.c, src/s_newconf.c, src/s_user.c,
 	modules/core/m_message.c, modules/m_wallops.c: Add 'wallops' and
 	'mass_notice' operflags. Remove 'nick_changes'; it will be replaced

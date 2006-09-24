@@ -333,7 +333,7 @@ static struct oper_flags oper_flagtable[] =
 	{ OPER_RESV,		'Q', 'q' },
 	{ OPER_GLOBKILL,	'O', 'o' },
 	{ OPER_LOCKILL,		'C', 'c' },
-	{ OPER_REMOTE,		'R', 'r' },
+	{ OPER_ROUTING,		'R', 'r' },
 	{ OPER_UNKLINE,		'U', 'u' },
 	{ OPER_REHASH,		'H', 'h' },
 	{ OPER_DIE,		'D', 'd' },

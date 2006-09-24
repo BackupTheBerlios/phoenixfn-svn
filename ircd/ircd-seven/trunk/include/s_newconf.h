@@ -139,7 +139,7 @@ extern void cluster_generic(struct Client *, const char *, int cltype,
 #define OPER_UNKLINE	0x000004
 #define OPER_LOCKILL	0x000008
 #define OPER_GLOBKILL	0x000010
-#define OPER_REMOTE	0x000020
+#define OPER_ROUTING	0x000020
 #define OPER_OVERRIDE	0x000040
 #define OPER_XLINE	0x000080
 #define OPER_RESV	0x000100
@@ -158,7 +158,7 @@ extern void cluster_generic(struct Client *, const char *, int cltype,
 #define OPER_WALLOPS	0x400000
 
 #define OPER_FLAGS	(OPER_KLINE|OPER_UNKLINE|OPER_LOCKILL|OPER_GLOBKILL|\
-			 OPER_REMOTE|OPER_OVERRIDE|OPER_XLINE|OPER_RESV|\
+			 OPER_ROUTING|OPER_OVERRIDE|OPER_XLINE|OPER_RESV|\
 			 OPER_MASSNOTICE|OPER_REHASH|OPER_DIE|OPER_ADMIN|\
 			 OPER_HADMIN|OPER_OPERWALL|OPER_INVIS|OPER_AUSPEX|\
 			 OPER_HELPER|OPER_CMODES|OPER_IMMUNE|OPER_WALLOPS)
@@ -167,7 +167,7 @@ extern void cluster_generic(struct Client *, const char *, int cltype,
 
 #define IsOperGlobalKill(x)     ((x)->operflags & OPER_GLOBKILL)
 #define IsOperLocalKill(x)      ((x)->operflags & OPER_LOCKILL)
-#define IsOperRemote(x)         ((x)->operflags & OPER_REMOTE)
+#define IsOperRouting(x)        ((x)->operflags & OPER_ROUTING)
 #define IsOperUnkline(x)        ((x)->operflags & OPER_UNKLINE)
 #define IsOperOverride(x)       ((x)->operflags & OPER_OVERRIDE)
 #define IsOperMassNotice(x)     ((x)->operflags & OPER_MASSNOTICE)
