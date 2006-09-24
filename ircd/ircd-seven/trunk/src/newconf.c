@@ -521,6 +521,7 @@ conf_end_oper(struct TopConf *tc)
 		yy_tmpoper->flags = yy_oper->flags;
 		yy_tmpoper->umodes = yy_oper->umodes;
 		yy_tmpoper->snomask = yy_oper->snomask;
+		yy_tmpoper->allowed_snomask = yy_oper->allowed_snomask;
 
 #ifdef HAVE_LIBCRYPTO
 		if(yy_oper->rsa_pubkey_file)
@@ -635,6 +636,12 @@ static void
 conf_set_oper_snomask(void *data)
 {
 	yy_oper->snomask = parse_snobuf_to_mask(0, (const char *) data);
+}
+
+static void
+conf_set_oper_allowed_snomask(void *data)
+{
+	yy_oper->allowed_snomask = parse_snobuf_to_mask(0, (const char *) data);
 }
 
 static int
@@ -1949,6 +1956,7 @@ static struct ConfEntry conf_operator_table[] =
 	{ "flags",	CF_STRING | CF_FLIST, conf_set_oper_flags,	0, NULL },
 	{ "umodes",	CF_STRING | CF_FLIST, conf_set_oper_umodes,	0, NULL },
 	{ "snomask",    CF_QSTRING, conf_set_oper_snomask,      0, NULL },
+	{ "allowed_snomask", CF_QSTRING, conf_set_oper_allowed_snomask, 0, NULL },
 	{ "user",	CF_QSTRING, conf_set_oper_user,		0, NULL },
 	{ "password",	CF_QSTRING, conf_set_oper_password,	0, NULL },
 	{ "\0",	0, NULL, 0, NULL }

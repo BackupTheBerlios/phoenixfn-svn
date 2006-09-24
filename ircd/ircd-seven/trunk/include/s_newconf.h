@@ -117,6 +117,7 @@ struct oper_conf
 	int umodes;
 
 	unsigned int snomask;
+	unsigned int allowed_snomask;
 
 #ifdef HAVE_LIBCRYPTO
 	char *rsa_pubkey_file;

@@ -5,6 +5,11 @@ This file lists every change made except typo and formatting fixes, which are
 only listed in SVN log. For a summary of what has changed between releases,
 see the NEWS file.
 
+2006-09-25 Stephen Bennett <spb@gentoo.org>
+
+	* include/client.h, include/s_newconf.h, src/newconf.c, src/s_user.c:
+	Implement allowed_snomask setting in oper block.
+
 2006-09-24 Stephen Bennett <spb@gentoo.org>
 
 	* modules/m_stats.c: Add back in the STATS spy hooks; apparently

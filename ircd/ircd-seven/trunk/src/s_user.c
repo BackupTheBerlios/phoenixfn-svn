@@ -1122,6 +1122,16 @@ user_mode(struct Client *client_p, struct Client *source_p, int parc, const char
 		source_p->umodes &= ~UMODE_IMMUNE;
 	}
 
+	if(MyClient(source_p) &&
+		((source_p->snomask & source_p->allowed_snomask) != source_p->snomask))
+	{
+		sendto_one(source_p,
+				":%s NOTICE %s :*** Server notices not granted: %s", 
+				me.name, source_p->name,
+				construct_snobuf(source_p->snomask & ~source_p->allowed_snomask));
+		source_p->snomask &= source_p->allowed_snomask;
+	}
+
 	/* let modules providing usermodes know that we've changed our usermode --nenolod */
 	hdata.client = source_p;
 	hdata.oldumodes = setflags;
@@ -1297,7 +1307,7 @@ oper_up(struct Client *source_p, struct oper_conf *oper_p)
 
 	if (oper_p->snomask)
 	{
-		source_p->snomask |= oper_p->snomask;
+		source_p->snomask |= oper_p->snomask & oper_p->allowed_snomask;
 		source_p->umodes |= UMODE_SERVNOTICE;
 	}
 	else if (source_p->umodes & UMODE_SERVNOTICE)
@@ -1313,6 +1323,7 @@ oper_up(struct Client *source_p, struct oper_conf *oper_p)
 
 	SetExemptKline(source_p);
 
+	source_p->allowed_snomask = oper_p->allowed_snomask;
 	source_p->operflags = oper_p->flags;
 	DupString(source_p->localClient->opername, oper_p->name);
 
@@ -1337,6 +1348,8 @@ oper_up(struct Client *source_p, struct oper_conf *oper_p)
 	sendto_one(source_p, form_str(RPL_YOUREOPER), me.name, source_p->name);
 	sendto_one(source_p, ":%s NOTICE %s :*** Oper privs are %s", me.name,
 		   source_p->name, get_oper_privs(oper_p->flags));
+	sendto_one(source_p, ":%s NOTICE %s :*** Allowed snomasks are %s", me.name,
+		   source_p->name, construct_snobuf(source_p->allowed_snomask));
 	send_oper_motd(source_p);
 
 	return (1);

@@ -152,6 +152,8 @@ struct Client
 	unsigned int operflags;	/* ugh. overflow. again. */
 
 	unsigned int snomask;	/* server notice mask */
+        /* snomask flags that this oper is permitted to set */
+        unsigned int allowed_snomask;
 
 	int hopcount;		/* number of servers to this 0 = local */
 	unsigned short status;	/* Client type */
