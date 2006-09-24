@@ -71,6 +71,8 @@ New privilege set:
         stay, with the following additions (naming arbitrary and
         subject to change):
     O and C (local and global kill) should be folded together.
+    resv -- this flag is already defined in charybdis, but not
+    implemented. Resurrect it.
     wallop -- can send wallops (+W)
     mass_notice -- can send mass notices (+M)
     routing -- CONNECT, SQUIT, sees through serverhide, view
