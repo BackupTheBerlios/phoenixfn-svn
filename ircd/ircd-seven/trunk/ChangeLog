@@ -7,6 +7,11 @@ see the NEWS file.
 
 2006-09-24 Elfyn McBratney <beu@freenode.net>
 
+	* modules/core/m_kill.c: Disallow the killing of network services
+	(+S clients).
+
+2006-09-24 Elfyn McBratney <beu@freenode.net>
+
 	* doc/example.conf, doc/reference.conf: Make example.conf more concise
 	and touch-up formatting in reference.conf.
 

@@ -110,6 +110,13 @@ mo_kill(struct Client *client_p, struct Client *source_p, int parc, const char *
 			   me.name, parv[0], user, target_p->name);
 	}
 
+	if (MyClient(source_p) && IsService(target_p))
+	{
+		sendto_one(source_p, form_str(ERR_ISCHANSERVICE),
+			me.name, source_p->name, target_p->name, "*");
+		return 0;
+	}
+
 	if(MyConnect(target_p))
 		sendto_one(target_p, ":%s!%s@%s KILL %s :%s",
 			   source_p->name, source_p->username, source_p->host,
