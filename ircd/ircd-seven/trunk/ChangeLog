@@ -7,6 +7,11 @@ see the NEWS file.
 
 2006-09-25 Stephen Bennett <spb@gentoo.org>
 
+	* doc/example.conf, doc/reference.conf: Update example configs for
+	allowed_snomask.
+
+2006-09-25 Stephen Bennett <spb@gentoo.org>
+
 	* include/client.h, include/s_newconf.h, src/newconf.c, src/s_user.c:
 	Implement allowed_snomask setting in oper block.
 
