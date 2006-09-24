@@ -5,6 +5,11 @@ This file lists every change made except typo and formatting fixes, which are
 only listed in SVN log. For a summary of what has changed between releases,
 see the NEWS file.
 
+2006-09-24 Stephen Bennett <spb@gentoo.org>
+
+	* modules/m_stats.c: Add back in the STATS spy hooks; apparently
+	they're used for more than spying.
+
 2006-09-24 Elfyn McBratney <beu@freenode.net>
 
 	* modules/core/m_kill.c: Disallow the killing of network services
