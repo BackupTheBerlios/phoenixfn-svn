@@ -10,7 +10,6 @@ Usermodes: (* designates that the umode is oper only)
          +o     - Designates this client is an IRC Operator.
                   Use the /oper command to attain this.
        * +a     - Is marked as a server admin in whois.
-       * +l     - Can see oper locops (local wallops).
        * +s     - Can see server notices (see /quote help snomask).
        * +z     - Can see operwalls.
          +D     - Deaf - ignores all channel messages.

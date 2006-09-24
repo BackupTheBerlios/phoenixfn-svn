@@ -5,6 +5,15 @@ This file lists every change made except typo and formatting fixes, which are
 only listed in SVN log. For a summary of what has changed between releases,
 see the NEWS file.
 
+2006-09-24 Stephen Bennett <spb@gentoo.org>
+
+	* include/client.h, src/newconf.c, src/s_user.c, src/s_conf.c,
+	help/opers/umode, -help/opers/locops, doc/reference.conf,
+	doc/example.conf, doc/sgml/oper-guide/config.sgml,
+	doc/sgml/oper-guide/umodes.sgml, modules/Makefile.in,
+	-modules/m_locops.c, modules/m_wallops.c, modules/m_stats.c,
+	+old/modules/m_locops.c: Remove LOCOPS.
+
 2006-09-24 Elfyn McBratney <beu@freenode.net>
 
 	* extensions/ip_cloaking.c, extensions/hurt.c,

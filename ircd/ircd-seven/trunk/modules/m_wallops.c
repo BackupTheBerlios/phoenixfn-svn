@@ -114,9 +114,7 @@ ms_wallops(struct Client *client_p, struct Client *source_p, int parc, const cha
 
 	if (IsPerson(source_p))
 	{
-		if (!strncmp(parv[1], "OPERWALL - ", 11) ||
-				!strncmp(parv[1], "LOCOPS - ", 9) ||
-				!strncmp(parv[1], "SLOCOPS - ", 10))
+		if (!strncmp(parv[1], "OPERWALL - ", 11))
 			prefix = "WALLOPS - ";
 	}
 

@@ -81,17 +81,6 @@
       </sect2>
       -->
       <sect2>
-	<title>+l, receive locops</title>
-	<para>
-	  LOCOPS is a version of OPERWALL that is sent to opers on a single
-	  server only. With cluster{} and shared{} blocks they can optionally
-	  be propagated further.
-	</para>
-	<para>
-	  Unlike OPERWALL, any oper can send and receive LOCOPS.
-	</para>
-      </sect2>
-      <sect2>
 	<title>+o, operator</title>
 	<para>
 	  This indicates global operator status.

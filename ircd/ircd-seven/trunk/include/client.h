@@ -442,7 +442,7 @@ struct exit_client_hook
 #define UMODE_OPERWALL     0x0200	/* Operwalls */
 #define UMODE_INVISIBLE    0x0400	/* makes user invisible */
 #define UMODE_CALLERID     0x2000	/* block unless caller id's */
-#define UMODE_LOCOPS       0x8000	/* show locops */
+//#define UMODE_LOCOPS       0x8000	/* show locops */
 #define UMODE_SERVICE      0x40000
 #define UMODE_DEAF	   0x80000
 #define UMODE_NOFORWARD    0x400000	/* don't forward */
@@ -472,7 +472,7 @@ struct exit_client_hook
 #define FLAGS2_EXEMPTJUPE	0x80000000
 
 #define DEFAULT_OPER_UMODES (UMODE_SERVNOTICE | UMODE_OPERWALL | \
-                             UMODE_WALLOP | UMODE_LOCOPS)
+                             UMODE_WALLOP )
 #define DEFAULT_OPER_SNOMASK SNO_GENERAL
 
 #define FLAGS_ID     (FLAGS_NEEDID | FLAGS_GOTID)
@@ -535,7 +535,6 @@ struct exit_client_hook
 #define ClearInvisible(x)       ((x)->umodes &= ~UMODE_INVISIBLE)
 #define SendWallops(x)          ((x)->umodes & UMODE_WALLOP)
 #define ClearWallops(x)         ((x)->umodes &= ~UMODE_WALLOP)
-#define SendLocops(x)           ((x)->umodes & UMODE_LOCOPS)
 #define SendServNotice(x)       ((x)->umodes & UMODE_SERVNOTICE)
 #define SendOperwall(x)         ((x)->umodes & UMODE_OPERWALL)
 #define SetWallops(x)           ((x)->umodes |= UMODE_WALLOP)

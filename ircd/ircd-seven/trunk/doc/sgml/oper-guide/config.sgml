@@ -903,19 +903,6 @@ cluster {
 	      <para>RESV removals</para>
 	    </listitem>
 	  </varlistentry>
-	  <varlistentry>
-	    <term>locops (L)</term>
-	    <listitem>
-	      <para>LOCOPS messages (sharing this with * makes LOCOPS rather
-	      similar to OPERWALL which is not useful)</para>
-	    </listitem>
-	  </varlistentry>
-	  <varlistentry>
-	    <term>all</term>
-	    <listitem>
-	      <para>All of the above</para>
-	    </listitem>
-	  </varlistentry>
 	</variablelist>
       </sect2>
       <sect2>
@@ -1016,14 +1003,7 @@ shared {
 	  <varlistentry>
 	    <term>all</term>
 	    <listitem>
-	      <para>All of the above; this does not include locops or rehash</para>
-	    </listitem>
-	  </varlistentry>
-	  <varlistentry>
-	    <term>locops (L)</term>
-	    <listitem>
-	      <para>LOCOPS messages (accepting this from * makes LOCOPS rather
-	      similar to OPERWALL which is not useful)</para>
+	      <para>All of the above; this does not include rehash</para>
 	    </listitem>
 	  </varlistentry>
 	  <varlistentry>
