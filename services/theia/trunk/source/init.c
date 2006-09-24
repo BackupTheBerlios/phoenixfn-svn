@@ -26,6 +26,7 @@
 #include <signal.h>
 #endif /* HAVE_CYGWIN */
 
+#include "common.h"
 #include "alloc.h"
 #include "chanserv.h"
 #include "client.h"
@@ -396,3 +397,7 @@ InitServs(struct Luser *servptr)
                               *(sptr->desc));
   }
 } /* InitServs() */
+
+/*
+ * vim: ts=8 sw=8 noet fdm=marker tw=80
+ */

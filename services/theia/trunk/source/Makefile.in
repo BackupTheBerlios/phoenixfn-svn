@@ -52,7 +52,8 @@ SOURCES =                  \
   timer.c                  \
   timestr.c                \
   sprintf_irc.c            \
-  svn_version.c
+  svn_version.c            \
+  debug.c
 
 OBJECTS = ${SOURCES:.c=.o}
 

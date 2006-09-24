@@ -16,6 +16,7 @@
 #include <assert.h>
 #include <sys/time.h>
 
+#include "common.h"
 #include "alloc.h"
 #include "client.h"
 #include "conf.h"
@@ -916,3 +917,6 @@ int checkforproc( char* source )
   
 }
 
+/*
+ * vim: ts=8 sw=8 noet fdm=marker tw=80
+ */

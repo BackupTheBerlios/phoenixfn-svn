@@ -21,6 +21,7 @@
 #endif
 #include <assert.h>
 
+#include "common.h"
 #include "alloc.h"
 #include "channel.h"
 #include "chanserv.h"
@@ -2695,3 +2696,7 @@ static void CheckServCollide(struct Server *bad_server)
   }
 }
 #endif /* SERVICES_FIGHT_FIX */
+
+/*
+ * vim: ts=8 sw=8 noet fdm=marker tw=80
+ */

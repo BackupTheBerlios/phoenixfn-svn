@@ -34,6 +34,7 @@
 
 #include <sys/utsname.h>
 
+#include "common.h"
 #include "alloc.h"
 #include "config.h"
 #include "data.h"
@@ -439,3 +440,7 @@ int main(int argc, char *argv[])
 
   return (0);
 } /* main() */
+
+/*
+ * vim: ts=8 sw=8 noet fdm=marker tw=80
+ */

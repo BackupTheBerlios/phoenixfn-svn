@@ -24,6 +24,7 @@
 #include <sys/time.h>
 #endif
 
+#include "common.h"
 #include "config.h"
 #include "dcc.h"
 #include "hybdefs.h"
@@ -220,3 +221,7 @@ RecordCommand(char *format, ...)
   /* send it to opers with usermode +s */
   SendUmode(OPERUMODE_S, buffer);
 } /* RecordCommand() */
+
+/*
+ * vim: ts=8 sw=8 noet fdm=marker tw=80
+ */

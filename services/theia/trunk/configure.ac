@@ -5,6 +5,7 @@ AC_CONFIG_AUX_DIR(autoconf)
 AC_CONFIG_HEADER(include/defs.h)
 
 CFLAGS=${CFLAGS:-"-g3 -O0 -Wall -W -Wcast-qual -pedantic -Wno-unused"}
+CFLAGS="-std=c99 -D_GNU_SOURCE $CFLAGS"
 
 dnl Set language and save it
 AC_LANG_C

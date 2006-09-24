@@ -30,6 +30,7 @@
 #include <arpa/inet.h>
 #include <fcntl.h>
 
+#include "common.h"
 #include "alloc.h"
 #include "conf.h"
 #include "config.h"
@@ -43,22 +44,6 @@
 #include "sock.h"
 #include "sprintf_irc.h"
 #include "timer.h"
-
-#ifdef HAVE_SOLARIS_THREADS
-#include <thread.h>
-#include <synch.h>
-#else
-#ifdef HAVE_PTHREADS
-#include <pthread.h>
-#endif
-#endif
-
-/* Solaris does not provide this by default. Anyway this is wrong approach,
-   since -1 is 255.255.255.255 addres which is _valid_! Obviously
-   inet_aton() should be used instead. I'll fix that later. -kre */
-#ifndef INADDR_NONE
-# define INADDR_NONE ((unsigned long)-1)
-#endif
 
 static int ReadHub(void);
 static int ReadSock(struct DccUser *dccptr);
@@ -118,119 +103,89 @@ int                       ReceiveLoad = RECVLOAD;
 /* Set this to 1 when exiting ReadSocketInfo (XXX: CRUDE SEMAPHORE HACK!) */
 int read_socket_done = 0;
 
-/*
-writesocket()
-  args: sockfd, writestr
-  purpose: write 'writestr' to socket designated by 'sockfd'
-  return: amount of bytes written
-*/
-
+/* {{{ int writesocket()
+ *
+ * Write string `str' to socket descriptor `sockfd'.
+ *
+ * Returns: number of bytes written.
+ */
 int
 writesocket(int sockfd, char *writestr)
-
 {
-  ssize_t ii;
-  size_t len;
+	int	ret, written_bytes = 0;
+	size_t	len;
 
-  assert(writestr);
+	assert(writestr);
+	if (sockfd == NOSOCKET)
+		return 0;
 
-  if (sockfd == NOSOCKET)
-    return (0);
+	len = strlen(writestr);
+	debug_printf("Writing %u bytes: %s", len, writestr);
+	for (;;) {
+		ret = write(sockfd, writestr + written_bytes, len - written_bytes);
+		if (ret > 0) {
+			written_bytes += ret;
+			Network->SendB += ret;
+			continue;
+		}
 
-  /*send(sockfd, writestr, strlen(writestr), 0);*/
+		if (ret != 0 && errno != EAGAIN) {
+			struct DccUser *conn = IsDccSock(sockfd);
+			if (conn)
+				conn->flags |= SOCK_EOF;
+		}
+		break;
+	}
 
-#ifdef DEBUGMODE
-  fprintf(stderr, "Writing: %s",
-    writestr);
-#endif /* DEBUGMODE */
+	return written_bytes;
+}
+/* }}} */
 
-  len = strlen(writestr);
-
-  ii = 0;
-  while (len > 0)
-    {
-      ssize_t ret = write(sockfd, writestr, len);
-
-      if (ret > 0)
-        {
-          ii += ret;
-          Network->SendB += ret;
-          len -= ret;
-          writestr += ret;
-        }
-
-      if ((ret < 0) && (errno != EAGAIN))
-        {
-          struct DccUser *conn;
-          /* 
-           * EOF writing to the socket - check if we were writing to a 
-           * partyline socket, if so, mark the user with SOCK_EOF to
-           * kill the connection later
-           */
-          if ((conn = IsDccSock(sockfd)))
-            conn->flags |= SOCK_EOF;
-          break;
-        }
-    }
-
-  return (ii);
-} /* writesocket() */
-
-/*
-toserv()
-  sends 'str' to hub server
-*/
-
+/* {{{ void toserv()
+ *
+ * Sends string `str' to our uplink.
+ */
 void
 toserv(char *format, ...)
-
 {
-  char buf[MAXLINE * 2];
-  int ii;
-  va_list args;
+	char	buf[MAXLINE * 2];
+	int	wb;
+	va_list	args;
 
-  if (HubSock == NOSOCKET)
-    return;
+	if (HubSock == NOSOCKET)
+		return;
 
-  va_start(args, format);
+	va_start(args, format);
+	vsprintf_irc(buf, format, args);
+	va_end(args);
 
-  vsprintf_irc(buf, format, args);
+	wb = writesocket(HubSock, buf);
+	/*
+	 * If format contains a trailing \n, but buf was too large
+	 * to fit 'format', make sure the \n gets through
+	 */
+	if (format[strlen(format) - 1] == '\n' && buf[wb - 1] != '\n')
+		writesocket(HubSock, "\n");
+}
+/* }}} */
 
-  va_end(args);
-
-  /* send the string to the server */
-  ii = writesocket(HubSock, buf);
-
-  /*
-   * If format contains a trailing \n, but buf was too large
-   * to fit 'format', make sure the \n gets through
-   */
-  if ((format[strlen(format) - 1] == '\n') &&
-      (buf[ii - 1] != '\n'))
-    writesocket(HubSock, "\n");
-} /* toserv() */
-
-/*
-tosock()
-  sends string to specified socket
-*/
-
+/* {{{ void tosock()
+ *
+ * Writes `string' to specified socket.
+ */
 void
 tosock(int sockfd, char *format, ...)
-
 {
-  char buf[MAXLINE * 2];
-  va_list args;
+	char	buf[MAXLINE * 2];
+	va_list	args;
 
-  va_start(args, format);
+	va_start(args, format);
+	vsprintf_irc(buf, format, args);
+	va_end(args);
 
-  vsprintf_irc(buf, format, args);
-
-  va_end(args);
-
-  /* send the string to the socket */
-  writesocket(sockfd, buf);
-} /* tosock() */
+	writesocket(sockfd, buf);
+}
+/* }}} */
 
 /*
 SetupVirtualHost()
@@ -280,7 +235,6 @@ Return: a hostent pointer to the hostname information
 
 struct hostent *
 LookupHostname(char *host, struct in_addr *ip_address)
-
 {
   struct hostent *hp;
   struct in_addr ip;
@@ -312,129 +266,92 @@ LookupHostname(char *host, struct in_addr *ip_address)
   return (hp);
 } /* LookupHostname() */
 
-/*
-ConnectHost()
-  args: hostname, port
-  purpose: bind socket and begin a non-blocking connection to
-           hostname at port
-  return: socket file descriptor if successful connect, -1 if not
-*/
-
+/* {{{ int ConnectHost()
+ *
+ * Create and possibly bind socket and connect host `hostname' on port `port'.
+ *
+ * TODO:
+ *   A lot of this code, and similar in ConnectHost() should be moved into a
+ *   common function used by both functions.
+ *
+ * Returns:
+ *   Socket fd on success;
+ *   -1 on error.
+ */
 int
 ConnectHost(char *hostname, unsigned int port)
-
 {
-  struct sockaddr_in ServAddr;
-  register struct hostent *hostptr;
-  struct in_addr ip;
-  int socketfd; /* socket file descriptor */
+	struct sockaddr_in		ServAddr;
+	register struct hostent		*hostptr = NULL;
+	struct in_addr			ip;
+	int				socketfd;
 
-  memset((void *) &ServAddr, 0, sizeof(struct sockaddr_in));
+	memset(&ServAddr, 0, sizeof(ServAddr));
+	hostptr = LookupHostname(hostname, &ip);
 
-  hostptr = LookupHostname(hostname, &ip);
+	if (hostptr) {
+		assert(ip.s_addr != INADDR_NONE);
+		ServAddr.sin_family = hostptr->h_addrtype;
+		ServAddr.sin_addr.s_addr = ip.s_addr;
+	} else {
+		/* No host entry, but there might be an ip address... */
+		if (ip.s_addr == INADDR_NONE) {
+			debug_printf("Cannot connect to port %d of %s: Unknown host",
+				port, hostname);
+			putlog(LOG1, "Cannot connect to port %d of %s: Unknown host",
+				port, hostname);
+			return -1;
+		}
 
-  if (hostptr)
-  {
-    assert(ip.s_addr != INADDR_NONE);
+		ServAddr.sin_family = AF_INET;
+		ServAddr.sin_addr.s_addr = ip.s_addr;
+	}
 
-    ServAddr.sin_family = hostptr->h_addrtype;
-    ServAddr.sin_addr.s_addr = ip.s_addr;
-  }
-  else
-  {
-    /*
-     * There is no host entry, but there might be an ip address
-     */
-    if (ip.s_addr == INADDR_NONE)
-    {
-    #ifdef DEBUGMODE
-      fprintf(stderr,
-        "Cannot connect to port %d of %s: Unknown host\n",
-        port,
-        hostname);
-    #endif
-      putlog(LOG1,
-        "Unable to connect to %s.%d: Unknown hostname",
-        hostname,
-        port);
-      return (-1);
-    }
+	ServAddr.sin_port = (unsigned short) htons((unsigned short) port);
+	debug_printf("Connecting to %s.%d", inet_ntoa(ServAddr.sin_addr), port);
 
-    ServAddr.sin_family = AF_INET;
-    ServAddr.sin_addr.s_addr = ip.s_addr;
-  }
+	/* Create stream socket descriptor. */
+	if ((socketfd = socket(ServAddr.sin_family, SOCK_STREAM, 0)) < 0) {
+		const char *err = strerror(errno);
+		debug_printf("socket() failed: %s", err);
+		putlog(LOG1, "socket() failed: %s", err);
+		return -1;
+	}
 
-#ifdef DEBUGMODE
-  fprintf(stderr,
-    "Connecting to %s[%s].%d\n",
-    hostname,
-    inet_ntoa(ServAddr.sin_addr),
-    port);
-#endif
+	if (LocalHostName) {
+		if (bind(socketfd, (struct sockaddr *) &LocalAddr, sizeof(LocalAddr)) < 0) {
+			const char *err = strerror(errno);
+			debug_printf("Unable to bind virtual host %s[%s]: %s",
+				LocalHostName, inet_ntoa(LocalAddr.sin_addr), err);
+			putlog(LOG1, "Unable to bind virtual host %s[%s]: %s",
+				LocalHostName, inet_ntoa(LocalAddr.sin_addr), err);
+			close(socketfd);
+			return -1;
+		}
+	}
 
-  if ((socketfd = socket(ServAddr.sin_family, SOCK_STREAM, 0)) < 0)
-  {
-  #ifdef DEBUGMODE
-    fprintf(stderr, "Unable to open stream socket\n");
-  #endif
-    putlog(LOG1,
-      "Unable to open stream socket: %s",
-      strerror(errno));
+	if (!SetNonBlocking(socketfd)) {
+		debug_printf("Unable to set socket [%d] non-blocking", socketfd);
+		putlog(LOG1, "Unable to set socket [%d] non-blocking", socketfd);
+		close(socketfd);
+		return -1;
+	}
 
-    return(-1);
-  }
+	if (connect(socketfd, (struct sockaddr *) &ServAddr, sizeof(ServAddr)) < 0) {
+		if (errno && errno != EINPROGRESS) {
+			const char *err = strerror(errno);
+			debug_printf("Could not connect to %s:%d: %s", port,
+				inet_ntoa(ServAddr.sin_addr), err);
+			putlog(LOG1, "Could not connect to %s:%d: %s", port,
+				inet_ntoa(ServAddr.sin_addr), err);
+			close(socketfd);
+			return -1;
+		}
+	}
 
-  if (LocalHostName)
-  {
-    /* bind to virtual host */
-    if ((bind(socketfd, (struct sockaddr *) &LocalAddr, sizeof(LocalAddr))) < 0)
-    {
-      putlog(LOG1, "Unable to bind virtual host %s[%s]: %s",
-        LocalHostName,
-        inet_ntoa(LocalAddr.sin_addr),
-        strerror(errno));
-      close (socketfd);
-      return (-1);
-    }
-  }
-
-  if (!SetNonBlocking(socketfd))
-  {
-    putlog(LOG1,
-      "Unable to set socket [%d] non-blocking",
-      socketfd);
-    close(socketfd);
-    return (-1);
-  }
-
-  ServAddr.sin_port = (unsigned short) htons((unsigned short) port);
-
-  /* Check for both if return value is -1 and errno is set. This is
-   * paranoid, I know, but it was obviously necessary on Solaris -kre */
-  if (connect(socketfd, (struct sockaddr *) &ServAddr, sizeof(ServAddr))==-1)
-  {
-    if (errno && errno!=EINPROGRESS)
-    {
-    #ifdef DEBUGMODE
-      fprintf(stderr,
-        "Cannot connect to port %d of %s: %s\n",
-        port,
-        hostname,
-        strerror(errno));
-    #endif
-      putlog(LOG1,
-        "Error connecting to %s[%s].%d: %s",
-        hostname,
-        hostname,
-        port,
-        strerror(errno));
-      close(socketfd);
-      return(-1);
-    }
-  }
-
-  return (socketfd);
-} /* ConnectHost() */
+	return socketfd;
+}
+/* }}} */
 
 /*
 CompleteHubConnection()
@@ -1282,3 +1199,7 @@ void signon(void)
       
   toserv("SERVER %s 1 :%s\n", Me.name, Me.info); 
 } /* signon() */
+
+/*
+ * vim: ts=8 sw=8 noet fdm=marker tw=80
+ */

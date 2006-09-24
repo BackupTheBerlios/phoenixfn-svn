@@ -29,6 +29,7 @@
 #include <netdb.h>
 #include <fcntl.h>
 
+#include "common.h"
 #include "alloc.h"
 #include "client.h"
 #include "conf.h"
@@ -360,133 +361,102 @@ SendUmode(int umode, char *format, ...)
   }
 } /* SendUmode() */
 
-/*
-DccConnectHost()
- Similar to ConnectHost(), but assume hostname is a hostname in
-long format (as the dcc protocol specifies)
-
-Return: socket descriptor for connection
-*/
-
+/* {{{ static int DccConnectHost()
+ *
+ * Establist a DCC connection to a remote host.  Similar to ConnectHost(), but
+ * assumes that the given is in "long" format, per DCC protocol specs.
+ *
+ * TODO:
+ *   A lot of this code, and similar in ConnectHost() should be moved into a
+ *   common function used by both functions.
+ *
+ * Returns:
+ *   Socket fd on success;
+ *   -1 on error.
+ */
 static int
-DccConnectHost(char *hostname, unsigned int port)
-
+DccConnectHost (char *hostname, unsigned int port)
 {
-  struct sockaddr_in ServAddr;
-  struct hostent *remote_host;
-  int socketfd; /* socket file descriptor */
-  int optspacer; /* spacer for setsockopt() later -kre */
-  struct in_addr ip;
+	struct sockaddr_in	ServAddr;
+	struct hostent		*remote_host = NULL;
+	int			socketfd;
+	int			opt;
+	struct in_addr		ip;
 
-  memset((void *) &ServAddr, 0, sizeof(struct sockaddr_in));
+	memset(&ServAddr, 0, sizeof(ServAddr));
+	remote_host = LookupHostname(hostname, &ip);
 
-  remote_host = LookupHostname(hostname, &ip);
+	if (remote_host) {
+		assert(ip.s_addr != INADDR_NONE);
+		ServAddr.sin_family = remote_host->h_addrtype;
+		ServAddr.sin_addr.s_addr = ip.s_addr;
+	} else {
+		if (ip.s_addr != INADDR_NONE) {
+			debug_printf("Cannot connect to port %d of %s: Unknown host",
+				port, hostname);
+			putlog(LOG1, "Unable to connect to %s.%d: Unknown hostname",
+				port, hostname);
+			return -1;
+		}
 
-  if (remote_host)
-  {
-    assert(ip.s_addr != INADDR_NONE);
-
-    ServAddr.sin_family = remote_host->h_addrtype;
-    ServAddr.sin_addr.s_addr = ip.s_addr;
-  }
-  else
-  {
-  if (ip.s_addr == INADDR_NONE)
-    {
-    #ifdef DEBUGMODE
-      fprintf(stderr,
-        "Cannot connect to port %d of %s: Unknown host\n",
-        port,
-        hostname);
-    #endif
-      putlog(LOG1,
-        "Unable to connect to %s.%d: Unknown hostname",
-        hostname,
-        port);
-      return (-1);
-    }
-    ServAddr.sin_family = AF_INET;
-    ServAddr.sin_addr.s_addr = ip.s_addr;
-  }
-
-  ServAddr.sin_port = (unsigned short) htons((unsigned short) port);
-
-#ifdef DEBUGMODE
-  fprintf(stderr,
-	  "Connecting to %s.%d\n",
-	  inet_ntoa(ServAddr.sin_addr),
-	  port);
-#endif /* DEBUGMODE */
-
-  /* Open INET socket -kre */
-  if ((socketfd = socket(AF_INET, SOCK_STREAM, 0)) < 0)
-    {
-#ifdef DEBUGMODE
-      fprintf(stderr, "Unable to open stream socket\n");
-#endif
-
-      putlog(LOG1,
-	     "Unable to open stream socket: %s",
-	     strerror(errno));
-
-      return(-1);
-    }
-
-  /* Make reusable address, look socket(7) -kre */
-  optspacer=1;
-  setsockopt(socketfd, SOL_SOCKET, SO_REUSEADDR, (char *)&optspacer,
-	      sizeof(optspacer));
-
-  if (LocalHostName)
-    {
-      /* bind to virtual host */
-      if ((bind(socketfd, (struct sockaddr *) &LocalAddr,
-		sizeof(LocalAddr))) < 0)
-	{
-	  putlog(LOG1, "Unable to bind virtual host %s[%s]: %s",
-		 LocalHostName,
-		 inet_ntoa(LocalAddr.sin_addr),
-		 strerror(errno));
-	  close (socketfd);
-	  return (-1);
+		ServAddr.sin_family = AF_INET;
+		ServAddr.sin_addr.s_addr = ip.s_addr;
 	}
-    }
 
-  if (!SetNonBlocking(socketfd))
-    {
-      putlog(LOG1,
-	     "Unable to set socket [%d] non-blocking",
-	     socketfd);
-      close(socketfd);
-      return (-1);
-    }
+	ServAddr.sin_port = (unsigned short) htons((unsigned short) port);
+	debug_printf("Connecting to %s.%d", inet_ntoa(ServAddr.sin_addr), port);
 
-  if (connect(socketfd, (struct sockaddr *) &ServAddr, sizeof(ServAddr))==-1)
-    {
-      /* React only if errno is set. -kre */
-      if (errno && errno!=EINPROGRESS)
-	{
-#ifdef DEBUGMODE
-	  fprintf(stderr,
-		  "Cannot connect to port %d of %s: %s\n",
-		  port,
-		  inet_ntoa(ServAddr.sin_addr),
-		  strerror(errno));
-#endif
-
-	  putlog(LOG1,
-		 "Error connecting to dcc host %s.%d: %s",
-		 inet_ntoa(ServAddr.sin_addr),
-		 port,
-		 strerror(errno));
-
-	  close(socketfd);
-	  return(-1);
+	/* Create stream socket descriptor. */
+	if ((socketfd = socket(AF_INET, SOCK_STREAM, 0)) < 0) {
+		const char *err = strerror(errno);
+		debug_printf("socket() failed: %s", err);
+		putlog(LOG1, "socket() failed: %s", err);
+		return -1;
 	}
-    }
 
-  return (socketfd);
-} /* DccConnectHost() */
+	/* Make bind() address reusable. */
+	opt = 1;
+	if (setsockopt(socketfd, SOL_SOCKET, SO_REUSEADDR, &opt, sizeof(opt)) != 0) {
+		const char *err = strerror(errno);
+		debug_printf("setsockopt(SO_REUSEADDR) failed: %s", err);
+		putlog(LOG1, "setsockopt(SO_REUSEADDR) failed: %s", err);
+		return -1;
+	}
+
+	if (LocalHostName) {
+		if (bind(socketfd, (struct sockaddr *) &LocalAddr, sizeof(LocalAddr)) < 0) {
+			const char *err = strerror(errno);
+			debug_printf("Unable to bind virtual host %s[%s]: %s",
+				LocalHostName, inet_ntoa(LocalAddr.sin_addr), err);
+			putlog(LOG1, "Unable to bind virtual host %s[%s]: %s",
+				LocalHostName, inet_ntoa(LocalAddr.sin_addr), err);
+			close(socketfd);
+			return -1;
+		}
+	}
+
+	if (!SetNonBlocking(socketfd)) {
+		debug_printf("Unable to set socket [%d] non-blocking", socketfd);
+		putlog(LOG1, "Unable to set socket [%d] non-blocking", socketfd);
+		close(socketfd);
+		return -1;
+	}
+
+	if (connect(socketfd, (struct sockaddr *) &ServAddr, sizeof(ServAddr)) < 0) {
+		if (errno && errno != EINPROGRESS) {
+			const char *err = strerror(errno);
+			debug_printf("Could not connect to %s:%d: %s", port,
+				inet_ntoa(ServAddr.sin_addr), err);
+			putlog(LOG1, "Could not connect to %s:%d: %s", port,
+				inet_ntoa(ServAddr.sin_addr), err);
+			close(socketfd);
+			return -1;
+		}
+	}
+
+	return socketfd;
+}
+/* }}} */
 
 /*
 ConnectClient()
@@ -2227,3 +2197,7 @@ ServReboot()
 
   currenthub->connect_ts = 0;
 } /* ServReboot() */
+
+/*
+ * vim: ts=8 sw=8 noet fdm=marker tw=80
+ */

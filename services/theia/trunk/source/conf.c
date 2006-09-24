@@ -1859,3 +1859,7 @@ void AddReconnect(const char *hub, const int port, const char *leaf,
   cHostList=ptr;
 } /* AddReconnect() */
 #endif
+
+/*
+ * vim: ts=8 sw=8 noet fdm=marker tw=80
+ */
