@@ -8,6 +8,12 @@ see the NEWS file.
 2006-09-24 Stephen Bennett <spb@gentoo.org>
 
 	* include/s_newconf.h, src/newconf.c, src/s_newconf.c,
+	doc/example.conf, doc/reference.conf, modules/core/m_kill.c: Fold
+	local_kill and global_kill into 'kill' flag.
+
+2006-09-24 Stephen Bennett <spb@gentoo.org>
+
+	* include/s_newconf.h, src/newconf.c, src/s_newconf.c,
 	doc/example.conf, doc/reference.conf, modules/m_connect.c
 	modules/core/m_squit.c: Replace 'remote' operflag with 'routing',
 	which allows local and remote CONNECT/SQUIT.
