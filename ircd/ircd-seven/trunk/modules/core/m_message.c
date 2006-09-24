@@ -375,7 +375,8 @@ build_target_list(int p_or_n, const char *command, struct Client *client_p,
 			continue;
 		}
 
-		if(strchr(nick, '@') || (IsOper(source_p) && (*nick == '$')))
+		if(strchr(nick, '@') || ((IsOperMassNotice(source_p) || !MyClient(source_p))
+			    && (*nick == '$')))
 		{
 			handle_special(p_or_n, command, client_p, source_p, nick, text);
 			continue;
@@ -901,7 +902,7 @@ handle_special(int p_or_n, const char *command, struct Client *client_p,
 
 		count = 0;
 
-		if(!IsOper(source_p))
+		if(!IsOperMassNotice(source_p) && MyClient(source_p))
 		{
 			if(strchr(nick, '%') || (strncmp(nick, "opers", 5) == 0))
 			{
@@ -960,7 +961,7 @@ handle_special(int p_or_n, const char *command, struct Client *client_p,
 	 *
 	 * Armin, 8Jun90 (gruner@informatik.tu-muenchen.de)
 	 */
-	if(IsOper(source_p) && *nick == '$')
+	if((IsOperMassNotice(source_p) || !MyClient(source_p)) && *nick == '$')
 	{
 		if((*(nick + 1) == '$' || *(nick + 1) == '#'))
 			nick++;
@@ -969,22 +970,6 @@ handle_special(int p_or_n, const char *command, struct Client *client_p,
 			sendto_one(source_p,
 				   ":%s NOTICE %s :The command %s %s is no longer supported, please use $%s",
 				   me.name, source_p->name, command, nick, nick);
-			return;
-		}
-
-		if((s = strrchr(nick, '.')) == NULL)
-		{
-			sendto_one_numeric(source_p, ERR_NOTOPLEVEL,
-					   form_str(ERR_NOTOPLEVEL), nick);
-			return;
-		}
-		while(*++s)
-			if(*s == '.' || *s == '*' || *s == '?')
-				break;
-		if(*s == '*' || *s == '?')
-		{
-			sendto_one_numeric(source_p, ERR_WILDTOPLEVEL,
-					   form_str(ERR_WILDTOPLEVEL), nick);
 			return;
 		}
 

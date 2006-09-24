@@ -7,6 +7,13 @@ see the NEWS file.
 
 2006-09-24 Stephen Bennett <spb@gentoo.org>
 
+	* include/s_newconf.h, src/newconf.c, src/s_newconf.c, src/s_user.c,
+	modules/core/m_message.c, modules/m_wallops.c: Add 'wallops' and
+	'mass_notice' operflags. Remove 'nick_changes'; it will be replaced
+	later by allowed snomasks.
+
+2006-09-24 Stephen Bennett <spb@gentoo.org>
+
 	* modules/core/m_sjoin.c: Don't deop override opers on sjoin unless
 	they're actually opped.
 

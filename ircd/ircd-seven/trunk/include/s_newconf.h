@@ -143,7 +143,7 @@ extern void cluster_generic(struct Client *, const char *, int cltype,
 #define OPER_OVERRIDE	0x000040
 #define OPER_XLINE	0x000080
 #define OPER_RESV	0x000100
-#define OPER_NICKS	0x000200
+#define OPER_MASSNOTICE	0x000200
 #define OPER_REHASH	0x000400
 #define OPER_DIE	0x000800
 #define OPER_ADMIN	0x001000
@@ -155,12 +155,13 @@ extern void cluster_generic(struct Client *, const char *, int cltype,
 #define OPER_HELPER	0x040000
 #define OPER_CMODES	0x080000
 #define OPER_IMMUNE	0x100000
+#define OPER_WALLOPS	0x400000
 
 #define OPER_FLAGS	(OPER_KLINE|OPER_UNKLINE|OPER_LOCKILL|OPER_GLOBKILL|\
 			 OPER_REMOTE|OPER_OVERRIDE|OPER_XLINE|OPER_RESV|\
-			 OPER_NICKS|OPER_REHASH|OPER_DIE|OPER_ADMIN|\
+			 OPER_MASSNOTICE|OPER_REHASH|OPER_DIE|OPER_ADMIN|\
 			 OPER_HADMIN|OPER_OPERWALL|OPER_INVIS|OPER_AUSPEX|\
-			 OPER_HELPER|OPER_CMODES|OPER_IMMUNE)
+			 OPER_HELPER|OPER_CMODES|OPER_IMMUNE|OPER_WALLOPS)
 
 #define IsOperConfEncrypted(x)	((x)->flags & OPER_ENCRYPTED)
 
@@ -169,7 +170,7 @@ extern void cluster_generic(struct Client *, const char *, int cltype,
 #define IsOperRemote(x)         ((x)->operflags & OPER_REMOTE)
 #define IsOperUnkline(x)        ((x)->operflags & OPER_UNKLINE)
 #define IsOperOverride(x)       ((x)->operflags & OPER_OVERRIDE)
-#define IsOperN(x)              ((x)->operflags & OPER_NICKS)
+#define IsOperMassNotice(x)     ((x)->operflags & OPER_MASSNOTICE)
 #define IsOperK(x)              ((x)->operflags & OPER_KLINE)
 #define IsOperXline(x)          ((x)->operflags & OPER_XLINE)
 #define IsOperResv(x)		((x)->operflags & OPER_RESV)
@@ -184,6 +185,7 @@ extern void cluster_generic(struct Client *, const char *, int cltype,
 #define IsOperHelper(x)		((x)->operflags & OPER_HELPER)
 #define IsOperCModes(x)		((x)->operflags & OPER_CMODES)
 #define IsOperImmune(x)		((x)->operflags & OPER_IMMUNE)
+#define IsOperWallops(x)	((x)->operflags & OPER_WALLOPS)
 
 extern struct oper_conf *make_oper_conf(void);
 extern void free_oper_conf(struct oper_conf *);

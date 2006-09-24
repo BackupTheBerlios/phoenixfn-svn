@@ -318,7 +318,7 @@ static struct mode_table flag_table[] = {
 	{"kline",		OPER_KLINE		},
 	{"unkline",		OPER_UNKLINE		},
 	{"override",		OPER_OVERRIDE		},
-	{"nick_changes",	OPER_NICKS		},
+	{"mass_notice",		OPER_MASSNOTICE		},
 	{"rehash",		OPER_REHASH		},
 	{"die",			OPER_DIE		},
 	{"admin",		OPER_ADMIN		},
@@ -331,6 +331,7 @@ static struct mode_table flag_table[] = {
 	{"set_cmodes",		OPER_CMODES		},
 	{"immune",		OPER_IMMUNE		},
 	{"resv",		OPER_RESV		},
+	{"wallops",		OPER_WALLOPS		},
 	{NULL, 0}
 };
 

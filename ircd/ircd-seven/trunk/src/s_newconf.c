@@ -338,13 +338,14 @@ static struct oper_flags oper_flagtable[] =
 	{ OPER_REHASH,		'H', 'h' },
 	{ OPER_DIE,		'D', 'd' },
 	{ OPER_ADMIN,		'A', 'a' },
-	{ OPER_NICKS,		'N', 'n' },
+	{ OPER_MASSNOTICE,	'N', 'n' },
 	{ OPER_OPERWALL,	'L', 'l' },
 	{ OPER_AUSPEX,		'S', 's' },
 	{ OPER_INVIS,		'P', 'p' },
 	{ OPER_HELPER,		'T', 't' },
 	{ OPER_CMODES,		'M', 'm' },
 	{ OPER_IMMUNE,		'I', 'i' },
+	{ OPER_WALLOPS,		'W', 'w' },
 	{ 0,			'\0', '\0' }
 };
 

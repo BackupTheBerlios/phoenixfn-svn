@@ -1079,17 +1079,6 @@ user_mode(struct Client *client_p, struct Client *source_p, int parc, const char
 	if(badflag)
 		sendto_one(source_p, form_str(ERR_UMODEUNKNOWNFLAG), me.name, source_p->name);
 
-	if(MyClient(source_p) && (source_p->snomask & SNO_NCHANGE) && !IsOperN(source_p))
-	{
-		if(IsOper(source_p))
-			sendto_one(source_p,
-				   ":%s NOTICE %s :*** You need the N flag for +s +n", me.name, parv[0]);
-		else
-			sendto_one(source_p, form_str(ERR_UMODEUNKNOWNFLAG), me.name, source_p->name);
-
-		source_p->snomask &= ~SNO_NCHANGE;	/* only tcm's really need this */
-	}
-
 	if(MyClient(source_p) && (source_p->umodes & UMODE_OPERWALL) && !IsOperOperwall(source_p))
 	{
 		if(IsOper(source_p))
@@ -1332,8 +1321,6 @@ oper_up(struct Client *source_p, struct oper_conf *oper_p)
 
 	if(IsOperAdmin(source_p) && !IsOperHiddenAdmin(source_p))
 		source_p->umodes |= UMODE_ADMIN;
-	if(!IsOperN(source_p))
-		source_p->snomask &= ~SNO_NCHANGE;
 	if(!IsOperOperwall(source_p))
 		source_p->umodes &= ~UMODE_OPERWALL;
 	hdata.client = source_p;
