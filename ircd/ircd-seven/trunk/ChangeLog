@@ -5,6 +5,11 @@ This file lists every change made except typo and formatting fixes, which are
 only listed in SVN log. For a summary of what has changed between releases,
 see the NEWS file.
 
+2006-09-24 Elfyn McBratney <beu@freenode.net>
+
+	* doc/example.conf, doc/reference.conf: Make example.conf more concise
+	and touch-up formatting in reference.conf.
+
 2006-09-24 Stephen Bennett <spb@gentoo.org>
 
 	* include/client.h, src/newconf.c, src/s_user.c, src/s_conf.c,
