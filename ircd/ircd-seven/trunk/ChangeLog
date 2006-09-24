@@ -7,6 +7,11 @@ see the NEWS file.
 
 2006-09-25 Stephen Bennett <spb@gentoo.org>
 
+	* modules/m_version.c: Update version reply to reflect that fact that
+	auspexed opers can see all user information.
+
+2006-09-25 Stephen Bennett <spb@gentoo.org>
+
 	* doc/example.conf, doc/reference.conf: Update example configs for
 	allowed_snomask.
 

@@ -134,9 +134,8 @@ confopts(struct Client *source_p)
 
 	*p++ = 'M';
 	*p++ = 'p';
+	*p++ = 'S';
 
-	if(opers_see_all_users)
-		*p++ = 'S';
 #ifdef IGNORE_BOGUS_TS
 	*p++ = 'T';
 #endif
