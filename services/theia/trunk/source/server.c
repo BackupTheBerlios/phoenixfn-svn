@@ -632,10 +632,7 @@ s_server(int ac, char **av)
     CheckJuped(av[2]);
 #endif /* ALLOW_JUPES */
 
-#ifdef DEBUGMODE
-    fprintf(stderr, "Introducing new server %s\n",
-      av[2]);
-#endif /* DEBUGMODE */
+    debug_printf("Introducing new server %s", av[2]);
   }
 } /* s_server() */
 

@@ -108,38 +108,18 @@ debug()
 */
 
 void
-debug(char *format, ...)
-
-#ifdef DEBUGMODE
-
+debug (char *format, ...)
 {
-  va_list args;
+	va_list	args;
+	char	buf[MAXLINE * 2];
 
-  va_start(args, format);
+	va_start(args, format);
+	vsprintf_irc(buf, format, args);
+	va_end(args);
 
-  fprintf(stderr, "DEBUG> ");
-  vfprintf(stderr, format, args);
-
-  va_end(args);
-} /* debug() */
-
-#else /* !DEBUGMODE */
-
-{
-  va_list args;
-  char buf[MAXLINE * 2];
-
-  va_start(args, format);
-
-  vsprintf_irc(buf, format, args);
-
-  va_end(args);
-
-  /* send the string to +d users */
-  SendUmode(OPERUMODE_D, "DEBUG: %s", buf);
-} /* debug() */
-
-#endif /* DEBUGMODE */
+	debug_print(buf);
+	SendUmode(OPERUMODE_D, "DEBUG: %s", buf);
+}
 
 /*
 fatal()

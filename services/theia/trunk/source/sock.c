@@ -353,72 +353,51 @@ ConnectHost(char *hostname, unsigned int port)
 }
 /* }}} */
 
-/*
-CompleteHubConnection()
- Complete second half of non-blocking connect sequence
-
-Return: 1 if successful
-        0 if unsuccessful
-*/
-
+/* {{{ int CompleteHubConnection()
+ *
+ * Complete second half of non-blocking connect sequence.
+ *
+ * Returns:
+ *   1 on success;
+ *   0 on error.
+ */
 int
 CompleteHubConnection(struct Servlist *hubptr)
-
 {
-  int errval;
-  socklen_t errlen;
+	int		errval;
+	socklen_t	errlen;
 
-  assert(hubptr != 0);
+	assert(hubptr != 0);
+	ClearHubConnect(hubptr);
 
-  ClearHubConnect(hubptr);
+	errval = 0;
+	errlen = sizeof(errval);
+	if (getsockopt(dccptr->socket, SOL_SOCKET, SO_ERROR, &errval, &errlen) < 0) {
+		const char *err = strerror(errno);
+		debug_printf("getsockopt(SO_ERROR) failed: %s", err);
+		putlog(LOG1, "getsockopt(SO_ERROR) failed: %s", err);
+		return 0;
+	}
 
-  errval = 0;
-  errlen = sizeof(errval);
-  if (getsockopt(HubSock, SOL_SOCKET, SO_ERROR, &errval, &errlen) < 0)
-  {
-    putlog(LOG1,
-      "getsockopt(SO_ERROR) failed: %s",
-      strerror(errno));
-    return 0;
-  }
+	if (errval > 0) {
+		const char *err = strerror(errval);
+		debug_printf("Failed to connect to %s:%d: %s", hubptr->hostname,
+			hubptr->port, err);
+		putlog(LOG1, "Failed to connect to %s:%d: %s", hubptr->hostname,
+				hubptr->port, err);
+		return 0;
+	}
 
-  if (errval > 0)
-  {
-  #ifdef DEBUGMODE
-    fprintf(stderr,
-      "Cannot connect to port %d of %s: %s\n",
-      hubptr->port,
-      hubptr->hostname,
-      strerror(errval));
-  #endif
+	signon();
+	hubptr->connect_ts = current_ts;
 
-    putlog(LOG1,
-      "Error connecting to port %d of %s: %s",
-      hubptr->port,
-      hubptr->hostname,
-      strerror(errval));
+	SendUmode(OPERUMODE_Y, "*** Connected to %s:%d", hubptr->hostname, hubptr->port);
+	putlog(LOG1, "Connected to %s:%d", hubptr->hostname, hubptr->port);
+	burst_complete = 0;
 
-    return 0;
-  }
-
-  signon();
-
-  hubptr->connect_ts = current_ts;
-
-  SendUmode(OPERUMODE_Y,
-    "*** Connected to %s:%d",
-    hubptr->hostname,
-    hubptr->port);
-
-  putlog(LOG1,
-    "Connected to %s:%d",
-    hubptr->hostname,
-    hubptr->port);
-
-  burst_complete = 0;
-
-  return 1;
-} /* CompleteHubConnection() */
+	return 1;
+}
+/* }}} */
 
 /*
 ReadSocketInfo()
@@ -713,18 +692,11 @@ ReadSocketInfo(void)
       /* Also check whether is errno set at all.. -kre */
       if ((SelectResult == (-1)) && errno && errno!=EINTR)
       {
-      #ifdef DEBUGMODE      
-        fprintf(stderr,
-          "Connection closed: %s\n",
-          strerror(errno));
-      #endif
-
-        putlog(LOG1, "Lost connection to %s:%d (%s)",
-          currenthub->hostname,
-          currenthub->port,
-          strerror(errno));
-
-        return;
+        const char *err = strerror(errno);
+        debug_printf("Connection closed: %s", err);
+	putlog(LOG1, "Lost connection to %s:%d (%s)", currenthub->hostname,
+          currenthub->port, err);
+	return;
       }
     }
   } /* for (;;) */

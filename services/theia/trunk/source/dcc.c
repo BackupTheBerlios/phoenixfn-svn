@@ -899,99 +899,79 @@ MakeConnection(char *host, int port, struct Luser *lptr)
   return 1;
 } /* MakeConnection() */
 
-/*
-GreetDccUser()
- Called upon a successful connection to a dcc client - give them
-the motd etc.
-
-Return: 1 if successful
-        0 if unsuccessful
-*/
-
+/* {{{ int GreetDccUser()
+ *
+ * Greets a new incomming DCC connection (motd, etc).
+ *
+ * Returns:
+ *   1 on success;
+ *   0 on error.
+ */
 int
-GreetDccUser(struct DccUser *dccptr)
-
+GreetDccUser (struct DccUser *dccptr)
 {
-  char prefix[MAXLINE],
-       sendstr[MAXLINE];
-  time_t CurrTime = current_ts;
-  struct tm *motd_tm;
-  struct Userlist *tempuser;
-  int errval;
-  socklen_t errlen;
+	char		prefix[MAXLINE];
+	char		sendstr[MAXLINE];
+	time_t		CurrTime = current_ts;
+	struct tm	*motd_tm = NULL;
+	struct Userlist	*tempuser = NULL;
+	int		errval;
+	socklen_t	errlen;
+	int		pending = 0;
 
-  assert(dccptr != 0);
+	assert(dccptr != NULL);
+	ClearDccConnect(dccptr);
 
-  ClearDccConnect(dccptr);
+	errval = 0;
+	errlen = sizeof(errval);
+	if (getsockopt(dccptr->socket, SOL_SOCKET, SO_ERROR, &errval, &errlen) < 0) {
+		const char *err = strerror(errno);
+		debug_printf("getsockopt(SO_ERROR) failed: %s", err);
+		putlog(LOG1, "getsockopt(SO_ERROR) failed: %s", err);
+		return 0;
+	}
 
-  errval = 0;
-  errlen = sizeof(errval);
-  if (getsockopt(dccptr->socket, SOL_SOCKET, SO_ERROR, &errval, &errlen) < 0)
-  {
-    putlog(LOG1,
-      "getsockopt(SO_ERROR) failed: %s",
-      strerror(errno));
-    return 0;
-  }
+	if (errval > 0) {
+		const char *err = strerror(errval);
+		debug_printf("Failed to connect to %s:%d: %s", dccptr->hostname,
+			dccptr->hostname, err);
+		putlog(LOG1, "Failed to connect to %s:%d: %s", dccptr->hostname,
+			dccptr->hostname, err);
+		SendUmode(OPERUMODE_Y, "*** Lost connection to [%s@%s:%d]: %s",
+				dccptr->username, dccptr->hostname, dccptr->port,
+				err);
+		return 0;
+	}
 
-  if (errval > 0)
-  {
-  #ifdef DEBUGMODE
-    fprintf(stderr,
-      "Cannot connect to port %d of %s: %s\n",
-      dccptr->port,
-      dccptr->hostname,
-      strerror(errval));
-  #endif
+	motd_tm = localtime(&CurrTime);
+	ircsprintf(sendstr, "theia %s (%d/%d/%d %d:%02d)\n", 
+		hVersion, 1900 + motd_tm->tm_year, motd_tm->tm_mon + 1,
+		motd_tm->tm_mday, motd_tm->tm_hour, motd_tm->tm_min);
+	writesocket(dccptr->socket, sendstr);
+	SendMotd(dccptr->socket);
 
-    SendUmode(OPERUMODE_Y,
-      "*** Lost connection to [%s@%s:%d]: %s",
-      dccptr->username,
-      dccptr->hostname,
-      dccptr->port,
-      strerror(errval));
+	if (IsDccPending(dccptr)) {
+		pending = 1;
+		writesocket(dccptr->socket, "You must .identify before you may use commands\n\n");
+	}
+	tempuser = GetUser(pending, dccptr->nick, dccptr->username, dccptr->hostname);
+	assert(tempuser != NULL);
 
-    return 0;
-  }
+	if (IsServicesAdmin(tempuser))
+		strcpy(prefix, "Admin(%)");
+	else if (IsAdmin(tempuser))
+		strcpy(prefix, "Admin");
+	else if (IsOper(tempuser))
+		strcpy(prefix, "Oper");
+	else
+		strcpy(prefix, "User");
 
-  motd_tm = localtime(&CurrTime);
-  ircsprintf(sendstr, "theia %s (%d/%d/%d %d:%02d)\n", 
-    hVersion, 1900 + motd_tm->tm_year, motd_tm->tm_mon + 1,
-    motd_tm->tm_mday, motd_tm->tm_hour, motd_tm->tm_min);
-  writesocket(dccptr->socket, sendstr);
+	BroadcastDcc(DCCALL, "%s %s (%s@%s) has connected\n",
+		prefix, dccptr->nick, dccptr->username, dccptr->hostname);
 
-  /* give new user the motd */
-  SendMotd(dccptr->socket);
-
-  if (IsDccPending(dccptr))
-  {
-    writesocket(dccptr->socket, 
-      "You must .identify before you may use commands\n\n");
-    tempuser = GetUser(0, dccptr->nick, dccptr->username, dccptr->hostname);
-  }
-  else
-    tempuser = GetUser(1, dccptr->nick, dccptr->username, dccptr->hostname);
-
-  assert(tempuser != 0);
-
-  if (IsServicesAdmin(tempuser))
-    strcpy(prefix, "Admin(%)");
-  else if (IsAdmin(tempuser))
-    strcpy(prefix, "Admin");
-  else if (IsOper(tempuser))
-    strcpy(prefix, "Oper");
-  else
-    strcpy(prefix, "User");
-
-  /* inform everyone of new user */
-  BroadcastDcc(DCCALL, "%s %s (%s@%s) has connected\n",
-    prefix,
-    dccptr->nick,
-    dccptr->username,
-    dccptr->hostname);
-
-  return 1;
-} /* GreetDccUser() */
+	return 1;
+}
+/* }}} */
 
 /*
 onctcp()

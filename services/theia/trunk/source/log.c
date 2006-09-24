@@ -36,68 +36,51 @@
 #include "sprintf_irc.h"
 #include "sprintf_irc.h"
 
-/*
-putlog()
-  args: int level, char *fmt, va_alist
-  purpose: log 'fmt' to log file
-  return: none
-*/
-
+/* {{{ void putlog()
+ *
+ * Print (possibly formatted) string `format' to log file.
+ */
 void
 putlog(int level, char *format, ...)
-
 {
-  FILE *fp;
-  time_t CurrTime;
-  char buf[MAXLINE];
-  va_list args;
+	FILE	*fp = NULL;
+	time_t	CurrTime;
+	char	buf[MAXLINE];
+	va_list	args;
 
-  /*
-   * Do not log anything if LogLevel equals 0 - also,
-   * if the given level is greater than LogLevel, do not
-   * log it
-   */
-  if ((LogLevel == 0) || (LogLevel < level))
-    return;
+	/*
+	 * Do not log anything if LogLevel equals 0 - also,
+	 * if the given level is greater than LogLevel, do not
+	 * log it
+	 */
+	if ((LogLevel == 0) || (LogLevel < level))
+		return;
+	if (!LogFile)
+		return;
 
-  if (!LogFile)
-    return;
+	debug_printf("Opening log file '%s'...", LogFile);
+	if (!(fp = fopen(LogFile, "a+"))) {
+		debug_printf("fopen() faield: %s", strerror(errno));
+		return;
+	}
 
-  if ((fp = fopen(LogFile, "a+")) == NULL)
-  {
-  #ifdef DEBUGMODE
-    printf("Unable to open log file: %s\n", LogFile);
-  #endif
-    return;
-  }
+	CurrTime = current_ts;
+	strcpy(buf, ctime(&CurrTime));
 
-  CurrTime = current_ts;
-  strcpy(buf, ctime(&CurrTime));
+	/*
+	 * Erase the \n character that ctime() puts on the end, in order
+	 * to concat the string we want to log
+	 */
+	buf[strlen(buf) - 1] = ' ';
 
-  /*
-   * Erase the \n character that ctime() puts on the end, in order
-   * to concat the string we want to log
-   */
-  buf[strlen(buf) - 1] = ' ';
-
-  fprintf(fp, "%s", buf);
-
-  va_start(args, format);
-
-  /* write the string to the log file */
-  vfprintf(fp, format, args);
-  fprintf(fp, "\n");
-
-  #ifdef DEBUGMODE
-    fprintf(stderr, "Logged> ");
-    vfprintf(stderr, format, args);
-    fprintf(stderr, "\n");
-  #endif
-
-  fclose(fp);
-
-  va_end(args);
-} /* putlog() */
+	fprintf(fp, "%s", buf);
+	va_start(args, format);
+	vfprintf(fp, format, args);
+	fprintf(fp, "\n");
+	va_end(args);
+	fclose(fp);
+}
+/* }}} */
 
 /*
 CheckLogs()
