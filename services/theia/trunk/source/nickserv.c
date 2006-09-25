@@ -278,7 +278,7 @@ ns_process(char *nick, char *command)
    * which should be separate from admin.
    */
   if (((cptr->level == LVL_USERADMIN) && !IsValidAdmin(lptr)) ||
-      (IsHelper(lptr) && (irccmp(arv[0], "setcloak") != 0 && irccmp(arv[0], "setpass") != 0)))
+      (IsHelper(lptr) && !(irccmp(arv[0], "setcloak") == 0 || irccmp(arv[0], "setpass") == 0)))
   {
     notice(n_NickServ, lptr->nick, "Unknown command [%s]",
       arv[0]);
@@ -2443,7 +2443,7 @@ n_recover(struct Luser *lptr, int ac, char **av)
   if (!goodcoll)
   {
     /* Admins may recover any nickname */
-    if (IsValidAdmin(lptr))
+    if (IsValidAdmin(lptr) && !IsHelper(lptr))
       goodcoll = 2;
   }
 
@@ -2550,7 +2550,7 @@ n_release(struct Luser *lptr, int ac, char **av)
   if (!goodrel)
   {
     /* Admins who are IDENTIFY'd may release any nickname */
-    if (IsValidAdmin(lptr))
+    if (IsValidAdmin(lptr) && !IsHelper(lptr))
       goodrel = 2;
   }
 
@@ -2661,7 +2661,7 @@ n_ghost(struct Luser *lptr, int ac, char **av)
   if (!goodcoll)
   {
     /* Admins may kill any nickname */
-    if (IsValidAdmin(lptr))
+    if (IsValidAdmin(lptr) && !IsHelper(lptr))
       {
         goodcoll = 1;
         o_Wallops("Administrative ghost from %s for nick [%s]",
@@ -2741,7 +2741,7 @@ n_access(struct Luser *lptr, int ac, char **av)
   /*
    * Allow administrators to specify a nickname to modify
    */
-  if (IsValidAdmin(lptr))
+  if (IsValidAdmin(lptr) && !IsHelper(lptr))
   {
     /*
      * First, check if av[1] is a valid command. If not,
@@ -4150,7 +4150,7 @@ n_list(struct Luser *lptr, int ac, char **av)
     lptr->hostname,
     av[1]);
 
-  if (IsValidAdmin(lptr))
+  if (IsValidAdmin(lptr) && !IsHelper(lptr))
     IsAnAdmin = 1;
   else
     IsAnAdmin = 0;
@@ -4236,7 +4236,7 @@ n_info(struct Luser *lptr, int ac, char **av)
     n_NickServ, lptr->nick, lptr->username, lptr->hostname,
     realptr->nick);
 
-  isadmin = IsValidAdmin(lptr);
+  isadmin = IsValidAdmin(lptr) && !IsHelper(lptr);
   isowner = ((nptr == GetMaster(tmpnick)) &&
       (tmpnick->flags & NS_IDENTIFIED));
   ishelper = IsHelper(tmpnick);
