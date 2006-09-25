@@ -125,7 +125,6 @@ scan_umodes(struct Client *client_p, struct Client *source_p, int parc,
 	dlink_node *tn;
 	int i;
 	const char *sockhost;
-	char buf[512];
 
 	if (parc < 3)
 	{

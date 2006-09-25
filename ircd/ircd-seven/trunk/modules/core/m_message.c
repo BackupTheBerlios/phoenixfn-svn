@@ -884,7 +884,6 @@ handle_special(int p_or_n, const char *command, struct Client *client_p,
 	struct Client *target_p;
 	char *host;
 	char *server;
-	char *s;
 	int count;
 
 	/* user[%host]@server addressed?
