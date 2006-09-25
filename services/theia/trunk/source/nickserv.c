@@ -277,7 +277,7 @@ ns_process(char *nick, char *command)
    * This is the same thing as above, but for special commands
    * which should be separate from admin.
    */
-  if ((cptr->level == LVL_USERADMIN) && !(IsValidAdmin(lptr)))
+  if ((cptr->level == LVL_USERADMIN) && !(IsValidAdmin(lptr) || IsHelper(lptr)))
   {
     notice(n_NickServ, lptr->nick, "Unknown command [%s]",
       arv[0]);
@@ -285,7 +285,8 @@ ns_process(char *nick, char *command)
     return;
   }
   else if ((cptr->level == LVL_USERADMIN) && 
-           !(IsUserAdmin(GetUser(1, lptr->nick, lptr->username, lptr->hostname))))
+           !(IsUserAdmin(GetUser(1, lptr->nick, lptr->username, lptr->hostname))) &&
+           IsHelper(lptr) && !(irccmp(arv[0], "setcloak") == 0 || irccmp(arv[0], "setpass") == 0))
   {
     notice(n_NickServ, lptr->nick, "Sorry, you do not have enough access for [%s]",
       arv[0]);
@@ -4206,7 +4207,7 @@ n_info(struct Luser *lptr, int ac, char **av)
 
 {
   struct NickInfo *nptr, *realptr, *tmpnick;
-  int online = 0, master_online = 0, isadmin = 0, isowner = 0;
+  int online = 0, master_online = 0, isadmin = 0, isowner = 0, ishelper = 0;
 
   /* find about nick who issued the request */
   if (!(tmpnick = FindNick(lptr->nick)))
@@ -4238,11 +4239,13 @@ n_info(struct Luser *lptr, int ac, char **av)
   isadmin = IsValidAdmin(lptr);
   isowner = ((nptr == GetMaster(tmpnick)) &&
       (tmpnick->flags & NS_IDENTIFIED));
+  ishelper = IsHelper(tmpnick);
 
   if (((nptr->flags & NS_PRIVATE) || (nptr->flags & NS_FORBID)) &&
       !isowner
 #ifdef EMPOWERADMINS
       && !isadmin
+      && !ishelper
 #endif
       )
     {
@@ -4273,7 +4276,7 @@ n_info(struct Luser *lptr, int ac, char **av)
 	 timeago(realptr->created, 1));
 
   /* Blech. What a mess. */
-  if (realptr->lastseen && !online && (!(nptr->flags & NS_HIDEALL) || isadmin || isowner))
+  if (realptr->lastseen && !online && (!(nptr->flags & NS_HIDEALL) || isadmin || isowner || ishelper))
     {
       if (nptr != realptr)
 	{
@@ -4302,13 +4305,13 @@ n_info(struct Luser *lptr, int ac, char **av)
 	}
     }
 
-  if (!(nptr->flags & NS_HIDEALL) || isadmin || isowner)
+  if (!(nptr->flags & NS_HIDEALL) || isadmin || isowner || ishelper)
   {
     char buf[MAXLINE];
 
     if (LastSeenInfo)
     {
-      if (!(nptr->flags & NS_HIDEADDR) || isadmin || isowner)
+      if (!(nptr->flags & NS_HIDEADDR) || isadmin || isowner || ishelper)
       {
         if (nptr->cloak && nptr->flags & NS_CLOAK)
         {
@@ -4334,12 +4337,12 @@ n_info(struct Luser *lptr, int ac, char **av)
             realptr->lastqmsg);
     } /* if (LastSeenInfo) */
 
-    if ((nptr->cloak) && (isadmin || isowner))
+    if ((nptr->cloak) && (isadmin || isowner || ishelper))
       notice(n_NickServ, lptr->nick,
         "              Cloak: %s", nptr->cloak);
 
 
-    if (!(nptr->flags & NS_HIDEEMAIL) || isadmin || isowner)
+    if (!(nptr->flags & NS_HIDEEMAIL) || isadmin || isowner || ishelper)
       if (realptr->email)
         notice(n_NickServ, lptr->nick,
           "      Email Address: %s", realptr->email);
@@ -4387,9 +4390,9 @@ n_info(struct Luser *lptr, int ac, char **av)
       strcat(buf, "MemoNotify, ");
     if (nptr->flags & NS_MEMOSIGNON)
       strcat(buf, "MemoSignon, ");
-    if ((nptr->flags & NS_CLOAK) && (isadmin || isowner))
+    if ((nptr->flags & NS_CLOAK) && (isadmin || isowner || ishelper))
       strcat(buf, "Cloaked, ");
-    if ((nptr->flags & NS_EXCHANS) && (isadmin || isowner))
+    if ((nptr->flags & NS_EXCHANS) && (isadmin || isowner || ishelper))
       strcat(buf, "ExtendChans, ");
 
     if (*buf)
@@ -4401,7 +4404,7 @@ n_info(struct Luser *lptr, int ac, char **av)
     }
   }
 
-  if (isadmin || isowner)
+  if (isadmin || isowner || ishelper)
   {
     int cnt;
 
@@ -4474,7 +4477,7 @@ n_info(struct Luser *lptr, int ac, char **av)
 
   #endif /* CHANNELSERVICES */
 
-  } /* if (isadmin || isowner) */
+  } /* if (isadmin || isowner || ishelper) */
 } /* n_info() */
 
 #ifdef LINKED_NICKNAMES
