@@ -17,6 +17,10 @@ __debug_printf (const char *fmt, ...)
 void
 __debug_print (const char *str)
 {
+	char *p;
+
+	if (str && (p = strrchr(str, '\n')) != NULL && *(p + 1) == '\0')
+		*p = '\0';
 	fprintf(stderr, "[D]: %s\n", str);
 	fflush(stderr);
 }
