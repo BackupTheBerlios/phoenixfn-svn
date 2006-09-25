@@ -7,6 +7,12 @@ see the NEWS file.
 
 2006-09-25 Stephen Bennett <spb@gentoo.org>
 
+	* include/s_newconf.h, src/newconf.c, modules/m_dline.c: Allow DLINE
+	ip ON server.name, controlled by 'dline' shared flag. Not clustered at
+	present.
+
+2006-09-25 Stephen Bennett <spb@gentoo.org>
+
 	* modules/core/m_message.c, modules/m_scan.c: Clean up some compiler
 	warnings.
 
