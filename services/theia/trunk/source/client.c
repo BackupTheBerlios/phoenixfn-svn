@@ -835,6 +835,8 @@ IsValidAdmin(struct Luser *lptr)
    * Give the arguement 0 to GetUser() indicating we must match
    * hostnames and not just nicknames - for better security
    */
+  if (IsHelper(GetUser(0, lptr->nick, lptr->username, lptr->hostname)))
+    return 1;
   if (IsAdmin(GetUser(0, lptr->nick, lptr->username, lptr->hostname)))
     return 1;
 

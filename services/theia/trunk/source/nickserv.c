@@ -277,7 +277,8 @@ ns_process(char *nick, char *command)
    * This is the same thing as above, but for special commands
    * which should be separate from admin.
    */
-  if ((cptr->level == LVL_USERADMIN) && !(IsValidAdmin(lptr) || IsHelper(lptr)))
+  if ((cptr->level == LVL_USERADMIN) && !IsValidAdmin(lptr) ||
+      (IsHelper(lptr) && !(irccmp(arv[0], "setcloak") == 0 || irccmp(arv[0], "setpass") == 0)))
   {
     notice(n_NickServ, lptr->nick, "Unknown command [%s]",
       arv[0]);
