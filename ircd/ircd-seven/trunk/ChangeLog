@@ -5,6 +5,11 @@ This file lists every change made except typo and formatting fixes, which are
 only listed in SVN log. For a summary of what has changed between releases,
 see the NEWS file.
 
+2006-09-27 Stephen Bennett <spb@gentoo.org>
+
+	* modules/core/m_kill.c: Send kill messages from services on +k rather
+	than +s. From charybdis revision 2149 (jilles).
+
 2006-09-25 Stephen Bennett <spb@gentoo.org>
 
 	* include/s_newconf.h, src/newconf.c, modules/m_dline.c: Allow DLINE
