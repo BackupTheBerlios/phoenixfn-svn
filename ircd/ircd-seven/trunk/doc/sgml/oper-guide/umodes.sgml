@@ -238,6 +238,7 @@
 	<title>+k, server kill notices</title>
 	<para>
 	  Opers with the +k snomask set will receive server notices when
+	  services kill users and when
 	  other servers kill and save (forced nick change to UID) users.
 	  Kills and saves by this server are on +d or +s.
 	</para>
@@ -261,7 +262,7 @@
 	<title>+s, generic server notices</title>
 	<para>
 	  This snomask allows an oper to receive generic server notices.
-	  This includes oper kills.
+	  This includes kills from opers (except services).
 	</para>
       </sect2>
       <sect2>

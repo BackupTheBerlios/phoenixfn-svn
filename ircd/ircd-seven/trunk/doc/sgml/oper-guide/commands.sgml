@@ -398,6 +398,7 @@
 	  <command>DLINE</command>
 	  <arg><replaceable>length</replaceable></arg>
 	  <arg choice=plain><replaceable>a</replaceable>.<replaceable>b</replaceable>.<replaceable>c</replaceable>.<replaceable>d</replaceable></arg>
+	  <arg>ON <replaceable>servername</replaceable></arg>
 	  <arg>:<replaceable>reason</replaceable></arg>
 	</cmdsynopsis>
 	<para>
@@ -419,12 +420,14 @@
 	  connections.
 	</para>
 	<para>
-	  D:lines cannot be set remotely on other servers.
-	</para>
-	<para>
 	  Only exempt{} blocks exempt from D:lines on initial connection.
 	  Being a server or having kline_exempt in auth{} does
 	  <emphasis>not</emphasis> exempt (different from K/G/X:lines).
+	</para>
+	<para>
+	  If the ON part is specified, the D:line is set on servers matching
+	  the given mask (provided a matching shared{} block exists there).
+	  D:lines are not affected by cluster{} blocks.
 	</para>
       </sect2>
       <sect2>
@@ -432,6 +435,7 @@
 	<cmdsynopsis>
 	  <command>UNDLINE</command>
 	  <arg choice=plain><replaceable>a.b.c.d</replaceable></arg>
+	  <arg>ON <replaceable>servername</replaceable></arg>
 	</cmdsynopsis>
 	<para>
 	  Will attempt to remove a D:line from <filename>dline.conf</filename>, and will flush

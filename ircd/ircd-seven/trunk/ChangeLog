@@ -7,6 +7,14 @@ see the NEWS file.
 
 2006-09-27 Stephen Bennett <spb@gentoo.org>
 
+	* include/s_newconf.h, src/newconf.c, help/opers/snomask,
+	doc/sgml/oper-guide/commands.sgml, doc/sgml/oper-guide/config.sgml,
+	doc/sgml/oper-guide/umodes.sgml, modules/m_dline.c, modules/m_stats.c:
+	Various improvements to remote D:line code, taken from charybdis
+	revisions 2143 to 2153 by jilles.
+
+2006-09-27 Stephen Bennett <spb@gentoo.org>
+
 	* modules/core/m_kill.c: Send kill messages from services on +k rather
 	than +s. From charybdis revision 2149 (jilles).
 

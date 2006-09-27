@@ -66,7 +66,7 @@ DECLARE_MODULE_AV1(dline, NULL, NULL, dline_clist, NULL, NULL, "$Revision$");
 static int valid_comment(char *comment);
 static int flush_write(struct Client *, FILE *, char *, char *);
 static int remove_temp_dline(const char *);
-static int apply_dline(struct Client *, const char *, int, const char *);
+static int apply_dline(struct Client *, const char *, int, char *);
 static int apply_undline(struct Client *, const char *);
 
 /* mo_dline()
@@ -82,7 +82,6 @@ mo_dline(struct Client *client_p, struct Client *source_p,
 	const char *dlhost;
 	char *reason = def;
 	char cidr_form_host[HOSTLEN + 1];
-	int bits;
 	int tdline_time = 0;
 	const char *target_server = NULL;
 	int loc = 1;
@@ -99,13 +98,6 @@ mo_dline(struct Client *client_p, struct Client *source_p,
 
 	dlhost = parv[loc];
 	strlcpy(cidr_form_host, dlhost, sizeof(cidr_form_host));
-
-	if(!parse_netmask(dlhost, NULL, &bits))
-	{
-		sendto_one(source_p, ":%s NOTICE %s :Invalid D-Line",
-			   me.name, source_p->name);
-		return 0;
-	}
 
 	loc++;
 
@@ -127,35 +119,6 @@ mo_dline(struct Client *client_p, struct Client *source_p,
 
 		if(!match(target_server, me.name))
 			return 0;
-	}
-
-	if(!valid_comment(reason))
-	{
-		sendto_one(source_p,
-			   ":%s NOTICE %s :Invalid character '\"' in comment",
-			   me.name, source_p->name);
-		return 0;
-	}
-
-	if(IsOperAdmin(source_p))
-	{
-		if(bits < 8)
-		{
-			sendto_one(source_p,
-				   ":%s NOTICE %s :For safety, bitmasks less than 8 require conf access.",
-				   me.name, parv[0]);
-			return 0;
-		}
-	}
-	else
-	{
-		if(bits < 16)
-		{
-			sendto_one(source_p,
-				   ":%s NOTICE %s :Dline bitmasks less than 16 are for admins only.",
-				   me.name, parv[0]);
-			return 0;
-		}
 	}
 
 	apply_dline(source_p, dlhost, tdline_time, reason);
@@ -195,13 +158,6 @@ mo_undline(struct Client *client_p, struct Client *source_p, int parc, const cha
 			return 0;
 	}
 
-	if(parse_netmask(cidr, NULL, NULL) == HM_HOST)
-	{
-		sendto_one(source_p, ":%s NOTICE %s :Invalid D-Line",
-			   me.name, source_p->name);
-		return 0;
-	}
-
 	apply_undline(source_p, cidr);
 
 	return 0;
@@ -210,16 +166,19 @@ mo_undline(struct Client *client_p, struct Client *source_p, int parc, const cha
 static int
 me_dline(struct Client *client_p, struct Client *source_p, int parc, const char **parv)
 {
+	int tdline_time = atoi(parv[1]);
 	/* Since this is coming over a server link, assume that the originating
 	 * server did the relevant permission/sanity checks...
 	 */
 
-	if(!find_shared_conf(source_p->username, source_p->host,
-				source_p->user->server, SHARED_DLINE))
+	if(!IsPerson(source_p))
 		return 0;
 
-	int tdline_time = valid_temp_time(parv[1]);
-	apply_dline(source_p, parv[2], tdline_time, parv[3]);
+	if(!find_shared_conf(source_p->username, source_p->host,
+				source_p->user->server, tdline_time > 0 ? SHARED_TDLINE : SHARED_PDLINE))
+		return 0;
+
+	apply_dline(source_p, parv[2], tdline_time, LOCAL_COPY(parv[3]));
 
 	check_dlines();
 	return 0;
@@ -228,8 +187,11 @@ me_dline(struct Client *client_p, struct Client *source_p, int parc, const char 
 static int
 me_undline(struct Client *client_p, struct Client *source_p, int parc, const char **parv)
 {
+	if(!IsPerson(source_p))
+		return 0;
+
 	if(!find_shared_conf(source_p->username, source_p->host,
-				source_p->user->server, SHARED_DLINE))
+				source_p->user->server, SHARED_UNDLINE))
 		return 0;
 
 	apply_undline(source_p, parv[1]);
@@ -238,13 +200,57 @@ me_undline(struct Client *client_p, struct Client *source_p, int parc, const cha
 }
 
 static int
-apply_dline(struct Client *source_p, const char *dlhost, int tdline_time, const char *reason)
+apply_dline(struct Client *source_p, const char *dlhost, int tdline_time, char *reason)
 {
 	struct ConfItem *aconf;
 	char *oper_reason;
 	char dlbuffer[IRCD_BUFSIZE];
 	const char *current_date;
 	struct irc_sockaddr_storage daddr;
+	int t = AF_INET, ty, b;
+	const char *creason;
+
+	ty = parse_netmask(dlhost, (struct sockaddr *)&daddr, &b);
+	if(ty == HM_HOST)
+	{
+		sendto_one(source_p, ":%s NOTICE %s :Invalid D-Line",
+			   me.name, source_p->name);
+		return 0;
+	}
+#ifdef IPV6
+	if(ty == HM_IPV6)
+		t = AF_INET6;
+	else
+#endif
+		t = AF_INET;
+
+	/* This means dlines wider than /16 cannot be set remotely */
+	if(IsOperAdmin(source_p))
+	{
+		if(b < 8)
+		{
+			sendto_one_notice(source_p,
+				   ":For safety, bitmasks less than 8 require conf access.");
+			return 0;
+		}
+	}
+	else
+	{
+		if(b < 16)
+		{
+			sendto_one_notice(source_p,
+				   ":Dline bitmasks less than 16 are for admins only.");
+			return 0;
+		}
+	}
+
+	if(!valid_comment(reason))
+	{
+		sendto_one(source_p,
+			   ":%s NOTICE %s :Invalid character '\"' in comment",
+			   me.name, source_p->name);
+		return 0;
+	}
 
 	/* Look for an oper reason */
 	if((oper_reason = strchr(reason, '|')) != NULL)
@@ -258,16 +264,6 @@ apply_dline(struct Client *source_p, const char *dlhost, int tdline_time, const 
 
 	if(ConfigFileEntry.non_redundant_klines)
 	{
-		const char *creason;
-		int t = AF_INET, ty, b;
-		ty = parse_netmask(dlhost, (struct sockaddr *)&daddr, &b);
-#ifdef IPV6
-        	if(ty == HM_IPV6)
-                	t = AF_INET6;
-                else
-#endif
-			t = AF_INET;
-                                  		
 		if((aconf = find_dline((struct sockaddr *)&daddr, t)) != NULL)
 		{
 			int bx;
@@ -349,6 +345,13 @@ apply_undline(struct Client *source_p, const char *cidr)
 	const char *filename, *found_cidr;
 	int pairme = NO, error_on_write = NO;
 	mode_t oldumask;
+
+	if(parse_netmask(cidr, NULL, NULL) == HM_HOST)
+	{
+		sendto_one(source_p, ":%s NOTICE %s :Invalid D-Line",
+			   me.name, source_p->name);
+		return 0;
+	}
 
 	ircsnprintf(temppath, sizeof(temppath), "%s.tmp", ConfigFileEntry.dlinefile);
 

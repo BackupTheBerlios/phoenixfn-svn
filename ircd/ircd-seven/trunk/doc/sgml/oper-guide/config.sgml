@@ -1001,6 +1001,24 @@ shared {
 	    </listitem>
 	  </varlistentry>
 	  <varlistentry>
+	    <term>dline (D)</term>
+	    <listitem>
+	      <para>Permanent and temporary D:lines</para>
+	    </listitem>
+	  </varlistentry>
+	  <varlistentry>
+	    <term>tdline (d)</term>
+	    <listitem>
+	      <para>Temporary D:lines</para>
+	    </listitem>
+	  </varlistentry>
+	  <varlistentry>
+	    <term>undline (E)</term>
+	    <listitem>
+	      <para>D:line removals</para>
+	    </listitem>
+	  </varlistentry>
+	  <varlistentry>
 	    <term>all</term>
 	    <listitem>
 	      <para>All of the above; this does not include rehash</para>

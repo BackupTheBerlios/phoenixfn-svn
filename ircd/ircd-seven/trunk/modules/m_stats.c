@@ -872,6 +872,9 @@ static struct shared_flags shared_flagtable[] =
 	{ SHARED_PRESV,		'Q' },
 	{ SHARED_TRESV,		'q' },
 	{ SHARED_UNRESV,	'R' },
+	{ SHARED_PDLINE,	'D' },
+	{ SHARED_TDLINE,	'd' },
+	{ SHARED_UNDLINE,	'E' },
 	{ SHARED_REHASH,	'H' },
 	{ 0,			'\0'}
 };

@@ -369,7 +369,9 @@ static struct mode_table cluster_table[] = {
 	{ "resv",	SHARED_PRESV	},
 	{ "tresv",	SHARED_TRESV	},
 	{ "unresv",	SHARED_UNRESV	},
-	{ "dline",	SHARED_DLINE	},
+	{ "dline",	SHARED_PDLINE	},
+	{ "tdline",	SHARED_TDLINE	},
+	{ "undline",	SHARED_UNDLINE	},
 	{ "all",	CLUSTER_ALL	},
 	{NULL, 0}
 };
@@ -379,14 +381,16 @@ static struct mode_table shared_table[] =
 	{ "kline",	SHARED_PKLINE|SHARED_TKLINE	},
 	{ "xline",	SHARED_PXLINE|SHARED_TXLINE	},
 	{ "resv",	SHARED_PRESV|SHARED_TRESV	},
+	{ "dline",	SHARED_PDLINE|SHARED_TDLINE	},
 	{ "tkline",	SHARED_TKLINE	},
 	{ "unkline",	SHARED_UNKLINE	},
 	{ "txline",	SHARED_TXLINE	},
 	{ "unxline",	SHARED_UNXLINE	},
 	{ "tresv",	SHARED_TRESV	},
 	{ "unresv",	SHARED_UNRESV	},
+	{ "tdline",	SHARED_TDLINE	},
+	{ "undline",	SHARED_UNDLINE	},
 	{ "rehash",	SHARED_REHASH	},
-	{ "dline",	SHARED_DLINE	},
 	{ "all",	SHARED_ALL	},
 	{ "none",	0		},
 	{NULL, 0}

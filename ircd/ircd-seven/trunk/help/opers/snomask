@@ -9,7 +9,7 @@ Server notice masks:
        +C     - Extended local client connections and exits
        +d     - Server debug messages
        +f     - 'I-line is full' notices
-       +k     - Server kill messages
+       +k     - Server and service kill messages
        +n     - Local client nick changes
        +r     - 'Rejected' client notices
        +s     - Generic server messages and oper kills
