@@ -345,6 +345,7 @@ static struct oper_flags oper_flagtable[] =
 	{ OPER_CMODES,		'M', 'm' },
 	{ OPER_IMMUNE,		'I', 'i' },
 	{ OPER_WALLOPS,		'W', 'w' },
+	{ OPER_EXPERIMENTAL,	'E', 'e' },
 	{ 0,			'\0', '\0' }
 };
 

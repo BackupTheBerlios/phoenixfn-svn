@@ -90,6 +90,13 @@ mo_scan(struct Client *client_p, struct Client *source_p, int parc,
 {
 	struct scan_cmd *sptr;
 
+	if(!IsOperExperimental(source_p))
+	{
+		sendto_one(source_p, form_str(ERR_NOPRIVS),
+				me.name, source_p->name, "scan");
+		return 0;
+	}
+
 	for (sptr = scan_cmds; sptr->name != NULL; sptr++)
 	{
 		if (!irccmp(sptr->name, parv[1]))

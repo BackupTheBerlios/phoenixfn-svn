@@ -330,6 +330,7 @@ static struct mode_table flag_table[] = {
 	{"immune",		OPER_IMMUNE		},
 	{"resv",		OPER_RESV		},
 	{"wallops",		OPER_WALLOPS		},
+	{"scan",		OPER_EXPERIMENTAL	},
 	{NULL, 0}
 };
 

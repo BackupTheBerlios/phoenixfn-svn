@@ -141,28 +141,29 @@ extern void propagate_generic(struct Client *source_p, const char *command,
 extern void cluster_generic(struct Client *, const char *, int cltype,
 			int cap, const char *format, ...);
 
-#define OPER_ENCRYPTED	0x000001
-#define OPER_KLINE	0x000002
-#define OPER_UNKLINE	0x000004
-//#define OPER_LOCKILL	0x000008
-#define OPER_KILL	0x000010
-#define OPER_ROUTING	0x000020
-#define OPER_OVERRIDE	0x000040
-#define OPER_XLINE	0x000080
-#define OPER_RESV	0x000100
-#define OPER_MASSNOTICE	0x000200
-#define OPER_REHASH	0x000400
-#define OPER_DIE	0x000800
-#define OPER_ADMIN	0x001000
-#define OPER_HADMIN	0x002000
-#define OPER_OPERWALL	0x004000
-#define OPER_INVIS	0x008000
-#define OPER_AUSPEX	0x010000
+#define OPER_ENCRYPTED		0x000001
+#define OPER_KLINE		0x000002
+#define OPER_UNKLINE		0x000004
+//#define OPER_LOCKILL		0x000008
+#define OPER_KILL		0x000010
+#define OPER_ROUTING		0x000020
+#define OPER_OVERRIDE		0x000040
+#define OPER_XLINE		0x000080
+#define OPER_RESV		0x000100
+#define OPER_MASSNOTICE		0x000200
+#define OPER_REHASH		0x000400
+#define OPER_DIE		0x000800
+#define OPER_ADMIN		0x001000
+#define OPER_HADMIN		0x002000
+#define OPER_OPERWALL		0x004000
+#define OPER_INVIS		0x008000
+#define OPER_AUSPEX		0x010000
 //#define OPER_REMOTEBAN	0x020000
-#define OPER_HELPER	0x040000
-#define OPER_CMODES	0x080000
-#define OPER_IMMUNE	0x100000
-#define OPER_WALLOPS	0x400000
+#define OPER_HELPER		0x040000
+#define OPER_CMODES		0x080000
+#define OPER_IMMUNE		0x100000
+#define OPER_WALLOPS		0x400000
+#define OPER_EXPERIMENTAL	0x800000
 
 #define OPER_FLAGS	(OPER_KLINE|OPER_UNKLINE|OPER_KILL|\
 			 OPER_ROUTING|OPER_OVERRIDE|OPER_XLINE|OPER_RESV|\
@@ -192,6 +193,7 @@ extern void cluster_generic(struct Client *, const char *, int cltype,
 #define IsOperCModes(x)		((x)->operflags & OPER_CMODES)
 #define IsOperImmune(x)		((x)->operflags & OPER_IMMUNE)
 #define IsOperWallops(x)	((x)->operflags & OPER_WALLOPS)
+#define IsOperExperimental(x)	((x)->operflags & OPER_EXPERIMENTAL)
 
 extern struct oper_conf *make_oper_conf(void);
 extern void free_oper_conf(struct oper_conf *);
