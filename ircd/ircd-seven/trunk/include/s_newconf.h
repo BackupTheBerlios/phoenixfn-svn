@@ -162,8 +162,9 @@ extern void cluster_generic(struct Client *, const char *, int cltype,
 #define OPER_HELPER		0x040000
 #define OPER_CMODES		0x080000
 #define OPER_IMMUNE		0x100000
-#define OPER_WALLOPS		0x400000
-#define OPER_EXPERIMENTAL	0x800000
+#define OPER_WALLOPS		0x200000
+#define OPER_EXPERIMENTAL	0x400000
+#define OPER_GRANT		0x800000
 
 #define OPER_FLAGS	(OPER_KLINE|OPER_UNKLINE|OPER_KILL|\
 			 OPER_ROUTING|OPER_OVERRIDE|OPER_XLINE|OPER_RESV|\
@@ -194,6 +195,7 @@ extern void cluster_generic(struct Client *, const char *, int cltype,
 #define IsOperImmune(x)		((x)->operflags & OPER_IMMUNE)
 #define IsOperWallops(x)	((x)->operflags & OPER_WALLOPS)
 #define IsOperExperimental(x)	((x)->operflags & OPER_EXPERIMENTAL)
+#define IsOperGrant(x)		((x)->operflags & OPER_GRANT)
 
 extern struct oper_conf *make_oper_conf(void);
 extern void free_oper_conf(struct oper_conf *);

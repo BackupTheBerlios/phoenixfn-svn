@@ -309,7 +309,7 @@ static struct mode_table umode_table[] = {
 	{NULL, 0}
 };
 
-static struct mode_table flag_table[] = {
+struct mode_table flag_table[] = {
 	{"encrypted",		OPER_ENCRYPTED		},
 	{"kill",		OPER_KILL		},
 	{"routing",		OPER_ROUTING		},
@@ -331,6 +331,7 @@ static struct mode_table flag_table[] = {
 	{"resv",		OPER_RESV		},
 	{"wallops",		OPER_WALLOPS		},
 	{"scan",		OPER_EXPERIMENTAL	},
+	{"grant",		OPER_GRANT		},
 	{NULL, 0}
 };
 

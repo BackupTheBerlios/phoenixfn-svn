@@ -5,6 +5,12 @@ This file lists every change made except typo and formatting fixes, which are
 only listed in SVN log. For a summary of what has changed between releases,
 see the NEWS file.
 
+2006-10-15 Stephen Bennett <spb@gentoo.org>
+
+	* include/s_newconf.h, src/newconf.c, src/s_newconf.c,
+	modules/Makefile.in, +modules/m_grant.c: Add initial GRANT support,
+	based on jilles's charybdis module.
+
 2006-10-14 Stephen Bennett <spb@gentoo.org>
 
 	* include/s_conf.h, include/client.h, src/newconf.c,
