@@ -305,7 +305,7 @@ single_whois(struct Client *source_p, struct Client *target_p, int auspex)
 		sendto_one_numeric(source_p, RPL_AWAY, form_str(RPL_AWAY),
 				   target_p->name, target_p->user->away);
 
-	if(IsOper(target_p))
+	if(SeesOper(target_p, source_p))
 	{
 		sendto_one_numeric(source_p, RPL_WHOISOPERATOR, form_str(RPL_WHOISOPERATOR),
 				   target_p->name,

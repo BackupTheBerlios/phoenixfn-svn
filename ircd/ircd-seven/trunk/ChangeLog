@@ -7,6 +7,13 @@ see the NEWS file.
 
 2006-10-14 Stephen Bennett <spb@gentoo.org>
 
+	* include/s_conf.h, include/client.h, src/newconf.c,
+	modules/m_whois.c, modules/m_who.c: Add new config entry 'hide_opers'.
+	If set, opers will not be shown in /whois or /who except to other
+	opers.
+
+2006-10-14 Stephen Bennett <spb@gentoo.org>
+
 	* include/s_newconf.h, src/newconf.c, src/s_newconf.c,
 	modules/m_scan.c: Add new scan operflag.
 
