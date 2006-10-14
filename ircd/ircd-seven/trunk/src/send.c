@@ -73,7 +73,7 @@ _send_linebuf(struct Client *to, buf_head_t *linebuf)
 	{
 		if(IsServer(to))
 		{
-			sendto_realops_snomask(SNO_GENERAL, L_ALL,
+			sendto_realops_snomask(SNO_GENERAL, L_NETWIDE,
 					     "Max SendQ limit exceeded for %s: %u > %lu",
 					     get_server_name(to, HIDE_IP),
 					     linebuf_len(&to->localClient->buf_sendq), 
@@ -128,13 +128,13 @@ send_linebuf_remote(struct Client *to, struct Client *from, buf_head_t *linebuf)
 	{
 		if(IsServer(from))
 		{
-			sendto_realops_snomask(SNO_GENERAL, L_ALL,
+			sendto_realops_snomask(SNO_GENERAL, L_NETWIDE,
 					     "Send message to %s[%s] dropped from %s(Fake Dir)",
 					     to->name, to->from->name, from->name);
 			return;
 		}
 
-		sendto_realops_snomask(SNO_GENERAL, L_ALL,
+		sendto_realops_snomask(SNO_GENERAL, L_NETWIDE,
 				     "Ghosted: %s[%s@%s] from %s[%s@%s] (%s)",
 				     to->name, to->username, to->host,
 				     from->name, from->username, from->host, to->from->name);

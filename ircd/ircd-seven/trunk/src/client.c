@@ -321,7 +321,7 @@ check_pings_list(dlink_list * list)
 				aconf->port = 0;
 				aconf->hold = CurrentTime + 60;
 				add_temp_kline(aconf);
-				sendto_realops_snomask(SNO_GENERAL, L_ALL,
+				sendto_realops_snomask(SNO_GENERAL, L_NETWIDE,
 						     "Idle time limit exceeded for %s - temp k-lining",
 						     get_client_name(client_p, HIDE_IP));
 
@@ -477,7 +477,7 @@ check_banned_lines(void)
 			if(aconf->status & CONF_EXEMPTDLINE)
 				continue;
 
-			sendto_realops_snomask(SNO_GENERAL, L_ALL,
+			sendto_realops_snomask(SNO_GENERAL, L_NETWIDE,
 					     "DLINE active for %s",
 					     get_client_name(client_p, HIDE_IP));
 
@@ -492,14 +492,14 @@ check_banned_lines(void)
 		{
 			if(IsExemptKline(client_p))
 			{
-				sendto_realops_snomask(SNO_GENERAL, L_ALL,
+				sendto_realops_snomask(SNO_GENERAL, L_NETWIDE,
 						"KLINE over-ruled for %s, client is kline_exempt [%s@%s]",
 						get_client_name(client_p, HIDE_IP),
 						aconf->user, aconf->host);
 				continue;
 			}
 
-			sendto_realops_snomask(SNO_GENERAL, L_ALL,
+			sendto_realops_snomask(SNO_GENERAL, L_NETWIDE,
 					"KLINE active for %s",
 					get_client_name(client_p, HIDE_IP));
 			notify_banned_client(client_p, aconf, K_LINED);
@@ -509,14 +509,14 @@ check_banned_lines(void)
 		{
 			if(IsExemptKline(client_p))
 			{
-				sendto_realops_snomask(SNO_GENERAL, L_ALL,
+				sendto_realops_snomask(SNO_GENERAL, L_NETWIDE,
 						"XLINE over-ruled for %s, client is kline_exempt [%s]",
 						get_client_name(client_p, HIDE_IP),
 						aconf->name);
 				continue;
 			}
 
-			sendto_realops_snomask(SNO_GENERAL, L_ALL, "XLINE active for %s",
+			sendto_realops_snomask(SNO_GENERAL, L_NETWIDE, "XLINE active for %s",
 					get_client_name(client_p, HIDE_IP));
 
 			(void) exit_client(client_p, client_p, &me, "Bad user info");
@@ -578,13 +578,13 @@ check_klines(void)
 		{
 			if(IsExemptKline(client_p))
 			{
-				sendto_realops_snomask(SNO_GENERAL, L_ALL,
+				sendto_realops_snomask(SNO_GENERAL, L_NETWIDE,
 						     "KLINE over-ruled for %s, client is kline_exempt",
 						     get_client_name(client_p, HIDE_IP));
 				continue;
 			}
 
-			sendto_realops_snomask(SNO_GENERAL, L_ALL,
+			sendto_realops_snomask(SNO_GENERAL, L_NETWIDE,
 					     "KLINE active for %s",
 					     get_client_name(client_p, HIDE_IP));
 
@@ -620,7 +620,7 @@ check_dlines(void)
 			if(aconf->status & CONF_EXEMPTDLINE)
 				continue;
 
-			sendto_realops_snomask(SNO_GENERAL, L_ALL,
+			sendto_realops_snomask(SNO_GENERAL, L_NETWIDE,
 					     "DLINE active for %s",
 					     get_client_name(client_p, HIDE_IP));
 
@@ -669,13 +669,13 @@ check_xlines(void)
 		{
 			if(IsExemptKline(client_p))
 			{
-				sendto_realops_snomask(SNO_GENERAL, L_ALL,
+				sendto_realops_snomask(SNO_GENERAL, L_NETWIDE,
 						     "XLINE over-ruled for %s, client is kline_exempt",
 						     get_client_name(client_p, HIDE_IP));
 				continue;
 			}
 
-			sendto_realops_snomask(SNO_GENERAL, L_ALL, "XLINE active for %s",
+			sendto_realops_snomask(SNO_GENERAL, L_NETWIDE, "XLINE active for %s",
 					     get_client_name(client_p, HIDE_IP));
 
 			(void) exit_client(client_p, client_p, &me, "Bad user info");
@@ -1023,7 +1023,7 @@ free_exited_clients(void *unused)
 						target_p->flags, target_p->flags2, target_p->operflags,
 						target_p->handler);
 					sendto_realops_snomask(SNO_GENERAL, L_ALL,
-						"Please report this to the ratbox developers!");
+						"Please report this to the ircd developers!");
 					found++;
 				}
 			}
@@ -1209,7 +1209,7 @@ exit_aborted_clients(void *unused)
 					abt->client->flags, abt->client->flags2, abt->client->operflags,
 					abt->client->handler);
 				sendto_realops_snomask(SNO_GENERAL, L_ALL,
-					"Please report this to the ratbox developers!");
+					"Please report this to the ircd developers!");
 				continue;
 			}
 		}
@@ -1219,7 +1219,7 @@ exit_aborted_clients(void *unused)
  	 	dlinkDelete(ptr, &abort_list);
 
  	 	if(IsAnyServer(abt->client))
- 	 	 	sendto_realops_snomask(SNO_GENERAL, L_ALL,
+ 	 	 	sendto_realops_snomask(SNO_GENERAL, L_NETWIDE,
   	 	 	                     "Closing link to %s: %s",
    	 	 	                     get_server_name(abt->client, HIDE_IP), abt->notice);
 
@@ -1507,7 +1507,7 @@ exit_local_server(struct Client *client_p, struct Client *source_p, struct Clien
 	if(source_p->serv != NULL)
 		remove_dependents(client_p, source_p, from, IsPerson(from) ? newcomment : comment, comment1);
 
-	sendto_realops_snomask(SNO_GENERAL, L_ALL, "%s was connected"
+	sendto_realops_snomask(SNO_GENERAL, L_NETWIDE, "%s was connected"
 			     " for %ld seconds.  %d/%d sendK/recvK.",
 			     source_p->name, CurrentTime - source_p->localClient->firsttime, sendk, recvk);
 
@@ -2090,7 +2090,7 @@ error_exit_client(struct Client *client_p, int error)
 				log_client_name(client_p, SHOW_IP), strerror(current_error));
 		}
 
-		sendto_realops_snomask(SNO_GENERAL, L_ALL,
+		sendto_realops_snomask(SNO_GENERAL, L_NETWIDE,
 				     "%s had been connected for %d day%s, %2d:%02d:%02d",
 				     client_p->name, connected / 86400,
 				     (connected / 86400 == 1) ? "" : "s",

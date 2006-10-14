@@ -214,7 +214,7 @@ me_rsfnc(struct Client *client_p, struct Client *source_p,
 
 	invalidate_bancache_user(target_p);
 
-	sendto_realops_snomask(SNO_NCHANGE, L_ALL,
+	sendto_realops_snomask(SNO_NCHANGE, L_NETWIDE,
 			"Nick change: From %s to %s [%s@%s]",
 			target_p->name, parv[2], target_p->username,
 			target_p->host);

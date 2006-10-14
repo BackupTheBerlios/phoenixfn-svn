@@ -5,6 +5,18 @@ This file lists every change made except typo and formatting fixes, which are
 only listed in SVN log. For a summary of what has changed between releases,
 see the NEWS file.
 
+2006-10-14 Stephen Bennett <spb@gentoo.org>
+
+	* src/s_user.c, src/s_conf.c, src/channel.c, src/client.c, src/hash.c,
+	src/send.c, src/s_serv.c, src/modules.c, src/parse.c, src/ircd.c,
+	modules/m_services.c, modules/m_svinfo.c, modules/m_restart.c,
+	modules/m_signon.c, modules/core/m_message.c, modules/core/m_nick.c,
+	modules/core/m_squit.c, modules/core/m_server.c,
+	modules/core/m_kill.c, modules/core/m_die.c, modules/m_rehash.c,
+	modules/m_set.c, modules/m_pong.c: Make lots of server notices
+	L_NETWIDE rather than L_ALL. May be slightly over-zealous; time will
+	tell.
+
 2006-09-27 Stephen Bennett <spb@gentoo.org>
 
 	* include/s_newconf.h, src/newconf.c, help/opers/snomask,

@@ -260,7 +260,7 @@ check_client(struct Client *client_p, struct Client *source_p, const char *usern
 			static char ipaddr[HOSTIPLEN];
 			inetntop_sock(&source_p->localClient->ip, ipaddr, sizeof(ipaddr));
 #endif
-			sendto_realops_snomask(SNO_UNAUTH, L_ALL,
+			sendto_realops_snomask(SNO_UNAUTH, L_NETWIDE,
 					"Unauthorised client connection from "
 					"%s!%s%s@%s [%s] on [%s/%u].",
 					source_p->name, IsGotId(source_p) ? "" : "~",
@@ -349,7 +349,7 @@ verify_access(struct Client *client_p, const char *username)
 
 			if(IsConfSpoofNotice(aconf))
 			{
-				sendto_realops_snomask(SNO_GENERAL, L_ALL,
+				sendto_realops_snomask(SNO_GENERAL, L_NETWIDE,
 						"%s spoofing: %s as %s",
 						client_p->name,
 						show_ip(NULL, client_p) ? client_p->host : aconf->name,
@@ -614,7 +614,7 @@ rehash(int sig)
 {
 	if(sig != 0)
 	{
-		sendto_realops_snomask(SNO_GENERAL, L_ALL,
+		sendto_realops_snomask(SNO_GENERAL, L_NETWIDE,
 				     "Got signal SIGHUP, reloading ircd conf. file");
 	}
 
@@ -656,7 +656,7 @@ rehash_bans(int sig)
 	int i;
 
 	if(sig != 0)
-		sendto_realops_snomask(SNO_GENERAL, L_ALL,
+		sendto_realops_snomask(SNO_GENERAL, L_NETWIDE,
 				"Got signal SIGUSR2, reloading ban confs");
 
 	clear_out_address_conf_bans();
@@ -1158,7 +1158,7 @@ read_conf_files(int cold)
 		}
 		else
 		{
-			sendto_realops_snomask(SNO_GENERAL, L_ALL,
+			sendto_realops_snomask(SNO_GENERAL, L_NETWIDE,
 					     "Can't open file '%s' - aborting rehash!", filename);
 			return;
 		}

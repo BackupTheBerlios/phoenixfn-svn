@@ -87,7 +87,7 @@ ms_pong(struct Client *client_p, struct Client *source_p, int parc, const char *
 	if(IsServer(source_p) && !HasSentEob(source_p))
 	{
 		if(MyConnect(source_p))
-			sendto_realops_snomask(SNO_GENERAL, L_ALL,
+			sendto_realops_snomask(SNO_GENERAL, L_NETWIDE,
 					     "End of burst (emulated) from %s (%d seconds)",
 					     source_p->name,
 					     (signed int) (CurrentTime - source_p->localClient->firsttime));

@@ -905,12 +905,12 @@ check_spambot_warning(struct Client *source_p, const char *name)
 		{
 			/* Its already known as a possible spambot */
 			if(name != NULL)
-				sendto_realops_snomask(SNO_BOTS, L_ALL,
+				sendto_realops_snomask(SNO_BOTS, L_NETWIDE,
 						     "User %s (%s@%s) trying to join %s is a possible spambot",
 						     source_p->name,
 						     source_p->username, source_p->host, name);
 			else
-				sendto_realops_snomask(SNO_BOTS, L_ALL,
+				sendto_realops_snomask(SNO_BOTS, L_NETWIDE,
 						     "User %s (%s@%s) is a possible spambot",
 						     source_p->name,
 						     source_p->username, source_p->host);
@@ -965,7 +965,7 @@ check_splitmode(void *unused)
 			if(eob_count < split_servers || Count.total < split_users)
 			{
 				splitmode = 1;
-				sendto_realops_snomask(SNO_GENERAL, L_ALL,
+				sendto_realops_snomask(SNO_GENERAL, L_NETWIDE,
 						     "Network split, activating splitmode");
 				eventAddIsh("check_splitmode", check_splitmode, NULL, 2);
 			}
@@ -975,7 +975,7 @@ check_splitmode(void *unused)
 		{
 			splitmode = 0;
 
-			sendto_realops_snomask(SNO_GENERAL, L_ALL,
+			sendto_realops_snomask(SNO_GENERAL, L_NETWIDE,
 					     "Network rejoined, deactivating splitmode");
 
 			eventDelete(check_splitmode, NULL);

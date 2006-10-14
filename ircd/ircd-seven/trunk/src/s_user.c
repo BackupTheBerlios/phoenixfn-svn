@@ -411,7 +411,7 @@ register_local_user(struct Client *client_p, struct Client *source_p, const char
            (dlink_list_length(&lclient_list) + 1) >= 
 	    ((unsigned long)GlobalSetOptions.maxclients - 5)) && !(IsExemptLimits(source_p)))
 	{
-		sendto_realops_snomask(SNO_FULL, L_ALL,
+		sendto_realops_snomask(SNO_FULL, L_NETWIDE,
 				     "Too many clients, rejecting %s[%s].", source_p->name, source_p->host);
 
 		ServerStats->is_ref++;
@@ -423,7 +423,7 @@ register_local_user(struct Client *client_p, struct Client *source_p, const char
 
 	if(!valid_username(source_p->username))
 	{
-		sendto_realops_snomask(SNO_REJ, L_ALL,
+		sendto_realops_snomask(SNO_REJ, L_NETWIDE,
 				     "Invalid username: %s (%s@%s)",
 				     source_p->name, source_p->username, source_p->host);
 		ServerStats->is_ref++;
@@ -538,7 +538,7 @@ register_local_user(struct Client *client_p, struct Client *source_p, const char
 	{
 		Count.max_loc = dlink_list_length(&lclient_list);
 		if(!(Count.max_loc % 10))
-			sendto_realops_snomask(SNO_GENERAL, L_ALL,
+			sendto_realops_snomask(SNO_GENERAL, L_NETWIDE,
 					     "New Max Local Clients: %d", Count.max_loc);
 	}
 

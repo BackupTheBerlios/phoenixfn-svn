@@ -459,7 +459,7 @@ mo_modreload(struct Client *client_p, struct Client *source_p, int parc, const c
 
 	if((load_one_module(parv[1], check_core) == -1) && check_core)
 	{
-		sendto_realops_snomask(SNO_GENERAL, L_ALL,
+		sendto_realops_snomask(SNO_GENERAL, L_NETWIDE,
 				     "Error reloading core module: %s: terminating ircd", parv[1]);
 		ilog(L_MAIN, "Error loading core module %s: terminating ircd", parv[1]);
 		exit(0);

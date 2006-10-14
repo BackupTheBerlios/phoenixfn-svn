@@ -362,7 +362,7 @@ handle_command(struct Message *mptr, struct Client *client_p,
 				return (-1);
 		}
 
-		sendto_realops_snomask(SNO_GENERAL, L_ALL,
+		sendto_realops_snomask(SNO_GENERAL, L_NETWIDE,
 				     "Dropping server %s due to (invalid) command '%s'"
 				     " with only %d arguments (expecting %d).",
 				     client_p->name, mptr->cmd, i, ehandler.min_para);
@@ -663,7 +663,7 @@ remove_unknown(struct Client *client_p, char *lsender, char *lbuffer)
 	if((IsDigit(lsender[0]) && slen == 3) || 
 	   (strchr(lsender, '.') != NULL))
 	{
-		sendto_realops_snomask(SNO_DEBUG, L_ALL,
+		sendto_realops_snomask(SNO_DEBUG, L_NETWIDE,
 				     "Unknown prefix (%s) from %s, Squitting %s",
 				     lbuffer, get_server_name(client_p, SHOW_IP), lsender);
 

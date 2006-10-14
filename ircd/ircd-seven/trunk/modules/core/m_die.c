@@ -78,6 +78,9 @@ mo_die(struct Client *client_p __unused, struct Client *source_p, int parc, cons
 		return 0;
 	}
 
+	sendto_realops_snomask(SNO_GENERAL, L_NETWIDE, "%s is shutting down %s...",
+		get_oper_name(source_p), me.name);
+
 	DLINK_FOREACH(ptr, lclient_list.head)
 	{
 		target_p = ptr->data;

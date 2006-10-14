@@ -123,8 +123,11 @@ mo_kill(struct Client *client_p, struct Client *source_p, int parc, const char *
 			   target_p->name, reason);
 
 	/* Do not change the format of this message.  There's no point in changing messages
-	 * that have been around for ever, for no reason.. */
-	sendto_realops_snomask(SNO_GENERAL, L_ALL,
+	 * that have been around for ever, for no reason..
+	 *
+	 * If target is local, send the message netwide. Global kills will cause all servers
+	 * to send out snotes locally in ms_kill. --spb */
+	sendto_realops_snomask(SNO_GENERAL, MyClient(target_p) ? L_NETWIDE : L_ALL,
 			     "Received KILL message for %s. From %s Path: %s (%s)",
 			     target_p->name, parv[0], me.name, reason);
 
@@ -243,7 +246,10 @@ ms_kill(struct Client *client_p, struct Client *source_p, int parc, const char *
 	 */
 	if(IsOper(source_p))	/* send it normally */
 	{
-		sendto_realops_snomask(IsService(source_p) ? SNO_SKILL : SNO_GENERAL, L_ALL,
+		/* Send this from the server that originated the kill, for consistency with 
+		 * local kill messages. --spb */
+		sendto_realops_snomask_from(IsService(source_p) ? SNO_SKILL : SNO_GENERAL, L_ALL,
+				     source_p->servptr,
 				     "Received KILL message for %s. From %s Path: %s!%s!%s!%s %s",
 				     target_p->name, parv[0], source_p->user->server,
 				     source_p->host, source_p->username, source_p->name, reason);

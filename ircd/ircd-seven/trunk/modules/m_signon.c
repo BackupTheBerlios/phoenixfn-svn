@@ -331,7 +331,7 @@ ms_signon(struct Client *client_p, struct Client *source_p,
 		{
 			if(!newts || !target_p->tsinfo || (newts == target_p->tsinfo) || !source_p->user)
 			{
-				sendto_realops_snomask(SNO_GENERAL, L_ALL,
+				sendto_realops_snomask(SNO_GENERAL, L_NETWIDE,
 						     "Nick change collision from SIGNON from %s to %s(%s <- %s)(both killed)",
 						     source_p->name, target_p->name, target_p->from->name,
 						     client_p->name);
@@ -361,12 +361,12 @@ ms_signon(struct Client *client_p, struct Client *source_p,
 				   (!sameuser && newts > target_p->tsinfo))
 				{
 					if(sameuser)
-						sendto_realops_snomask(SNO_GENERAL, L_ALL,
+						sendto_realops_snomask(SNO_GENERAL, L_NETWIDE,
 								     "Nick change collision from SIGNON from %s to %s(%s <- %s)(older killed)",
 								     source_p->name, target_p->name,
 								     target_p->from->name, client_p->name);
 					else
-						sendto_realops_snomask(SNO_GENERAL, L_ALL,
+						sendto_realops_snomask(SNO_GENERAL, L_NETWIDE,
 								     "Nick change collision from SIGNON from %s to %s(%s <- %s)(newer killed)",
 								     source_p->name, target_p->name,
 								     target_p->from->name, client_p->name);
@@ -391,12 +391,12 @@ ms_signon(struct Client *client_p, struct Client *source_p,
 				else
 				{
 					if(sameuser)
-						sendto_realops_snomask(SNO_GENERAL, L_ALL,
+						sendto_realops_snomask(SNO_GENERAL, L_NETWIDE,
 								     "Nick collision from SIGNON on %s(%s <- %s)(older killed)",
 								     target_p->name, target_p->from->name,
 								     client_p->name);
 					else
-						sendto_realops_snomask(SNO_GENERAL, L_ALL,
+						sendto_realops_snomask(SNO_GENERAL, L_NETWIDE,
 								     "Nick collision from SIGNON on %s(%s <- %s)(newer killed)",
 								     target_p->name, target_p->from->name,
 								     client_p->name);

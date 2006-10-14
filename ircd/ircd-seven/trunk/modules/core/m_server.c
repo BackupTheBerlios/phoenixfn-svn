@@ -89,7 +89,7 @@ mr_server(struct Client *client_p, struct Client *source_p, int parc, const char
 	 */
 	if(!DoesTS(client_p))
 	{
-		sendto_realops_snomask(SNO_GENERAL, L_ALL, "Link %s dropped, non-TS server",
+		sendto_realops_snomask(SNO_GENERAL, L_NETWIDE, "Link %s dropped, non-TS server",
 				     get_server_name(client_p, HIDE_IP));
 		exit_client(client_p, client_p, client_p, "Non-TS server");
 		return 0;
@@ -108,7 +108,7 @@ mr_server(struct Client *client_p, struct Client *source_p, int parc, const char
 	case -1:
 		if(ConfigFileEntry.warn_no_nline)
 		{
-			sendto_realops_snomask(SNO_GENERAL, L_ALL,
+			sendto_realops_snomask(SNO_GENERAL, L_NETWIDE,
 					     "Unauthorised server connection attempt from %s: "
 					     "No entry for servername %s",
 					     get_server_name(client_p, HIDE_IP), name);
@@ -123,7 +123,7 @@ mr_server(struct Client *client_p, struct Client *source_p, int parc, const char
 		break;
 
 	case -2:
-		sendto_realops_snomask(SNO_GENERAL, L_ALL,
+		sendto_realops_snomask(SNO_GENERAL, L_NETWIDE,
 				     "Unauthorised server connection attempt from %s: "
 				     "Bad password for server %s",
 				     get_server_name(client_p, HIDE_IP), name);
@@ -137,7 +137,7 @@ mr_server(struct Client *client_p, struct Client *source_p, int parc, const char
 		break;
 
 	case -3:
-		sendto_realops_snomask(SNO_GENERAL, L_ALL,
+		sendto_realops_snomask(SNO_GENERAL, L_NETWIDE,
 				     "Unauthorised server connection attempt from %s: "
 				     "Invalid host for server %s",
 				     get_server_name(client_p, HIDE_IP), name);
@@ -152,7 +152,7 @@ mr_server(struct Client *client_p, struct Client *source_p, int parc, const char
 
 		/* servername is > HOSTLEN */
 	case -4:
-		sendto_realops_snomask(SNO_GENERAL, L_ALL,
+		sendto_realops_snomask(SNO_GENERAL, L_NETWIDE,
 				     "Invalid servername %s from %s",
 				     name, get_server_name(client_p, HIDE_IP));
 		ilog(L_SERVER, "Access denied, invalid servername from %s",
@@ -177,7 +177,7 @@ mr_server(struct Client *client_p, struct Client *source_p, int parc, const char
 		 * Definitely don't do that here. This is from an unregistered
 		 * connect - A1kmm.
 		 */
-		sendto_realops_snomask(SNO_GENERAL, L_ALL,
+		sendto_realops_snomask(SNO_GENERAL, L_NETWIDE,
 				     "Attempt to re-introduce server %s from %s",
 				     name, get_server_name(client_p, HIDE_IP));
 		ilog(L_SERVER, "Attempt to re-introduce server %s from %s",
@@ -190,7 +190,7 @@ mr_server(struct Client *client_p, struct Client *source_p, int parc, const char
 
 	if(has_id(client_p) && (target_p = find_id(client_p->id)) != NULL)
 	{
-		sendto_realops_snomask(SNO_GENERAL, L_ALL,
+		sendto_realops_snomask(SNO_GENERAL, L_NETWIDE,
 				     "Attempt to re-introduce SID %s from %s%s",
 				     client_p->id, name, get_server_name(client_p, HIDE_IP));
 		ilog(L_SERVER, "Attempt to re-introduce SID %s from %s",
@@ -267,7 +267,7 @@ ms_server(struct Client *client_p, struct Client *source_p, int parc, const char
 
 		sendto_one(client_p, "ERROR :Server %s already exists", name);
 
-		sendto_realops_snomask(SNO_GENERAL, L_ALL,
+		sendto_realops_snomask(SNO_GENERAL, L_NETWIDE,
 				     "Link %s cancelled, server %s already exists",
 				     get_server_name(client_p, SHOW_IP), name);
 		ilog(L_SERVER, "Link %s cancelled, server %s already exists",
@@ -289,7 +289,7 @@ ms_server(struct Client *client_p, struct Client *source_p, int parc, const char
 		 * for a while and servers to send stuff to the wrong place.
 		 */
 		sendto_one(client_p, "ERROR :Nickname %s already exists!", name);
-		sendto_realops_snomask(SNO_GENERAL, L_ALL,
+		sendto_realops_snomask(SNO_GENERAL, L_NETWIDE,
 				     "Link %s cancelled: Server/nick collision on %s",
 				     get_server_name(client_p, HIDE_IP), name);
 		ilog(L_SERVER, "Link %s cancelled: Server/nick collision on %s",
@@ -356,7 +356,7 @@ ms_server(struct Client *client_p, struct Client *source_p, int parc, const char
 	if(!hlined)
 	{
 		/* OOOPs nope can't HUB */
-		sendto_realops_snomask(SNO_GENERAL, L_ALL, "Non-Hub link %s introduced %s.",
+		sendto_realops_snomask(SNO_GENERAL, L_NETWIDE, "Non-Hub link %s introduced %s.",
 				     get_server_name(client_p, HIDE_IP), name);
 		ilog(L_SERVER, "Non-Hub link %s introduced %s.",
 			client_p->name, name);
@@ -369,7 +369,7 @@ ms_server(struct Client *client_p, struct Client *source_p, int parc, const char
 	if(llined)
 	{
 		/* OOOPs nope can't HUB this leaf */
-		sendto_realops_snomask(SNO_GENERAL, L_ALL,
+		sendto_realops_snomask(SNO_GENERAL, L_NETWIDE,
 				     "Link %s introduced leafed server %s.",
 				     get_server_name(client_p, HIDE_IP), name);
 		ilog(L_SERVER, "Link %s introduced leafed server %s.",
@@ -383,7 +383,7 @@ ms_server(struct Client *client_p, struct Client *source_p, int parc, const char
 
 	if(strlen(name) > HOSTLEN)
 	{
-		sendto_realops_snomask(SNO_GENERAL, L_ALL,
+		sendto_realops_snomask(SNO_GENERAL, L_NETWIDE,
 				     "Link %s introduced server with invalid servername %s",
 				     get_server_name(client_p, HIDE_IP), name);
 		ilog(L_SERVER, "Link %s introduced server with invalid servername %s",
@@ -450,7 +450,7 @@ ms_sid(struct Client *client_p, struct Client *source_p, int parc, const char *p
 	if((target_p = server_exists(parv[1])) != NULL)
 	{
 		sendto_one(client_p, "ERROR :Server %s already exists", parv[1]);
-		sendto_realops_snomask(SNO_GENERAL, L_ALL,
+		sendto_realops_snomask(SNO_GENERAL, L_NETWIDE,
 				     "Link %s cancelled, server %s already exists",
 				     get_server_name(client_p, SHOW_IP), parv[1]);
 		ilog(L_SERVER, "Link %s cancelled, server %s already exists",
@@ -464,7 +464,7 @@ ms_sid(struct Client *client_p, struct Client *source_p, int parc, const char *p
 	if((target_p = find_id(parv[3])) != NULL)
 	{
 		sendto_one(client_p, "ERROR :SID %s already exists", parv[3]);
-		sendto_realops_snomask(SNO_GENERAL, L_ALL,
+		sendto_realops_snomask(SNO_GENERAL, L_NETWIDE,
 				     "Link %s cancelled, SID %s already exists",
 				     get_server_name(client_p, SHOW_IP), parv[3]);
 		ilog(L_SERVER, "Link %s cancelled, SID %s already exists",
@@ -477,7 +477,7 @@ ms_sid(struct Client *client_p, struct Client *source_p, int parc, const char *p
 	if(bogus_host(parv[1]) || strlen(parv[1]) > HOSTLEN)
 	{
 		sendto_one(client_p, "ERROR :Invalid servername");
-		sendto_realops_snomask(SNO_GENERAL, L_ALL,
+		sendto_realops_snomask(SNO_GENERAL, L_NETWIDE,
 				     "Link %s cancelled, servername %s invalid",
 				     get_server_name(client_p, SHOW_IP), parv[1]);
 		ilog(L_SERVER, "Link %s cancelled, servername %s invalid",
@@ -491,7 +491,7 @@ ms_sid(struct Client *client_p, struct Client *source_p, int parc, const char *p
 	   !IsIdChar(parv[3][2]) || parv[3][3] != '\0')
 	{
 		sendto_one(client_p, "ERROR :Invalid SID");
-		sendto_realops_snomask(SNO_GENERAL, L_ALL,
+		sendto_realops_snomask(SNO_GENERAL, L_NETWIDE,
 				     "Link %s cancelled, SID %s invalid",
 				     get_server_name(client_p, SHOW_IP), parv[3]);
 		ilog(L_SERVER, "Link %s cancelled, SID %s invalid",
@@ -522,7 +522,7 @@ ms_sid(struct Client *client_p, struct Client *source_p, int parc, const char *p
 	if(!hlined)
 	{
 		sendto_one(client_p, "ERROR :No matching hub_mask");
-		sendto_realops_snomask(SNO_GENERAL, L_ALL,
+		sendto_realops_snomask(SNO_GENERAL, L_NETWIDE,
 				     "Non-Hub link %s introduced %s.",
 				     get_server_name(client_p, SHOW_IP), parv[1]);
 		ilog(L_SERVER, "Non-Hub link %s introduced %s.",
@@ -535,7 +535,7 @@ ms_sid(struct Client *client_p, struct Client *source_p, int parc, const char *p
 	if(llined)
 	{
 		sendto_one(client_p, "ERROR :Matching leaf_mask");
-		sendto_realops_snomask(SNO_GENERAL, L_ALL,
+		sendto_realops_snomask(SNO_GENERAL, L_NETWIDE,
 				     "Link %s introduced leafed server %s.",
 				     get_server_name(client_p, SHOW_IP), parv[1]);
 		ilog(L_SERVER, "Link %s introduced leafed server %s.",

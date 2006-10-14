@@ -122,7 +122,7 @@ slink_error(unsigned int rpl, unsigned int len, unsigned char *data, struct Clie
 	s_assert(len < 256);
 	data[len - 1] = '\0';
 
-	sendto_realops_snomask(SNO_GENERAL, L_ALL, "SlinkError for %s: %s", server_p->name, data);
+	sendto_realops_snomask(SNO_GENERAL, L_NETWIDE, "SlinkError for %s: %s", server_p->name, data);
 	exit_client(server_p, server_p, &me, "servlink error -- terminating link");
 }
 
@@ -424,11 +424,11 @@ try_connections(void *unused)
 	 *   -- adrian
 	 */
 #ifndef HIDE_SERVERS_IPS
-	sendto_realops_snomask(SNO_GENERAL, L_ALL,
+	sendto_realops_snomask(SNO_GENERAL, L_NETWIDE,
 			"Connection to %s[%s] activated.",
 			server_p->name, server_p->host);
 #else
-	sendto_realops_snomask(SNO_GENERAL, L_ALL,
+	sendto_realops_snomask(SNO_GENERAL, L_NETWIDE,
 			"Connection to %s activated",
 			server_p->name);
 #endif
@@ -1011,7 +1011,7 @@ server_estab(struct Client *client_p)
 	if((server_p = client_p->localClient->att_sconf) == NULL)
 	{
 		/* This shouldn't happen, better tell the ops... -A1kmm */
-		sendto_realops_snomask(SNO_GENERAL, is_remote_connect(client_p) ? L_NETWIDE : L_ALL,
+		sendto_realops_snomask(SNO_GENERAL, L_NETWIDE,
 				     "Warning: Lost connect{} block for server %s!", host);
 		return exit_client(client_p, client_p, client_p, "Lost connect{} block!");
 	}
@@ -1082,7 +1082,7 @@ server_estab(struct Client *client_p)
 	{
 		if(fork_server(client_p) < 0)
 		{
-			sendto_realops_snomask(SNO_GENERAL, is_remote_connect(client_p) ? L_NETWIDE : L_ALL,
+			sendto_realops_snomask(SNO_GENERAL, L_NETWIDE,
 					     "Warning: fork failed for server %s -- check servlink_path (%s)",
 					     get_server_name(client_p, HIDE_IP),
 					     ConfigFileEntry.servlink_path);
@@ -1489,7 +1489,7 @@ serv_connect(struct server_conf *server_p, struct Client *by)
 	 */
 	if((client_p = find_server(NULL, server_p->name)))
 	{
-		sendto_realops_snomask(SNO_GENERAL, L_ALL,
+		sendto_realops_snomask(SNO_GENERAL, L_NETWIDE,
 				     "Server %s already present from %s",
 				     server_p->name, get_server_name(client_p, SHOW_IP));
 		if(by && IsPerson(by) && !MyClient(by))
@@ -1664,7 +1664,7 @@ serv_connect_callback(int fd, int status, void *data)
 		 */
 		if(status == COMM_ERR_TIMEOUT)
 		{
-			sendto_realops_snomask(SNO_GENERAL, is_remote_connect(client_p) ? L_NETWIDE : L_ALL,
+			sendto_realops_snomask(SNO_GENERAL, L_NETWIDE,
 					"Error connecting to %s[%s]: %s",
 					client_p->name, 
 #ifdef HIDE_SERVERS_IPS
@@ -1680,7 +1680,7 @@ serv_connect_callback(int fd, int status, void *data)
 		else
 		{
 			errstr = strerror(comm_get_sockerr(fd));
-			sendto_realops_snomask(SNO_GENERAL, is_remote_connect(client_p) ? L_NETWIDE : L_ALL,
+			sendto_realops_snomask(SNO_GENERAL, L_NETWIDE,
 					"Error connecting to %s[%s]: %s (%s)",
 					client_p->name,
 #ifdef HIDE_SERVERS_IPS
@@ -1702,7 +1702,7 @@ serv_connect_callback(int fd, int status, void *data)
 	/* Get the C/N lines */
 	if((server_p = client_p->localClient->att_sconf) == NULL)
 	{
-		sendto_realops_snomask(SNO_GENERAL, is_remote_connect(client_p) ? L_NETWIDE : L_ALL, "Lost connect{} block for %s",
+		sendto_realops_snomask(SNO_GENERAL, L_NETWIDE, "Lost connect{} block for %s",
 				get_server_name(client_p, HIDE_IP));
 		exit_client(client_p, client_p, &me, "Lost connect{} block");
 		return;
@@ -1739,7 +1739,7 @@ serv_connect_callback(int fd, int status, void *data)
 	 */
 	if(IsAnyDead(client_p))
 	{
-		sendto_realops_snomask(SNO_GENERAL, is_remote_connect(client_p) ? L_NETWIDE : L_ALL,
+		sendto_realops_snomask(SNO_GENERAL, L_NETWIDE,
 				     "%s went dead during handshake", client_p->name);
 		exit_client(client_p, client_p, &me, "Went dead during handshake");
 		return;

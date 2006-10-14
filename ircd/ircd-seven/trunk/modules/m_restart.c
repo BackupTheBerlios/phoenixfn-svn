@@ -81,6 +81,9 @@ mo_restart(struct Client *client_p, struct Client *source_p, int parc, const cha
 		return 0;
 	}
 
+	sendto_realops_snomask(SNO_GENERAL, L_NETWIDE, "%s is restarting %s...",
+		get_oper_name(source_p), me.name);
+
 	DLINK_FOREACH(ptr, lclient_list.head)
 	{
 		target_p = ptr->data;

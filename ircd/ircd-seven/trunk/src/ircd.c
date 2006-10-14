@@ -270,7 +270,7 @@ set_time(void)
 	if(gettimeofday(&newtime, NULL) == -1)
 	{
 		ilog(L_MAIN, "Clock Failure (%d)", errno);
-		sendto_realops_snomask(SNO_GENERAL, L_ALL,
+		sendto_realops_snomask(SNO_GENERAL, L_NETWIDE,
 				     "Clock Failure (%d), TS can be corrupted", errno);
 
 		restart("Clock Failure");
@@ -306,7 +306,7 @@ check_rehash(void *unused)
 
 	if(doremotd)
 	{
-		sendto_realops_snomask(SNO_GENERAL, L_ALL,
+		sendto_realops_snomask(SNO_GENERAL, L_NETWIDE,
 				     "Got signal SIGUSR1, reloading ircd motd file");
 		free_cachefile(user_motd);
 		user_motd = cache_file(MPATH, "ircd.motd", 0);

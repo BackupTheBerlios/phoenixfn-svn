@@ -85,7 +85,7 @@ mo_squit(struct Client *client_p, struct Client *source_p, int parc, const char 
 	{
 		if(MyConnect(found_squit->target_p))
 		{
-			sendto_realops_snomask(SNO_GENERAL, L_ALL,
+			sendto_realops_snomask(SNO_GENERAL, L_NETWIDE,
 					     "Received SQUIT %s from %s (%s)",
 					     found_squit->target_p->name,
 					     get_client_name(source_p, HIDE_IP), comment);
@@ -133,7 +133,7 @@ ms_squit(struct Client *client_p, struct Client *source_p, int parc, const char 
 	/* Server is closing its link */
 	if (target_p == client_p)
 	{
-		sendto_realops_snomask(SNO_GENERAL, L_ALL, "Server %s closing link (%s)",
+		sendto_realops_snomask(SNO_GENERAL, L_NETWIDE, "Server %s closing link (%s)",
 				target_p->name, comment);
 	}
 	/*
