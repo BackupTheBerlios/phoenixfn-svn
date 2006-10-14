@@ -7,6 +7,11 @@ see the NEWS file.
 
 2006-10-14 Stephen Bennett <spb@gentoo.org>
 
+	* include/s_newconf.h, src/newconf.c, src/s_newconf.c,
+	modules/m_scan.c: Add new scan operflag.
+
+2006-10-14 Stephen Bennett <spb@gentoo.org>
+
 	* src/s_user.c, src/s_conf.c, src/channel.c, src/client.c, src/hash.c,
 	src/send.c, src/s_serv.c, src/modules.c, src/parse.c, src/ircd.c,
 	modules/m_services.c, modules/m_svinfo.c, modules/m_restart.c,
