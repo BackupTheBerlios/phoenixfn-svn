@@ -362,7 +362,7 @@ struct exit_client_hook
 #define IsAdmin(x)		((x)->umodes & UMODE_ADMIN)
 #define IsHelper(x)		((x)->umodes & UMODE_HELPER)
 #define IsImmune(x)		((x)->umodes & UMODE_IMMUNE)
-#define SeesOper(x, y)		(IsOper(x) && (!ConfigFileEntry.hide_opers || IsOper(target_p)))
+#define SeesOper(x, y)		(IsOper(x) && (!ConfigFileEntry.hide_opers || IsOper(y)))
 
 #define SetReject(x)		{(x)->status = STAT_REJECT; \
 				 (x)->handler = UNREGISTERED_HANDLER; }
