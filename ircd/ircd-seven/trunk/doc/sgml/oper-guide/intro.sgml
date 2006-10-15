@@ -3,22 +3,22 @@
     <sect1>
       <title>Scope of this document</title>
       <para>
-	This document describes the commands and functions available to operators in
-	the charybdis ircd, as used on <ulink url="http://www.atheme.net">AthemeNet</ulink>.
+        This document describes the commands and functions available to operators in
+        the ircd-seven IRC daemon.
       </para>
       <para>
-        This document, and various ideas for features of charybdis, have
-	been taken from dancer-ircd/hyperion, the ircd used on freenode,
-	mainly written by Andrew Suffield and Jilles Tjoelker.
+        This document, and various ideas for features of ircd-seven, have
+        been taken from dancer-ircd/hyperion, the ircd used on freenode,
+        mainly written by Andrew Suffield and Jilles Tjoelker.
       </para>
       <para>
-	While this document may be of some interest to the users of charybdis servers,
-	it is intended as a reference for network staff.
+        While this document may be of some interest to the users of ircd-seven servers,
+        it is intended as a reference for network staff.
       </para>
       <para>
-	Charybdis is based on ircd-ratbox 2.1.4, although much has changed.
-	<ulink url="http://www.ircd-ratbox.org">ircd-ratbox</ulink> is commonly used
-	on efnet, and some other networks.
+        ircd-seven is based on charybdis-2.1, although much has changed.
+        <ulink url="http://ircd-charybdis.org">ircd-charybdis</ulink> is currently used
+        on <ulink url="http://www.atheme.net">AthemeNet</ulink>, amongst others.
       </para>
     </sect1>
   </chapter>

@@ -8,128 +8,163 @@
         letter means the privilege is possessed, lowercase means it is not.
       </para>
       <sect2>
-	<title>admin (A), server administrator</title>
-	<para>
-	  Various privileges intended for server administrators.
-	  Among other things, this automatically sets umode +a and allows
-	  loading modules.
-	</para>
+        <title>admin (A), server administrator</title>
+        <para>
+          Various privileges intended for server administrators.
+          Among other things, this automatically sets umode +a and allows
+          loading modules.
+        </para>
       </sect2>
       <sect2>
-	<title>remoteban (B), set remote bans</title>
-	<para>
-	  This grants the ability to use the ON argument on KLINE/XLINE/RESV
-	  and UNKLINE/UNXLINE/UNRESV to set and unset bans on other servers,
-	  and the server argument on REHASH.
-	  This is only allowed if the oper may perform the action locally,
-	  and if the remote server has a shared{} block.
-	</para>
-	<note><para>
-	  If a cluster{} block is present, bans are sent remotely even
-	  if the oper does not have remoteban privilege.
-	</para></note>
+        <title>kill (C), kill users</title>
+        <para>
+          This grants permission to use KILL to disconnect a user from
+          the network.
+        </para>
       </sect2>
       <sect2>
-	<title>local_kill (C), kill local users</title>
-	<para>
-	  This grants permission to use KILL on users on the same server,
-	  disconnecting them from the network.
-	</para>
+        <title>die (D), die and restart</title>
+        <para>
+          This grants permission to use DIE and RESTART, shutting down
+          or restarting the server.
+        </para>
       </sect2>
       <sect2>
-	<title>die (D), die and restart</title>
-	<para>
-	  This grants permission to use DIE and RESTART, shutting down
-	  or restarting the server.
-	</para>
+        <title>scan (E), use of SCAN</title>
+        <para>
+          This grants permission to use the SCAN command to list users
+          matching certain conditions.
+        </para>
       </sect2>
       <sect2>
-	<title>rehash (H), rehash</title>
-	<para>
-	  Allows using the REHASH command, to rehash various configuration
-	  files or clear certain lists.
-	</para>
+        <title>grant (G), use of GRANT</title>
+        <para>
+          This allows an operator to use GRANT to grant or revoke privileges
+          to another user on the network. Use with caution.
+        </para>
       </sect2>
       <sect2>
-	<title>kline (K), kline and dline</title>
-	<para>
-	  Allows using KLINE and DLINE, to ban users by user@host mask
-	  or IP address.
-	</para>
+        <title>rehash (H), rehash</title>
+        <para>
+          Allows using the REHASH command, to rehash various configuration
+          files or clear certain lists.
+        </para>
       </sect2>
       <sect2>
-	<title>operwall (L), send/receive operwall</title>
-	<para>
-	  Allows using the OPERWALL command and umode +z to send and
-	  receive operwalls.
-	</para>
+        <title>immune (I), immune from kick</title>
+        <para>
+          Allows access to usermode +m, making an oper immune to channel
+          kicks. Grant with caution.
+        </para>
       </sect2>
       <sect2>
-	<title>nick_changes (N), see nick changes</title>
-	<para>
-	  Allows using snomask +n to see local client nick changes.
-	  This is designed for monitor bots.
-	</para>
+        <title>kline (K), kline and dline</title>
+        <para>
+          Allows using KLINE and DLINE, to ban users by user@host mask
+          or IP address.
+        </para>
       </sect2>
       <sect2>
-	<title>global_kill (O), global kill</title>
-	<para>
-	  Allows using KILL on users on any server.
-	</para>
+        <title>operwall (L), send/receive operwall</title>
+        <para>
+          Allows using the OPERWALL command and umode +z to send and
+          receive operwalls.
+        </para>
       </sect2>
       <sect2>
-	<title>hidden_oper (P), hide from /stats p</title>
-	<para>
-	  This privilege currently does nothing, but was designed
-	  to hide bots from /stats p so users will not message them
-	  for help.
-	</para>
+        <title>set_cmodes (M), set staff-only channel modes</title>
+        <para>
+          Allows an operator to set restricted channel modes, currently
+          +L and +P.
+        </para>
       </sect2>
       <sect2>
-	<title>remote (R), remote routing</title>
-	<para>
-	  This allows using the third argument of the CONNECT command, to
-	  instruct another server to connect somewhere, and using SQUIT
-	  with an argument that is not locally connected.
-	  (In both cases all opers with +w set will be notified.)
-	</para>
+        <title>mass_notice (N), send mass notices</title>
+        <para>
+          Allows an operator to send notices to all users matching a hostmask,
+          rather than just by nick.
+        </para>
       </sect2>
       <sect2>
-	<title>auspex (S), see hidden information</title>
-	<para>
-	  This allows /mode #channel, /whois nick, /who #channel,
-	  /chantrace #channel, /who mask, /masktrace user@host :gecos
-	  and /scan umodes +modes-modes global list to see through secret
-	  channels, invisible users, etc.
-	</para>
-	<para>
-	  If you grant this to anyone, it is a good idea to establish 
-	  concrete policies describing what it is to be used for, and
-	  what not.
-	</para>
+        <title>override (O), oper override</title>
+        <para>
+          Grants implicit channel operator status, and overrides any restriction
+          on joining and talking in channels. Use with extreme caution.
+        </para>
       </sect2>
       <sect2>
-	<title>unkline (U), unkline</title>
-	<para>
-	  Allows using UNKLINE and UNDLINE.
-	</para>
+        <title>hidden_oper (P), hide from /stats p</title>
+        <para>
+          This privilege currently does nothing. It was designed
+          to hide bots from /stats p so users will not message them
+          for help, and so is somewhat redundant with the advent of the 'helper'
+          flag.
+        </para>
       </sect2>
       <sect2>
-	<title>xline (X), xline and unxline</title>
-	<para>
-	  Allows using XLINE and UNXLINE, to ban/unban users by realname.
-	</para>
+        <title>resv (Q), allow RESV</title>
+        <para>
+          Allows the operator to use RESV to forbid the use of a given nick or
+          channel name.
+        </para>
       </sect2>
       <sect2>
-	<title>hidden_admin, hidden administrator</title>
-	<para>
-	  This grants everything granted to the admin privilege,
-	  except the ability to set umode +a. If both admin and hidden_admin
-	  are possessed, umode +a can still not be used.
-	</para>
-	<note><para>
-	  This privilege does not appear in /stats o or oper up notices.
-	</para></note>
+        <title>routing (R), routing commands</title>
+        <para>
+          Allows use of CONNECT, SQUIT, and related commands, locally and remotely,
+          to connect and remove servers to or from the network.
+        </para>
+      </sect2>
+      <sect2>
+        <title>auspex (S), see hidden information</title>
+        <para>
+          This allows /mode #channel, /whois nick, /who #channel,
+          /chantrace #channel, /who mask, /masktrace user@host :gecos
+          and /scan umodes +modes-modes global list to see through secret
+          channels, invisible users, etc.
+        </para>
+        <para>
+          If you grant this to anyone, it is a good idea to establish 
+          concrete policies describing what it is to be used for, and
+          what not.
+        </para>
+      </sect2>
+      <sect2>
+        <title>helper (T), show in /stats p</title>
+        <para>
+          Allows access to usermode +T. Users with +T set who are not marked
+          as away are considered available for support and will appear in a /stats p
+          listing.
+        </para>
+      </sect2>
+      <sect2>
+        <title>unkline (U), unkline</title>
+        <para>
+          Allows using UNKLINE and UNDLINE.
+        </para>
+      </sect2>
+      <sect2>
+        <title>wallops (W), send wallops</title>
+        <para>
+          Allows use of the WALLOPS command.
+        </para>
+      </sect2>
+      <sect2>
+        <title>xline (X), xline and unxline</title>
+        <para>
+          Allows using XLINE and UNXLINE, to ban/unban users by realname.
+        </para>
+      </sect2>
+      <sect2>
+        <title>hidden_admin, hidden administrator</title>
+        <para>
+          This grants everything granted to the admin privilege,
+          except the ability to set umode +a. If both admin and hidden_admin
+          are possessed, umode +a can still not be used.
+        </para>
+        <note><para>
+          This privilege does not appear in /stats o or oper up notices.
+        </para></note>
       </sect2>
     </sect1>
   </chapter>

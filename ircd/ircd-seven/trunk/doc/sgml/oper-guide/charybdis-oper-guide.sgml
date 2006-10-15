@@ -7,18 +7,22 @@
 <!ENTITY commands SYSTEM "commands.sgml">
 <!ENTITY config SYSTEM "config.sgml">
 ]>
-<book id="charybdis-oper-guide">
+<book id="ircd-seven-oper-guide">
   <bookinfo>
     <date>24 November 2005</date>
-    <title>Operators guide for the charybdis IRC server</title>
+    <title>Operators guide for the ircd-seven IRC server</title>
     <author>
-      <firstname>William</firstname>
-      <surname>Pitcock</surname>
+      <firstname>Stephen</firstname>
+      <surname>Bennett</surname>
     </author>
-    <address><email>nenolod@nenolod.net</email></address>
+    <address><email>spb@gentoo.org</email></address>
     <copyright>
       <year>2005-2006</year>
       <holder>William Pitcock and Jilles Tjoelker</holder>
+    </copyright>
+	<copyright>
+      <year>2006</year>
+      <holder>Stephen Bennett</holder>
     </copyright>
     <legalnotice>
       <para>
