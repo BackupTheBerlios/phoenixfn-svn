@@ -393,6 +393,7 @@ static struct mode_table shared_table[] =
 	{ "tdline",	SHARED_TDLINE	},
 	{ "undline",	SHARED_UNDLINE	},
 	{ "rehash",	SHARED_REHASH	},
+	{ "grant",	SHARED_GRANT	},
 	{ "all",	SHARED_ALL	},
 	{ "none",	0		},
 	{NULL, 0}

@@ -325,7 +325,7 @@ struct oper_flags
 	char has;
 	char hasnt;
 };
-static struct oper_flags oper_flagtable[] =
+struct oper_flags oper_flagtable[] =
 {
 	{ OPER_OVERRIDE,	'O', 'o' },
 	{ OPER_KLINE,		'K', 'k' },

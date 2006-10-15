@@ -7,6 +7,12 @@ see the NEWS file.
 
 2006-10-15 Stephen Bennett <spb@gentoo.org>
 
+	* include/snomask.h, include/s_newconf.h, src/newconf.c,
+	src/snomask.c, src/s_newconf.c, modules/m_grant.c: Make GRANT work
+	remotely.
+
+2006-10-15 Stephen Bennett <spb@gentoo.org>
+
 	* include/snomask.h, src/snomask.c, modules/m_grant.c: Make GRANT work
 	with allowed snomasks.
 

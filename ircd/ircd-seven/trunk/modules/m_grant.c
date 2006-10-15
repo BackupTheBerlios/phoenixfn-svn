@@ -14,13 +14,14 @@
 #include "s_newconf.h"
 
 static int mo_grant(struct Client *client_p, struct Client *source_p, int parc, const char *parv[]);
+static int me_grant(struct Client *client_p, struct Client *source_p, int parc, const char *parv[]);
 
 static int do_grant(struct Client *source_p, struct Client *target_p, int addflags, int removeflags, int dooper,
 		int dodeoper, int add_snomask, int remove_snomask);
 
 struct Message grant_msgtab = {
   "GRANT", 0, 0, 0, MFLG_SLOW,
-  { mg_ignore, mg_not_oper, mg_ignore, mg_ignore, mg_ignore, {mo_grant, 3}}
+  { mg_ignore, mg_not_oper, mg_ignore, mg_ignore, {me_grant, 5}, {mo_grant, 3}}
 };
 
 mapi_clist_av1 grant_clist[] = { &grant_msgtab, NULL };
@@ -34,7 +35,15 @@ struct mode_table
 	int mode;
 };
 
+struct oper_flags
+{
+	int flag;
+	char has;
+	char hasnt;
+};
+
 extern struct mode_table flag_table[];
+extern struct oper_flags oper_flagtable[];
 
 static int
 mo_grant(struct Client *client_p, struct Client *source_p, int parc, const char *parv[])
@@ -45,7 +54,9 @@ mo_grant(struct Client *client_p, struct Client *source_p, int parc, const char 
 	int i, j;
 	int dir;
 	const char *p;
+	char *q;
 	int add_snomask = 0, remove_snomask = 0;
+	char oper_flag_changes[32], snomask_changes[64];
 
 	if(!IsOperGrant(source_p))
 	{
@@ -58,13 +69,6 @@ mo_grant(struct Client *client_p, struct Client *source_p, int parc, const char 
 	{
 		sendto_one_numeric(source_p, ERR_NOSUCHNICK,
 				form_str(ERR_NOSUCHNICK), parv[1]);
-		return 0;
-	}
-
-	if (!MyConnect(target_p))
-	{
-		sendto_one(source_p, form_str(ERR_USERNOTONSERV),
-			   me.name, source_p->name, target_p->name);
 		return 0;
 	}
 
@@ -115,18 +119,86 @@ mo_grant(struct Client *client_p, struct Client *source_p, int parc, const char 
 		return 0;
 	}
 
-	if(MyClient(target_p))
+	if (MyClient(target_p))
 	{
-		return do_grant(source_p, target_p, addflags, removeflags, dooper, dodeoper, 
+		do_grant(source_p, target_p, addflags, removeflags, dooper, dodeoper, 
 				add_snomask, remove_snomask);
 	}
 	else
 	{
-		sendto_one(source_p, form_str(ERR_USERNOTONSERV),
-				me.name, source_p->name, target_p->name);
+		q = oper_flag_changes;
+
+		for (i = 0; oper_flagtable[i].flag; ++i)
+		{
+			if (addflags & oper_flagtable[i].flag)
+				*q++ = oper_flagtable[i].has;
+			else if (removeflags & oper_flagtable[i].flag)
+				*q++ = oper_flagtable[i].hasnt;
+		}
+		if(q == oper_flag_changes)
+			*q++ = '.';
+		*q++ = '\0';
+
+		strlcpy(snomask_changes, construct_snobuf_changes(add_snomask, remove_snomask), sizeof(snomask_changes));
+
+		sendto_realops_snomask(SNO_DEBUG, L_NETWIDE, "Sending ENCAP GRANT %s %s %d %d %s to %s",
+				get_id(target_p, target_p), oper_flag_changes, dooper, dodeoper, snomask_changes,
+				target_p->servptr->name);
+
+		sendto_one(target_p, ":%s ENCAP %s GRANT %s %s %d %d %s",
+				get_id(source_p, target_p), target_p->servptr->name,
+				get_id(target_p, target_p), oper_flag_changes, dooper, dodeoper,
+				snomask_changes);
+	}
+
+	return 0;
+}
+
+static int me_grant(struct Client *client_p, struct Client *source_p, int parc, const char *parv[])
+{
+	struct Client *target_p;
+	int addflags = 0, removeflags = 0, dooper = 0, dodeoper = 0, add_snomask = 0, remove_snomask = 0;
+	int i = 0;
+	const char *p;
+
+	target_p = find_person(parv[1]);
+	if (target_p == NULL)
+	{
+		sendto_one_numeric(source_p, ERR_NOSUCHNICK,
+				form_str(ERR_NOSUCHNICK), parv[1]);
 		return 0;
 	}
+
+	if(!find_shared_conf(source_p->username, source_p->host,
+				source_p->user->server, SHARED_GRANT))
+		return 0;
+
+	p = parv[2];
+
+	for (i = 0; oper_flagtable[i].flag; ++i)
+	{
+		if (*p == oper_flagtable[i].has)
+			addflags |= oper_flagtable[i].flag;
+		else if (*p == oper_flagtable[i].hasnt)
+			removeflags |= oper_flagtable[i].flag;
+		else if (*p == '\0' || *p == '.')
+			break;
+		else
+			continue;
+		++p;
+	}
+
+	dooper = atoi(parv[3]);
+	dodeoper = atoi(parv[4]);
+
+	add_snomask = parse_snobuf_to_mask(0, parv[5]);
+	remove_snomask = ~parse_snobuf_to_mask(~0, parv[5]);
+
+	do_grant(source_p, target_p, addflags, removeflags, dooper, dodeoper, add_snomask, remove_snomask);
+
+	return 0;
 }
+
 
 static int do_grant(struct Client *source_p, struct Client *target_p, int addflags, int removeflags, int dooper,
 		int dodeoper, int add_snomask, int remove_snomask)
@@ -245,11 +317,14 @@ static int do_grant(struct Client *source_p, struct Client *target_p, int addfla
 					get_oper_name(source_p),
 					get_client_name(target_p, HIDE_IP),
 					desc,
-					construct_snobuf_changes(orig_snomask, target_p->allowed_snomask));
+					construct_snobuf_changes(target_p->allowed_snomask & ~orig_snomask, 
+						orig_snomask & ~target_p->allowed_snomask));
 			sendto_one_notice(target_p, ":%s is changing oper flags on you: %s, snomask %s",
-					source_p->name, desc, construct_snobuf_changes(orig_snomask, target_p->allowed_snomask));
+					source_p->name, desc, construct_snobuf_changes(target_p->allowed_snomask & ~orig_snomask, 
+						orig_snomask & ~target_p->allowed_snomask));
 			sendto_one_notice(source_p, ":Changed oper flags on %s: %s, snomask %s",
-					target_p->name, desc, construct_snobuf_changes(orig_snomask, target_p->allowed_snomask));
+					target_p->name, desc, construct_snobuf_changes(target_p->allowed_snomask & ~orig_snomask, 
+						orig_snomask & ~target_p->allowed_snomask));
 			/* fix up any umodes/snomasks they may not have
 			 * anymore */
 			newparv[0] = target_p->name;

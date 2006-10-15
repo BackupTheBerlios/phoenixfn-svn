@@ -144,7 +144,7 @@ construct_snobuf(unsigned int val)
  * side effects - NONE
  */
 char *
-construct_snobuf_changes(unsigned int before, unsigned int after)
+construct_snobuf_changes(unsigned int addflags, unsigned int removeflags)
 {
 	int i;
 	char *ptr = snobuf;
@@ -152,18 +152,18 @@ construct_snobuf_changes(unsigned int before, unsigned int after)
 	*ptr = '\0';
 	*ptr++ = '+';
 
-	if (after & ~before)
+	if (addflags)
 	{
 		for (i = 0; i < 128; i++)
-			if (snomask_modes[i] && (after & snomask_modes[i]) && !(before & snomask_modes[i]))
+			if (snomask_modes[i] && (addflags & snomask_modes[i]))
 				*ptr++ = (char) i;
 	}
 
-	if (before & ~after)
+	if (removeflags)
 	{
 		*ptr++ = '-';
 		for (i = 0; i < 128; i++)
-			if (snomask_modes[i] && (before & snomask_modes[i]) && !(after & snomask_modes[i]))
+			if (snomask_modes[i] && (removeflags & snomask_modes[i]))
 				*ptr++ = (char) i;
 	}
 
