@@ -7,6 +7,11 @@ see the NEWS file.
 
 2006-10-15 Stephen Bennett <spb@gentoo.org>
 
+	* include/snomask.h, src/snomask.c, modules/m_grant.c: Make GRANT work
+	with allowed snomasks.
+
+2006-10-15 Stephen Bennett <spb@gentoo.org>
+
 	* include/s_newconf.h, src/newconf.c, src/s_newconf.c,
 	modules/Makefile.in, +modules/m_grant.c: Add initial GRANT support,
 	based on jilles's charybdis module.

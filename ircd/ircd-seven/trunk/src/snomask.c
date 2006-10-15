@@ -137,6 +137,43 @@ construct_snobuf(unsigned int val)
 }
 
 /*
+ * construct_snobuf_changes
+ *
+ * inputs       - snomask before changes, snomask after changes
+ * outputs      - snomask string of changes from before to after
+ * side effects - NONE
+ */
+char *
+construct_snobuf_changes(unsigned int before, unsigned int after)
+{
+	int i;
+	char *ptr = snobuf;
+
+	*ptr = '\0';
+	*ptr++ = '+';
+
+	if (after & ~before)
+	{
+		for (i = 0; i < 128; i++)
+			if (snomask_modes[i] && (after & snomask_modes[i]) && !(before & snomask_modes[i]))
+				*ptr++ = (char) i;
+	}
+
+	if (before & ~after)
+	{
+		*ptr++ = '-';
+		for (i = 0; i < 128; i++)
+			if (snomask_modes[i] && (before & snomask_modes[i]) && !(after & snomask_modes[i]))
+				*ptr++ = (char) i;
+	}
+
+	*ptr++ = '\0';
+
+	return snobuf;
+}
+
+
+/*
  * parse_snobuf_to_mask
  *
  * inputs       - value to alter bitmask for, snomask itself

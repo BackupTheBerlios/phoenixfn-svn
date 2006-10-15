@@ -55,6 +55,7 @@
 #define SNO_SPY			0x00000800
 
 char *construct_snobuf(unsigned int val);
+char *construct_snobuf_changes(unsigned int before, unsigned int after);
 unsigned int parse_snobuf_to_mask(unsigned int val, const char *sno);
 unsigned int find_snomask_slot(void);
 

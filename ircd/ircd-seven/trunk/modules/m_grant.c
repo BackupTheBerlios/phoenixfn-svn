@@ -15,6 +15,9 @@
 
 static int mo_grant(struct Client *client_p, struct Client *source_p, int parc, const char *parv[]);
 
+static int do_grant(struct Client *source_p, struct Client *target_p, int addflags, int removeflags, int dooper,
+		int dodeoper, int add_snomask, int remove_snomask);
+
 struct Message grant_msgtab = {
   "GRANT", 0, 0, 0, MFLG_SLOW,
   { mg_ignore, mg_not_oper, mg_ignore, mg_ignore, mg_ignore, {mo_grant, 3}}
@@ -37,15 +40,12 @@ static int
 mo_grant(struct Client *client_p, struct Client *source_p, int parc, const char *parv[])
 {
 	struct Client *target_p;
-	const char *newparv[4];
-	struct oper_conf oper;
 	int addflags = 0, removeflags = 0;
 	int dooper = 0, dodeoper = 0;
 	int i, j;
 	int dir;
 	const char *p;
-	int changes = 0;
-	char desc[512];
+	int add_snomask = 0, remove_snomask = 0;
 
 	if(!IsOperGrant(source_p))
 	{
@@ -85,6 +85,13 @@ mo_grant(struct Client *client_p, struct Client *source_p, int parc, const char 
 				dodeoper = 1, dooper = 0;
 			continue;
 		}
+		if (!irccmp(p, "snomask"))
+		{
+			add_snomask = parse_snobuf_to_mask(0, parv[++i]);
+			remove_snomask = ~parse_snobuf_to_mask(~0, parv[i]);
+			continue;
+		}
+
 		for (j = 0; flag_table[j].name != NULL; j++)
 		{
 			if (!irccmp(p, flag_table[j].name))
@@ -107,6 +114,29 @@ mo_grant(struct Client *client_p, struct Client *source_p, int parc, const char 
 		sendto_one_notice(source_p, ":You may not change flags you do not have access to");
 		return 0;
 	}
+
+	if(MyClient(target_p))
+	{
+		return do_grant(source_p, target_p, addflags, removeflags, dooper, dodeoper, 
+				add_snomask, remove_snomask);
+	}
+	else
+	{
+		sendto_one(source_p, form_str(ERR_USERNOTONSERV),
+				me.name, source_p->name, target_p->name);
+		return 0;
+	}
+}
+
+static int do_grant(struct Client *source_p, struct Client *target_p, int addflags, int removeflags, int dooper,
+		int dodeoper, int add_snomask, int remove_snomask)
+{
+	const char *newparv[4];
+	struct oper_conf oper;
+	int changes = 0;
+	int orig_snomask = target_p->allowed_snomask;
+	char desc[512];
+	int j;
 
 	if (dodeoper)
 	{
@@ -158,22 +188,26 @@ mo_grant(struct Client *client_p, struct Client *source_p, int parc, const char 
 			oper.flags = addflags;
 			oper.umodes = 0;
 			oper.snomask = 0;
+			oper.allowed_snomask = add_snomask;
 			sendto_realops_snomask(SNO_GENERAL, L_NETWIDE,
-					"%s is opering %s with flags %s",
+					"%s is opering %s with flags %s and snomask %s",
 					get_oper_name(source_p),
 					get_client_name(target_p, HIDE_IP),
-					desc);
+					desc,
+					construct_snobuf(oper.allowed_snomask));
 			sendto_one_notice(target_p, ":%s is opering you",
 					source_p->name);
 			oper_up(target_p, &oper);
-			sendto_one_notice(source_p, ":Opered %s with flags %s",
-					target_p->name, desc);
+			sendto_one_notice(source_p, ":Opered %s with flags %s and snomask %s",
+					target_p->name, desc, construct_snobuf(oper.allowed_snomask));
 			changes++;
 		}
 	}
-	removeflags &= target_p->operflags & OPER_FLAGS;
-	addflags &= ~target_p->operflags & OPER_FLAGS;
-	if ((addflags | removeflags) != 0)
+	removeflags &= target_p->operflags;
+	addflags &= ~target_p->operflags;
+	remove_snomask &= target_p->allowed_snomask;
+	add_snomask &= ~target_p->allowed_snomask;
+	if ((addflags | removeflags | add_snomask | remove_snomask) != 0)
 	{
 		if (!IsOper(target_p))
 		{
@@ -184,6 +218,8 @@ mo_grant(struct Client *client_p, struct Client *source_p, int parc, const char 
 		{
 			target_p->operflags |= addflags;
 			target_p->operflags &= ~removeflags;
+			target_p->allowed_snomask |= add_snomask;
+			target_p->allowed_snomask &= ~remove_snomask;
 			desc[0] = '\0';
 			for (j = 0; flag_table[j].name != NULL; j++)
 			{
@@ -202,15 +238,18 @@ mo_grant(struct Client *client_p, struct Client *source_p, int parc, const char 
 					strlcat(desc, flag_table[j].name, sizeof desc);
 				}
 			}
+			if(desc[0] == '\0')
+				strlcpy(desc, "<none>", sizeof desc);
 			sendto_realops_snomask(SNO_GENERAL, L_NETWIDE,
-					"%s is changing oper flags on %s (%s)",
+					"%s is changing oper flags on %s (%s, snomask %s)",
 					get_oper_name(source_p),
 					get_client_name(target_p, HIDE_IP),
-					desc);
-			sendto_one_notice(target_p, ":%s is changing oper flags on you: %s",
-					source_p->name, desc);
-			sendto_one_notice(source_p, ":Changed oper flags on %s: %s",
-					target_p->name, desc);
+					desc,
+					construct_snobuf_changes(orig_snomask, target_p->allowed_snomask));
+			sendto_one_notice(target_p, ":%s is changing oper flags on you: %s, snomask %s",
+					source_p->name, desc, construct_snobuf_changes(orig_snomask, target_p->allowed_snomask));
+			sendto_one_notice(source_p, ":Changed oper flags on %s: %s, snomask %s",
+					target_p->name, desc, construct_snobuf_changes(orig_snomask, target_p->allowed_snomask));
 			/* fix up any umodes/snomasks they may not have
 			 * anymore */
 			newparv[0] = target_p->name;
