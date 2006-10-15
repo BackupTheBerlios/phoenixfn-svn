@@ -114,16 +114,16 @@ ircd: $(OBJS) y.tab.o lex.yy.o version.o
 install-mkdirs:
 	-@if test ! -d $(DESTDIR)$(prefix); then \
 		echo "ircd: setting up ircd directory structure"; \
-		mkdir $(DESTDIR)$(prefix); \
+		mkdir -p $(DESTDIR)$(prefix); \
 	fi
 	-@if test ! -d $(DESTDIR)$(exec_prefix); then \
-		mkdir $(DESTDIR)$(exec_prefix); \
+		mkdir -p $(DESTDIR)$(exec_prefix); \
 	fi
 	-@if test ! -d $(DESTDIR)$(bindir); then \
-		mkdir $(DESTDIR)$(bindir); \
+		mkdir -p $(DESTDIR)$(bindir); \
 	fi
 	-@if test ! -d $(DESTDIR)$(libdir); then \
-		mkdir $(DESTDIR)$(libdir); \
+		mkdir -p $(DESTDIR)$(libdir); \
 	fi
 
 install: install-mkdirs build

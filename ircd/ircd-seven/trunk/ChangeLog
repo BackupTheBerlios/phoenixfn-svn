@@ -7,6 +7,12 @@ see the NEWS file.
 
 2006-10-15 Stephen Bennett <spb@gentoo.org>
 
+	* Makefile.in, src/Makefile.in, unsupported/Makefile.in,
+	extensions/Makefile.in, tools/Makefile.in, doc/Makefile.in,
+	modules/Makefile.in: Use mkdir -p in lots of places.
+
+2006-10-15 Stephen Bennett <spb@gentoo.org>
+
 	* include/s_conf.h, src/newconf.c, modules/m_kline.c: Allow disabling
 	of KLINE foo@bar ON server.name in config, and when enabled send out
 	netwide server notices when it is used. This does not affect clustered

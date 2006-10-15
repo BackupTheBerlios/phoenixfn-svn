@@ -38,7 +38,7 @@ all: $(OBJS)
 
 install: all
 	-@if test ! -d $(DESTDIR)$(AUTOMODULEDIR); then \
-                mkdir $(DESTDIR)$(AUTOMODULEDIR); \
+                mkdir -p $(DESTDIR)$(AUTOMODULEDIR); \
         fi
 	@echo "Installing modules into $(DESTDIR)$(AUTOMODULEDIR) .."
 	@for file in $(OBJS); do \

@@ -80,13 +80,13 @@ automoduledir	= @moduledir@/autoload
 install-mkdirs:
 	-@if test ! -d $(DESTDIR)$(prefix); then \
 		echo "ircd: setting up tools directory structure"; \
-		mkdir $(DESTDIR)$(prefix); \
+		mkdir -p $(DESTDIR)$(prefix); \
 	fi
 	-@if test ! -d $(DESTDIR)$(exec_prefix); then \
-		mkdir $(DESTDIR)$(exec_prefix); \
+		mkdir -p $(DESTDIR)$(exec_prefix); \
 	fi
 	-@if test ! -d $(DESTDIR)$(bindir); then \
-		mkdir $(DESTDIR)$(bindir); \
+		mkdir -p $(DESTDIR)$(bindir); \
 	fi
 
 install: install-mkdirs build
