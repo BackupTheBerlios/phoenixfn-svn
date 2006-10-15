@@ -57,7 +57,7 @@ int snomask_modes[256] = {
         0,                      /* K */
         0,                      /* L */
         0,                      /* M */
-        0,                      /* N */
+        SNO_NCHANGE_GLOBAL,     /* N */
         0,                      /* O */
         0,                      /* P */
         0,		        /* Q */

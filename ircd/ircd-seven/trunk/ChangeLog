@@ -7,6 +7,12 @@ see the NEWS file.
 
 2006-10-15 Stephen Bennett <spb@gentoo.org>
 
+	* include/snomask.h, src/snomask.c, modules/core/m_nick.c: Make
+	snomask +n show local nick changes again, and add +N for global nick
+	change notices.
+
+2006-10-15 Stephen Bennett <spb@gentoo.org>
+
 	* Makefile.in, src/Makefile.in, unsupported/Makefile.in,
 	extensions/Makefile.in, tools/Makefile.in, doc/Makefile.in,
 	modules/Makefile.in: Use mkdir -p in lots of places.

@@ -793,9 +793,13 @@ change_local_nick(struct Client *client_p, struct Client *source_p,
 			invalidate_bancache_user(source_p);
 	}
 
-	sendto_realops_snomask(SNO_NCHANGE, L_NETWIDE,
+	sendto_realops_snomask(SNO_NCHANGE, L_ALL,
 			     "Nick change: From %s to %s [%s@%s]",
 			     source_p->name, nick, source_p->username, source_p->host);
+
+    sendto_realops_snomask(SNO_NCHANGE_GLOBAL, L_NETWIDE,
+                 "Nick change: From %s to %s [%s@%s]",
+                 source_p->name, nick, source_p->username, source_p->host);
 
 	/* send the nick change to the users channels */
 	sendto_common_channels_local(source_p, ":%s!%s@%s NICK :%s",

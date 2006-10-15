@@ -53,6 +53,7 @@
 #define SNO_UNAUTH		0x00000200
 #define SNO_EXTERNAL		0x00000400
 #define SNO_SPY			0x00000800
+#define SNO_NCHANGE_GLOBAL	0x00001000
 
 char *construct_snobuf(unsigned int val);
 char *construct_snobuf_changes(unsigned int addflags, unsigned int removeflags);
