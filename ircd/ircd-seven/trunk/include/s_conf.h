@@ -240,6 +240,7 @@ struct config_file_entry
 	int default_umodes;
 	int global_snotices;
 	int hide_opers;
+	int allow_kline_on;
 };
 
 struct config_channel_entry

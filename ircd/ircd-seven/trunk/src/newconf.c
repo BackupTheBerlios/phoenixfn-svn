@@ -2086,6 +2086,7 @@ static struct ConfEntry conf_general_table[] =
 	{ "use_whois_actually", CF_YESNO, NULL, 0, &ConfigFileEntry.use_whois_actually	},
 	{ "warn_no_nline",	CF_YESNO, NULL, 0, &ConfigFileEntry.warn_no_nline	},
 	{ "hide_opers",		CF_YESNO, NULL, 0, &ConfigFileEntry.hide_opers		},
+	{ "allow_kline_on",	CF_YESNO, NULL, 0, &ConfigFileEntry.allow_kline_on	},
 	{ "\0", 		0, 	  NULL, 0, NULL }
 };
 

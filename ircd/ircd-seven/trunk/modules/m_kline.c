@@ -146,6 +146,20 @@ mo_kline(struct Client *client_p, struct Client *source_p,
 
 	if(target_server != NULL)
 	{
+		if(!ConfigFileEntry.allow_kline_on)
+		{
+			sendto_one(source_p, ":%s NOTICE %s :*** KLINE ON server.name is disabled.",
+					me.name, source_p->name);
+			return 0;
+		}
+
+		if(tkline_time > 0)
+			sendto_realops_snomask(SNO_GENERAL, L_NETWIDE, "%s added temporary %d minute K-Line for [%s@%s] on %s [%s]",
+					get_oper_name(source_p), tkline_time / 60, user, host, target_server, reason);
+		else
+			sendto_realops_snomask(SNO_GENERAL, L_NETWIDE, "%s added K-Line for [%s@%s] on %s [%s]",
+					get_oper_name(source_p), user, host, target_server, reason);
+
 		propagate_generic(source_p, "KLINE", target_server, CAP_KLN,
 				"%d %s %s :%s",
 				tkline_time, user, host, reason);
