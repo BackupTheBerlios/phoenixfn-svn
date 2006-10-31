@@ -5,6 +5,14 @@ This file lists every change made except typo and formatting fixes, which are
 only listed in SVN log. For a summary of what has changed between releases,
 see the NEWS file.
 
+2006-10-31 Stephen Bennett <spb@gentoo.org>
+
+	* src/messages.tab, src/s_newconf.c, modules/m_services.c,
+	modules/m_whois.c: Touch up some numeric responses. Sort privileges
+	alphabetically in oper-up notices, by request of LoRez. Only show real
+	host in whois to self and auspex opers. Fix nick-change notices on
+	RSFNC.
+
 2006-10-15 Stephen Bennett <spb@gentoo.org>
 
 	* doc/sgml/oper-guide/charybdis-oper-guide.sgml,

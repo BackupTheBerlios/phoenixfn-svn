@@ -316,7 +316,7 @@ single_whois(struct Client *source_p, struct Client *target_p, int auspex)
 
 	if(MyClient(target_p))
 	{
-		if (IsDynSpoof(target_p) && (IsOper(source_p) || source_p == target_p))
+		if (IsDynSpoof(target_p) && (IsOperAuspex(source_p) || source_p == target_p))
 		{
 			/* trick here: show a nonoper their own IP if
 			 * dynamic spoofed but not if auth{} spoofed
@@ -340,7 +340,7 @@ single_whois(struct Client *source_p, struct Client *target_p, int auspex)
 	}
 	else
 	{
-		if (IsDynSpoof(target_p) && (IsOper(source_p) || source_p == target_p))
+		if (IsDynSpoof(target_p) && (IsOperAuspex(source_p) || source_p == target_p))
 		{
 			ClearDynSpoof(target_p);
 			sendto_one_numeric(source_p, RPL_WHOISHOST,
