@@ -152,6 +152,9 @@ extern const char *form_str(int);
 #define RPL_LISTEND          323
 #define RPL_CHANNELMODEIS    324
 
+#define RPL_WHOISOPER_PRIVS  326	/* Use the same numeric as hyperion, the only
+					   other ircd I know which uses this... */
+
 #define RPL_CREATIONTIME     329
 #define RPL_WHOISLOGGEDIN    330
 

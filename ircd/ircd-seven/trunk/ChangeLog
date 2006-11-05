@@ -5,6 +5,15 @@ This file lists every change made except typo and formatting fixes, which are
 only listed in SVN log. For a summary of what has changed between releases,
 see the NEWS file.
 
+2006-11-04 Stephen Bennett <spb@gentoo.org>
+
+	* include/numeric.h, include/s_newconf.h, src/chmode.c, src/s_user.c,
+	src/messages.tab, src/s_serv.c, src/s_newconf.c, modules/m_grant.c,
+	modules/m_whois.c, modules/core/m_join.c, modules/m_map.c,
+	modules/m_links.c: Require the routing privilege rather than umode +o
+	for unrestricted MAP and LINKS. Show oper privilege in WHOIS where
+	possible. Fix up some use of is_chanop / is_real_chanop.
+
 2006-10-31 Stephen Bennett <spb@gentoo.org>
 
 	* src/messages.tab, src/s_newconf.c, modules/m_services.c,

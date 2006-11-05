@@ -319,12 +319,6 @@ find_oper_conf(const char *username, const char *host, const char *locip, const 
 	return NULL;
 }
 
-struct oper_flags
-{
-	int flag;
-	char has;
-	char hasnt;
-};
 struct oper_flags oper_flagtable[] =
 {
 	{ OPER_ADMIN,		'A', 'a' },

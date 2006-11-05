@@ -35,15 +35,7 @@ struct mode_table
 	int mode;
 };
 
-struct oper_flags
-{
-	int flag;
-	char has;
-	char hasnt;
-};
-
 extern struct mode_table flag_table[];
-extern struct oper_flags oper_flagtable[];
 
 static int
 mo_grant(struct Client *client_p, struct Client *source_p, int parc, const char *parv[])

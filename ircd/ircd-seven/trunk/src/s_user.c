@@ -1408,7 +1408,7 @@ change_nick_user_host(struct Client *target_p,	const char *nick, const char *use
 			chptr = mscptr->chptr;
 			mptr = mode;
 
-			if(is_chanop(mscptr))
+			if(is_real_chanop(mscptr))
 			{
 				*mptr++ = 'o';
 				strcat(modeval, nick);

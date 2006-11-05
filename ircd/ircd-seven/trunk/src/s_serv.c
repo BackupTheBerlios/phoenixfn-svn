@@ -731,7 +731,7 @@ burst_TS5(struct Client *client_p)
 			msptr = uptr->data;
 
 			tlen = strlen(msptr->client_p->name) + 1;
-			if(is_chanop(msptr))
+			if(is_real_chanop(msptr))
 				tlen++;
 			if(is_voiced(msptr))
 				tlen++;
@@ -889,7 +889,7 @@ burst_TS6(struct Client *client_p)
 			msptr = uptr->data;
 
 			tlen = strlen(use_id(msptr->client_p)) + 1;
-			if(is_chanop(msptr))
+			if(is_real_chanop(msptr))
 				tlen++;
 			if(is_voiced(msptr))
 				tlen++;

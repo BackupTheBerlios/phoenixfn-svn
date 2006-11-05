@@ -75,7 +75,7 @@ static int mask_pos;
 int
 get_channel_access(struct Client *source_p, struct membership *msptr)
 {
-	if(!MyClient(source_p) || is_chanop(msptr) || IsOperOverride(source_p))
+	if(!MyClient(source_p) || is_chanop(msptr))
 		return CHFL_CHANOP;
 
 	return CHFL_PEON;

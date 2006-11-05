@@ -348,7 +348,7 @@ static  const char *  replies[] = {
 /* 323 RPL_LISTEND, */          ":%s 323 %s :End of /LIST",
 /* 324 RPL_CHANNELMODEIS, */    ":%s 324 %s %s %s",
 /* 325 */       NULL,
-/* 326 */       NULL,
+/* 326 RPL_WHOISOPER_PRIVS */   "%s :has oper privs: %s",
 /* 327 */       NULL,
 /* 328 */       NULL,
 /* 329 RPL_CREATIONTIME, */	":%s 329 %s %s %lu", 

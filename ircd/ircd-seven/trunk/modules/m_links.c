@@ -39,11 +39,11 @@
 #include "cache.h"
 
 static int m_links(struct Client *, struct Client *, int, const char **);
-static int mo_links(struct Client *, struct Client *, int, const char **);
+static int do_links(struct Client *, struct Client *, int, const char **);
 
 struct Message links_msgtab = {
 	"LINKS", 0, 0, 0, MFLG_SLOW,
-	{mg_unreg, {m_links, 0}, {mo_links, 0}, mg_ignore, mg_ignore, {mo_links, 0}}
+	{mg_unreg, {m_links, 0}, {do_links, 0}, mg_ignore, mg_ignore, {m_links, 0}}
 };
 
 int doing_links_hook;
@@ -70,16 +70,17 @@ static void send_links_cache(struct Client *source_p);
 static int
 m_links(struct Client *client_p, struct Client *source_p, int parc, const char *parv[])
 {
-	if(ConfigServerHide.flatten_links && !IsExemptShide(source_p))
+	if(ConfigServerHide.flatten_links && !IsExemptShide(source_p) &&
+			!IsOperRouting(source_p))
 		send_links_cache(source_p);
 	else
-		mo_links(client_p, source_p, parc, parv);
+		do_links(client_p, source_p, parc, parv);
 
 	return 0;
 }
 
 static int
-mo_links(struct Client *client_p, struct Client *source_p, int parc, const char *parv[])
+do_links(struct Client *client_p, struct Client *source_p, int parc, const char *parv[])
 {
 	const char *mask = "";
 	struct Client *target_p;

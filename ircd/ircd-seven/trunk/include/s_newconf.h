@@ -132,6 +132,15 @@ struct oper_conf
 #endif
 };
 
+struct oper_flags
+{
+	int flag;
+	char has;
+	char hasnt;
+};
+
+extern struct oper_flags oper_flagtable[];
+
 extern struct remote_conf *make_remote_conf(void);
 extern void free_remote_conf(struct remote_conf *);
 

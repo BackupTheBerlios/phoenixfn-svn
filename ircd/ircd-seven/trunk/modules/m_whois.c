@@ -312,6 +312,27 @@ single_whois(struct Client *source_p, struct Client *target_p, int auspex)
 				   IsService(target_p) ? ConfigFileEntry.servicestring :
 				   (IsAdmin(target_p) ? GlobalSetOptions.adminstring :
 				    GlobalSetOptions.operstring));
+
+		if (target_p->operflags)
+		{
+			char oper_flags[32], *p;
+			int i;
+
+			p = &oper_flags[0];
+
+			for (i = 0; oper_flagtable[i].flag; ++i)
+			{
+				if (target_p->operflags & oper_flagtable[i].flag)
+					*p++ = oper_flagtable[i].has;
+				else
+					*p++ = oper_flagtable[i].hasnt;
+			}
+			*p++ = '\0';
+
+			sendto_one_numeric(source_p, RPL_WHOISOPER_PRIVS,
+					    form_str(RPL_WHOISOPER_PRIVS),
+					    target_p->name, oper_flags);
+		}
 	}
 
 	if(MyClient(target_p))
