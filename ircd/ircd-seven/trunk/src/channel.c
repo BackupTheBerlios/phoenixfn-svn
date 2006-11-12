@@ -816,7 +816,7 @@ can_send(struct Channel *chptr, struct Client *source_p, struct membership *mspt
 			 * theres no possibility of caching them --fl
 			 */
 			if(chptr->mode.mode & MODE_NOPRIVMSGS || chptr->mode.mode & MODE_MODERATED
-				|| (chptr->mode.mode & MODE_QUIETUNID) && !*source_p->user->suser)
+				|| ((chptr->mode.mode & MODE_QUIETUNID) && !*source_p->user->suser))
 				return CAN_SEND_NO;
 			else
 				return CAN_SEND_NONOP;

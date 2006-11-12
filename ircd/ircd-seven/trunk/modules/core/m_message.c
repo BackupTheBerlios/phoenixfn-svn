@@ -450,6 +450,13 @@ msg_channel(int p_or_n, const char *command,
 			source_p->localClient->last = CurrentTime;
 	}
 
+	if (chptr->mode.mode & MODE_QUIETUNID && !*source_p->user->suser)
+	{
+		sendto_one_numeric(source_p, ERR_CANNOTSENDTOCHAN,
+			form_str(ERR_CANNOTSENDTOCHAN), chptr->chname);
+		return;
+	}
+
 	if(chptr->mode.mode & MODE_NOCOLOR)
 	{
 		strlcpy(text2, text, BUFSIZE);
