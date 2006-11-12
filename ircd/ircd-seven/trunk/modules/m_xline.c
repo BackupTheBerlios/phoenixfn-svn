@@ -125,6 +125,13 @@ mo_xline(struct Client *client_p, struct Client *source_p, int parc, const char 
 	/* XLINE <gecos> ON <server> :<reason> */
 	if(parc >= loc+2 && !irccmp(parv[loc], "ON"))
 	{
+		if(!IsOperRemoteBan(source_p))
+		{
+			sendto_one(source_p, form_str(ERR_NOPRIVS), me.name, source_p->name,
+					"remoteban");
+			return 0;
+		}
+
 		target_server = parv[loc+1];
 		loc += 2;
 	}
@@ -452,6 +459,13 @@ mo_unxline(struct Client *client_p, struct Client *source_p, int parc, const cha
 
 	if(parc == 4 && !(irccmp(parv[2], "ON")))
 	{
+		if(!IsOperRemoteBan(source_p))
+		{
+			sendto_one(source_p, form_str(ERR_NOPRIVS), me.name, source_p->name,
+					"remoteban");
+			return 0;
+		}
+
 		propagate_generic(source_p, "UNXLINE", parv[3], CAP_CLUSTER,
 				"%s", parv[1]);
 

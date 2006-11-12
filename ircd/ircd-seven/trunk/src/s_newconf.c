@@ -322,6 +322,7 @@ find_oper_conf(const char *username, const char *host, const char *locip, const 
 struct oper_flags oper_flagtable[] =
 {
 	{ OPER_ADMIN,		'A', 'a' },
+	{ OPER_REMOTEBAN,	'B', 'b' },
 	{ OPER_KILL,		'C', 'c' },
 	{ OPER_DIE,		'D', 'd' },
 	{ OPER_EXPERIMENTAL,	'E', 'e' },
@@ -338,8 +339,8 @@ struct oper_flags oper_flagtable[] =
 	{ OPER_AUSPEX,		'S', 's' },
 	{ OPER_HELPER,		'T', 't' },
 	{ OPER_UNKLINE,		'U', 'u' },
-	{ OPER_XLINE,		'X', 'x' },
 	{ OPER_WALLOPS,		'W', 'w' },
+	{ OPER_XLINE,		'X', 'x' },
 	{ 0,			'\0', '\0' }
 };
 

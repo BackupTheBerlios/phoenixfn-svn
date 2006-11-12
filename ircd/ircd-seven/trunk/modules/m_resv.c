@@ -119,6 +119,23 @@ mo_resv(struct Client *client_p, struct Client *source_p, int parc, const char *
 	/* remote resv.. */
 	if(target_server)
 	{
+		if(!IsOperRemoteBan(source_p))
+		{
+			sendto_one(source_p, form_str(ERR_NOPRIVS), me.name, source_p->name,
+					"remoteban");
+			return 0;
+		}
+
+		if(temp_time > 0)
+			sendto_realops_snomask(SNO_GENERAL, L_NETWIDE,
+					"%s is setting a temporary %d-minute RESV for %s on %s",
+					get_oper_name(source_p), temp_time, name, target_server);
+		else
+			sendto_realops_snomask(SNO_GENERAL, L_NETWIDE,
+					"%s is setting a RESV for %s on %s",
+					get_oper_name(source_p), name, target_server);
+
+
 		propagate_resv(source_p, target_server, temp_time, name, reason);
 
 		if(match(target_server, me.name) == 0)
@@ -377,12 +394,18 @@ mo_unresv(struct Client *client_p, struct Client *source_p, int parc, const char
 
 	if((parc == 4) && (irccmp(parv[2], "ON") == 0))
 	{
+		if(!IsOperRemoteBan(source_p))
+		{
+			sendto_one(source_p, form_str(ERR_NOPRIVS), me.name, source_p->name,
+					"remoteban");
+		}
 		propagate_generic(source_p, "UNRESV", parv[3], CAP_CLUSTER,
 				"%s", parv[1]);
 
 		if(match(parv[3], me.name) == 0)
 			return 0;
 	}
+
 	else if(dlink_list_length(&cluster_conf_list) > 0)
 		cluster_generic(source_p, "UNRESV", SHARED_UNRESV, CAP_CLUSTER,
 				"%s", parv[1]);

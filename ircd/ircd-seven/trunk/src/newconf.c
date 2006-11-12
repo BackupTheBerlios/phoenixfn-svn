@@ -332,6 +332,7 @@ struct mode_table flag_table[] = {
 	{"wallops",		OPER_WALLOPS		},
 	{"scan",		OPER_EXPERIMENTAL	},
 	{"grant",		OPER_GRANT		},
+	{"remoteban",		OPER_REMOTEBAN		},
 	{NULL, 0}
 };
 

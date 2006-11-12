@@ -168,7 +168,7 @@ extern void cluster_generic(struct Client *, const char *, int cltype,
 #define OPER_OPERWALL		0x004000
 #define OPER_INVIS		0x008000
 #define OPER_AUSPEX		0x010000
-//#define OPER_REMOTEBAN	0x020000
+#define OPER_REMOTEBAN	0x020000
 #define OPER_HELPER		0x040000
 #define OPER_CMODES		0x080000
 #define OPER_IMMUNE		0x100000
@@ -192,6 +192,7 @@ extern void cluster_generic(struct Client *, const char *, int cltype,
 #define IsOperK(x)              ((x)->operflags & OPER_KLINE)
 #define IsOperXline(x)          ((x)->operflags & OPER_XLINE)
 #define IsOperResv(x)		((x)->operflags & OPER_RESV)
+#define IsOperRemoteBan(x)      ((x)->operflags & OPER_REMOTEBAN)
 #define IsOperDie(x)            ((x)->operflags & OPER_DIE)
 #define IsOperRehash(x)         ((x)->operflags & OPER_REHASH)
 #define IsOperHiddenAdmin(x)    ((x)->operflags & OPER_HADMIN)

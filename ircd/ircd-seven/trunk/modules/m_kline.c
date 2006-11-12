@@ -152,6 +152,12 @@ mo_kline(struct Client *client_p, struct Client *source_p,
 					me.name, source_p->name);
 			return 0;
 		}
+		else if(!IsOperRemoteBan(source_p))
+		{
+			sendto_one(source_p, form_str(ERR_NOPRIVS), me.name, source_p->name,
+			    "remoteban");
+		        return 0;
+		}
 
 		if(tkline_time > 0)
 			sendto_realops_snomask(SNO_GENERAL, L_NETWIDE, "%s added temporary %d minute K-Line for [%s@%s] on %s [%s]",
@@ -401,6 +407,18 @@ mo_unkline(struct Client *client_p, struct Client *source_p, int parc, const cha
 	/* possible remote kline.. */
 	if((parc > 3) && (irccmp(parv[2], "ON") == 0))
 	{
+		if (!IsOperRemoteBan(source_p))
+		{
+			sendto_one(source_p, form_str(ERR_NOPRIVS), me.name, source_p->name,
+					"remoteban");
+
+			return 0;
+		}
+
+		sendto_realops_snomask(SNO_GENERAL, L_NETWIDE,
+				"%s is removing K-Line for [%s@%s] on %s",
+				get_oper_name(source_p), user, host, parv[3]);
+
 		propagate_generic(source_p, "UNKLINE", parv[3], CAP_UNKLN,
 				"%s %s", user, host);
 
