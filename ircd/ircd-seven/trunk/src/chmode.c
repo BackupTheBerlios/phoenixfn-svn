@@ -410,6 +410,11 @@ chm_simple(struct Client *source_p, struct Channel *chptr,
 		return;
 	}
 
+	/*
+	 * XXX: This needs 'fixing'; hard coding magic numbers like this is fucking
+	 * silly...
+	 */
+
 	/* +ntspmaikl == 9 + MAXMODEPARAMS (4 * +o) */
 	if(MyClient(source_p) && (++mode_limit > (9 + MAXMODEPARAMS)))
 		return;
@@ -1259,7 +1264,7 @@ struct ChannelMode chmode_table[256] =
   {chm_nosuch,	0 },			/* O */
   {chm_staff,	MODE_PERMANENT },	/* P */
   {chm_simple,	MODE_DISFORWARD },	/* Q */
-  {chm_nosuch,	0 },			/* R */
+  {chm_simple,	MODE_QUIETUNID },	/* R */
   {chm_nosuch,	0 },			/* S */
   {chm_nosuch,	0 },			/* T */
   {chm_nosuch,	0 },			/* U */

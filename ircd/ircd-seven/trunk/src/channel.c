@@ -837,7 +837,8 @@ can_send(struct Channel *chptr, struct Client *source_p, struct membership *mspt
 				return CAN_SEND_NO;
 		}
 		else if(is_banned(chptr, source_p, msptr, NULL, NULL) == CHFL_BAN
-			|| is_quieted(chptr, source_p, msptr, NULL, NULL) == CHFL_BAN)
+			|| is_quieted(chptr, source_p, msptr, NULL, NULL) == CHFL_BAN
+			|| (chptr->mode.mode & MODE_QUIETUNID) && !*source_p->localClient->suser)
 			return CAN_SEND_NO;
 	}
 
