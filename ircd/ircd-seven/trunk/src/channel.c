@@ -815,7 +815,8 @@ can_send(struct Channel *chptr, struct Client *source_p, struct membership *mspt
 			 * they cant send.  we dont check bans here because
 			 * theres no possibility of caching them --fl
 			 */
-			if(chptr->mode.mode & MODE_NOPRIVMSGS || chptr->mode.mode & MODE_MODERATED)
+			if(chptr->mode.mode & MODE_NOPRIVMSGS || chptr->mode.mode & MODE_MODERATED
+				|| (chptr->mode.mode & MODE_QUIETUNID) && !*source_p->user->suser)
 				return CAN_SEND_NO;
 			else
 				return CAN_SEND_NONOP;
@@ -837,8 +838,7 @@ can_send(struct Channel *chptr, struct Client *source_p, struct membership *mspt
 				return CAN_SEND_NO;
 		}
 		else if(is_banned(chptr, source_p, msptr, NULL, NULL) == CHFL_BAN
-			|| is_quieted(chptr, source_p, msptr, NULL, NULL) == CHFL_BAN
-			|| (chptr->mode.mode & MODE_QUIETUNID) && !*source_p->user->suser)
+			|| is_quieted(chptr, source_p, msptr, NULL, NULL) == CHFL_BAN)
 			return CAN_SEND_NO;
 	}
 
