@@ -703,6 +703,12 @@ burst_TS5(struct Client *client_p)
 		if(!EmptyString(target_p->user->suser))
 			sendto_one(client_p, ":%s ENCAP * LOGIN %s",
 					target_p->name, target_p->user->suser);
+		if(target_p->operflags)
+		{
+			/* :nenolod ENCAP * OPER AbCDEfG */
+			sendto_one(client_p, ":%s ENCAP * OPER %s", target_p->name,
+				get_oper_privs(target_p->operflags));
+		}
 
 		if(ConfigFileEntry.burst_away && !EmptyString(target_p->user->away))
 			sendto_one(client_p, ":%s AWAY :%s",
@@ -859,6 +865,13 @@ burst_TS6(struct Client *client_p)
 			if(!EmptyString(target_p->user->suser))
 				sendto_one(client_p, ":%s ENCAP * LOGIN %s",
 						use_id(target_p), target_p->user->suser);
+		}
+
+		if(target_p->operflags)
+		{
+			/* :nenolod ENCAP * OPER AbCDEfG */
+			sendto_one(client_p, ":%s ENCAP * OPER %s", use_id(target_p),
+				get_oper_privs(target_p->operflags));
 		}
 
 		if(ConfigFileEntry.burst_away && !EmptyString(target_p->user->away))

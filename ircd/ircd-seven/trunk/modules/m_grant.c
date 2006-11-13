@@ -10,6 +10,7 @@
 #include "ircd.h"
 #include "send.h"
 #include "s_user.h"
+#include "s_serv.h"
 #include "s_conf.h"
 #include "s_newconf.h"
 
@@ -317,6 +318,13 @@ static int do_grant(struct Client *source_p, struct Client *target_p, int addfla
 			sendto_one_notice(source_p, ":Changed oper flags on %s: %s, snomask %s",
 					target_p->name, desc, construct_snobuf_changes(target_p->allowed_snomask & ~orig_snomask, 
 						orig_snomask & ~target_p->allowed_snomask));
+
+			sendto_server(source_p, NULL, CAP_TS6, NOCAPS, ":%s ENCAP * OPER %s",
+					get_id(target_p, target_p), get_oper_privs(target_p->operflags));
+
+			sendto_server(source_p, NULL, NOCAPS, CAP_TS6, ":%s ENCAP * OPER %s",
+					target_p->name, get_oper_privs(target_p->operflags));
+
 			/* fix up any umodes/snomasks they may not have
 			 * anymore */
 			newparv[0] = target_p->name;

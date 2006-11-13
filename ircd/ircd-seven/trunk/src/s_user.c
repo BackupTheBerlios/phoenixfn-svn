@@ -1352,6 +1352,12 @@ oper_up(struct Client *source_p, struct oper_conf *oper_p)
 		   source_p->name, construct_snobuf(source_p->allowed_snomask));
 	send_oper_motd(source_p);
 
+	sendto_server(source_p, NULL, CAP_TS6, NOCAPS, ":%s ENCAP * OPER %s",
+		use_id(source_p), get_oper_privs(oper_p->flags));
+
+	sendto_server(source_p, NULL, NOCAPS, CAP_TS6, ":%s ENCAP * OPER %s",
+		source_p->name, get_oper_privs(oper_p->flags));
+
 	return (1);
 }
 

@@ -42,12 +42,14 @@
 #include "modules.h"
 #include "packet.h"
 #include "cache.h"
+#include "hash.h"
 
 static int m_oper(struct Client *, struct Client *, int, const char **);
+static int me_oper(struct Client *, struct Client *, int, const char **);
 
 struct Message oper_msgtab = {
 	"OPER", 0, 0, 0, MFLG_SLOW,
-	{mg_unreg, {m_oper, 3}, mg_ignore, mg_ignore, mg_ignore, {m_oper, 3}}
+	{mg_unreg, {m_oper, 3}, mg_ignore, mg_ignore, {me_oper, 3}, {m_oper, 3}}
 };
 
 mapi_clist_av1 oper_clist[] = { &oper_msgtab, NULL };
@@ -126,6 +128,42 @@ m_oper(struct Client *client_p, struct Client *source_p, int parc, const char *p
 			sendto_realops_snomask(SNO_GENERAL, L_NETWIDE,
 					     "Failed OPER attempt by %s (%s@%s)",
 					     source_p->name, source_p->username, source_p->host);
+		}
+	}
+
+	return 0;
+}
+
+/*
+ * me_oper()
+ *
+ *   parv[0] = user
+ *   parv[1] = operflags
+ *
+ * XXX - we could probably optimize this somehow --nenolod
+ */
+static int
+me_oper(struct Client *client_p, struct Client *source_p, int parc, const char *parv[])
+{
+	struct Client *target_p;
+	char *p;
+
+	if ((target_p = find_client(parv[0])) == NULL)
+		return -1;
+
+	/* make sure we start out with a clean slate */
+	target_p->operflags = 0;
+
+	for (p = parv[1]; *p != '\0'; p++)
+	{
+		int i;
+
+		for (i = 0; oper_flagtable[i].flag; i++)
+		{
+			if (*p == oper_flagtable[i].has)
+				target_p->operflags |= oper_flagtable[i].flag;
+			else
+				target_p->operflags &= ~oper_flagtable[i].flag;
 		}
 	}
 

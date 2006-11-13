@@ -5,6 +5,22 @@ This file lists every change made except typo and formatting fixes, which are
 only listed in SVN log. For a summary of what has changed between releases,
 see the NEWS file.
 
+2006-11-13 Stephen Bennett <spb@gentoo.org>
+
+	* src/s_user.c, src/s_serv.c, modules/m_grant.c, modules/m_oper.c,
+	modules/m_whois.c: Propogate operflags between servers.
+
+2006-11-13 Stephen Bennett <spb@gentoo.org>
+
+	* include/s_serv.h, src/s_serv.c, doc/technical/capab.txt: Stop saying
+	that we support G-lines. We don't.
+
+2006-11-13 Stephen Bennett <spb@gentoo.org>
+
+	* include/s_newconf.h, src/newconf.c, src/s_newconf.c,
+	modules/m_kline.c, modules/m_resv.c modules/m_xline.c: Resurrect the
+	remoteban privilege
+
 2006-11-12 Elfyn McBratney <beu@freenode.net>
 
 	* include/channel.h, src/chmode.c, src/channel.c: Implement channel
